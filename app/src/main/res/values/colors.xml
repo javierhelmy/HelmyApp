@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C0C0C1</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="progresBars">#4bfc51</color>
+
+    <color name="error">#FC2B30</color>
+
+    <color name="background_widgets">#FFFFFF</color>
+
+    <color name="background_buttons">#C0C0C1</color>
+    <color name="textHintColor">#C0C0C1</color>
+    <color name="textViews">#808080</color>
+    <color name="textColorBtns">#000000</color>
+    <color name="textColorEdit">#FFFFFF</color>
+
+    <color name="mainBtnsColor">#0091ff</color>
+    <color name="warning">#ff6600</color>
+
+</resources>

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_helmy"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ActivityMain" >
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fillViewport="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/LLh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/marginHorizontalLinearLs"
+                android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+                android:layout_marginRight="@dimen/marginHorizontalWidgets"
+                android:gravity="center"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/marginBtwWidgets"
+                    android:layout_marginLeft="@dimen/marginBtwWidgets"
+                    android:layout_marginRight="@dimen/marginBtwWidgets" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/TextSizeM"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="@dimen/marginBtwWidgets"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/PrimaryHelmetSection"
+                        android:textColor="@color/textColorEdit"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:src="@drawable/ic_help_white_24dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:onClick="click_helmetQuestion" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thicknessSeperator"
+                    android:layout_marginLeft="@dimen/marginBtwWidgets"
+                    android:layout_marginRight="@dimen/marginBtwWidgets"
+                    android:background="@android:color/white"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginBtwWidgetsXL">
+
+                    <ImageView
+                        android:id="@+id/batteryMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/battery_red"
+                        android:layout_marginLeft="@dimen/marginBtwWidgets"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/pbHelmetBattery"/>
+
+                    <ProgressBar
+                        android:id="@+id/pbHelmetBattery"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:progress="100"
+                        android:translationY="-5dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/batteryMain"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvBatteryLevelMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--%"
+                        android:textSize="@dimen/TextSizeM"
+                        android:textColor="@color/error"
+                        android:padding="0dp"
+                        android:layout_marginEnd="@dimen/marginBtwWidgets"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/pbHelmetBattery"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LLconnection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+                android:layout_marginRight="@dimen/marginHorizontalWidgets"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toBottomOf="@id/LLh"
+                android:weightSum="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgRingHelmetConnected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ring_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgHelmetConnected"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/bluetooth_red"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="@dimen/marginBtwWidgetsXL"
+                        app:layout_constraintTop_toTopOf="@+id/imgRingHelmetConnected"
+                        app:layout_constraintLeft_toLeftOf="@+id/imgRingHelmetConnected"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgRingHelmetConnected"
+                        app:layout_constraintRight_toRightOf="@+id/imgRingHelmetConnected" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgLabelHelmetConnected"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/label_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        android:layout_weight="0.7"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvHelmetConnected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Searching"
+                        android:textSize="@dimen/TextSize"
+                        android:maxLines="1"
+                        android:gravity="center"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LLonHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+                android:layout_marginRight="@dimen/marginHorizontalWidgets"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toBottomOf="@id/LLconnection"
+                android:weightSum="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgRingHelmetOnHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ring_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgHelmetOnHead"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/helmet_red"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="@dimen/marginBtwWidgetsXL"
+                        app:layout_constraintTop_toTopOf="@+id/imgRingHelmetOnHead"
+                        app:layout_constraintLeft_toLeftOf="@+id/imgRingHelmetOnHead"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgRingHelmetOnHead"
+                        app:layout_constraintRight_toRightOf="@+id/imgRingHelmetOnHead" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgLabelHelmetOnHead"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/label_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvHelmetOnHead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/helmetNotOnTheHead"
+                        android:textSize="@dimen/TextSize"
+                        android:maxLines="1"
+                        android:gravity="center"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LLtemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+                android:layout_marginRight="@dimen/marginHorizontalWidgets"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toBottomOf="@id/LLonHead"
+                android:weightSum="1"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgRingHelmetTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ring_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgThermometer"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/thermometer"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="@dimen/marginBtwWidgetsXL"
+                        app:layout_constraintTop_toTopOf="@+id/imgRingHelmetTemperature"
+                        app:layout_constraintLeft_toLeftOf="@+id/imgRingHelmetTemperature"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgRingHelmetTemperature"
+                        app:layout_constraintRight_toRightOf="@+id/imgRingHelmetTemperature" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgLabelHelmetTemperature"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/label_red"
+                        android:layout_gravity="start|center_vertical"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" >
+
+                        <TextView
+                            android:id="@+id/tvTemperatureLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/corporalTemperature"
+                            android:textSize="@dimen/TextSize"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+                            android:id="@+id/tvTemperature"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/marginBtwWidgetsSM"
+                            android:text="00.0\u00B0"
+                            android:textSize="@dimen/TextSizeTemperature"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="center_horizontal"
+                            android:maxLines="1"
+                            />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/LLb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+                android:layout_marginRight="@dimen/marginHorizontalWidgets"
+                android:layout_marginBottom="@dimen/marginHorizontalWidgetsM"
+                android:layout_marginTop="@dimen/marginBtwWidgetsXL"
+                android:gravity="center"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/LLtemperature" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/marginBtwWidgets"
+                    android:layout_marginRight="@dimen/marginBtwWidgets">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/TextSizeM"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/marginBtwWidgets"
+                        android:layout_marginRight="@dimen/marginBtwWidgets"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/BikeSection"
+                        android:textColor="@color/textColorEdit"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/tvBikeBlockchainId"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tvBikeBlockchainId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_gravity="bottom"
+                        android:fontFamily="sans-serif"
+                        android:text="ID:123456789012"
+                        android:textColor="@color/textColorEdit"
+                        app:layout_constraintRight_toLeftOf="@+id/imgQ"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imgQ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:src="@drawable/ic_help_white_24dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:onClick="click_bikeQuestion" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thicknessSeperator"
+                    android:layout_marginLeft="@dimen/marginBtwWidgets"
+                    android:layout_marginRight="@dimen/marginBtwWidgets"
+                    android:layout_marginBottom="@dimen/marginBtwWidgetsSM"
+                    android:background="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_marginTop="@dimen/marginBtwWidgets" >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:layout_gravity="center_vertical" >
+
+                        <ImageView
+                            android:id="@+id/imgRingBikeConnected"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ring_red"
+                            android:layout_gravity="start|center_vertical"
+                            android:adjustViewBounds="true"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/imgBikeConnected"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:src="@drawable/bike_red"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:layout_margin="@dimen/marginBtwWidgets"
+                            app:layout_constraintTop_toTopOf="@+id/imgRingBikeConnected"
+                            app:layout_constraintLeft_toLeftOf="@+id/imgRingBikeConnected"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgRingBikeConnected"
+                            app:layout_constraintRight_toRightOf="@+id/imgRingBikeConnected" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.7" >
+
+                        <ImageView
+                            android:id="@+id/imgLabelBikeConnected"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/label_red"
+                            android:layout_gravity="start|center_vertical"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="0.7"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvBikeConnected"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Searching"
+                            android:textSize="@dimen/TextSize"
+                            android:maxLines="1"
+                            android:gravity="center"
+                            android:textColor="@color/colorAccent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goBack"
+                android:textColor="@color/textColorEdit"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:onClick="goBack" />
+
+            <ImageView
+                android:id="@+id/imgLogoBottom1"
+                android:layout_width="@dimen/logoWidth"
+                android:layout_height="@dimen/logoHeight"
+                android:src="@drawable/helmy_logo"
+                android:adjustViewBounds="true"
+                android:layout_marginRight="@dimen/marginBtwWidgets"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/alertReady"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.9"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marginHorizontalWidgetsXL"
+            android:layout_margin="@dimen/marginHorizontalWidgets"
+            android:src="@drawable/logo_complete"
+            android:adjustViewBounds="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+            android:layout_marginRight="@dimen/marginHorizontalWidgets"
+            android:layout_marginTop="@dimen/marginBtwWidgets"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:textColorLink="@color/mainBtnsColor"
+            android:textSize="@dimen/TextSizeTemperature"
+            android:textStyle="bold"
+            android:text="@string/readyToStart"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/LLbtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/marginBtwWidgetsXL"
+            android:layout_marginRight="@dimen/marginBtwWidgetsXL"
+            android:layout_marginBottom="@dimen/marginHorizontalWidgetsXL"
+            android:paddingBottom="@dimen/marginHorizontalWidgetsXL"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyButtonStyleBlue"
+                android:text="@string/Ok"
+                android:layout_marginTop="@dimen/marginBtwWidgetsXL"
+                android:onClick="click_hideAlertReady" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

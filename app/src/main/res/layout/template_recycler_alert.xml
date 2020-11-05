@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp" >
+
+    <TextView
+        android:id="@+id/tvRecyclerAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/paddingEditTexts"
+        android:paddingBottom="@dimen/paddingEditTexts"
+        android:gravity="center"
+        android:textColor="@color/textColorBtns"
+        android:textSize="@dimen/TextSizeM"
+        android:maxLines="1" />
+
+</androidx.cardview.widget.CardView>

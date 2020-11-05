@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CL_Info3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_helmy"
+    tools:context=".ActivityRegisterUser_PersonalInfo3">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goBack"
+        android:textColor="@color/textColorEdit"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:onClick="goBack" />
+
+    <LinearLayout
+        android:id="@+id/LLtitle_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/registerPersonalDataTitle"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsSM"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thicknessSeperator"
+            android:layout_marginLeft="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginRight="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            android:background="@android:color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TextSize"
+            android:gravity="center"
+            android:text="@string/WhyThisInformationLabel"
+            android:drawableRight="@drawable/ic_help_outline_black_24dp"
+            android:textColor="@color/textViews"
+            android:onClick="tvWhyThisInfo_click" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsM"
+        android:layout_marginBottom="@dimen/marginBtwWidgetsXL"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSaveInfo3"
+        app:layout_constraintTop_toBottomOf="@id/LLtitle_3"
+        app:layout_constraintLeft_toLeftOf="parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Spinner
+                android:id="@+id/spinnerSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmySpinnerStyle"
+                android:spinnerMode="dropdown" />
+
+            <Spinner
+                android:id="@+id/spinnerEPS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmySpinnerStyle"
+                android:spinnerMode="dropdown" />
+
+            <Spinner
+                android:id="@+id/spinnerARL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmySpinnerStyle"
+                android:spinnerMode="dropdown" />
+
+            <EditText
+                android:id="@+id/etPhoneReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:hint="@string/userPhone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btnSaveInfo3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/HelmyButtonSaveNextStyleBlue"
+        android:layout_marginTop="@dimen/marginBtwWidgetsXL"
+        android:text="@string/userEnterNextData"
+        android:onClick="savePersonalInfo3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/CL_progress_logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CL_progress_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginHorizontalLinearLs"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/imgLogoBottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+            android:layout_marginRight="@dimen/marginHorizontalWidgets"
+            android:layout_marginBottom="@dimen/marginBtwWidgets" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/progress_dot"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/progress_dot"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/progress_dot"
+                        android:layout_gravity="center"/>
+
+                    <ImageView
+                        android:id="@+id/circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/progress_circle"
+                        android:layout_gravity="center"
+                        android:scaleX="3"
+                        android:scaleY="3"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thicknessSeperator"
+                android:background="@color/background_buttons"
+                android:layout_gravity="center_vertical" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imgLogoBottom"
+            android:layout_width="@dimen/logoWidth"
+            android:layout_height="@dimen/logoHeight"
+            android:src="@drawable/helmy_logo"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="@dimen/marginBtwWidgets"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pbInfo3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

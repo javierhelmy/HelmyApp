@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "47959277174",
+    "firebase_url": "https://helmy-253417.firebaseio.com",
+    "project_id": "helmy-253417",
+    "storage_bucket": "helmy-253417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47959277174:android:e9f270677359bd0d1fa957",
+        "android_client_info": {
+          "package_name": "com.example.helmy2_bike_helmet_ble_blueui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47959277174-o1fhqfuqit5e36v7hfcdla82hklv0a7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.helmy2_bike_helmet_ble_blueui",
+            "certificate_hash": "f4b1dd0b02c36b6a1f2fa9f576abf1436d708531"
+          }
+        },
+        {
+          "client_id": "47959277174-stk1e173kq1ab5m0c3gbpv4ng045mpgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYKv8hgMwlHJRmLO4jID5r5FkYmhIP-dE"
+        },
+        {
+          "current_key": "AIzaSyCXjm3jiWlgMzy5a4IAg-rz74LHjAUszOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47959277174-stk1e173kq1ab5m0c3gbpv4ng045mpgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47959277174:android:6a739d22bb59556e1fa957",
+        "android_client_info": {
+          "package_name": "com.taedison.helmy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47959277174-mtje14rcq0oaol91828k9kdhiad75tt4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taedison.helmy",
+            "certificate_hash": "f4b1dd0b02c36b6a1f2fa9f576abf1436d708531"
+          }
+        },
+        {
+          "client_id": "47959277174-stk1e173kq1ab5m0c3gbpv4ng045mpgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYKv8hgMwlHJRmLO4jID5r5FkYmhIP-dE"
+        },
+        {
+          "current_key": "AIzaSyCXjm3jiWlgMzy5a4IAg-rz74LHjAUszOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47959277174-stk1e173kq1ab5m0c3gbpv4ng045mpgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

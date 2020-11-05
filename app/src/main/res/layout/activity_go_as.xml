@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start"
+    tools:context=".ActivityGoAs" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_helmy" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_hamburguer"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageButton
+                android:id="@+id/btnHamburguer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_menu_hamburguer"
+                android:background="@android:color/transparent"
+                android:onClick="displayMenu"
+                android:layout_marginStart="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/helmy_logo"
+                android:adjustViewBounds="true"
+                android:layout_margin="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvHelloName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TextSizeXL"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/hello"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/marginHorizontalWidgets"
+            app:layout_constraintTop_toBottomOf="@id/cl_hamburguer"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_marginLeft="@dimen/marginBtwWidgets"
+            android:layout_marginRight="@dimen/marginBtwWidgets"
+            app:layout_constraintTop_toTopOf="@id/tvHelloName"
+            app:layout_constraintBottom_toBottomOf="@id/tvEmail"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
+
+            <LinearLayout
+                android:id="@+id/LLbtnsGoAs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/marginBtwWidgets"
+                android:layout_marginRight="@dimen/marginBtwWidgets" >
+
+                <TextView
+                    android:id="@+id/tvHowToStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/TextSizeXL"
+                    android:gravity="center"
+                    android:textColor="@color/background_widgets"
+                    android:text="@string/goAsLabel"
+                    android:layout_marginBottom="@dimen/marginHorizontalWidgetsM" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btnGoAsDriver"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/marginBtwWidgets"
+                        android:paddingTop="@dimen/marginBtwWidgetsXL"
+                        android:paddingBottom="@dimen/marginBtwWidgetsXL"
+                        android:layout_weight="1"
+                        android:background="@drawable/whitecontour_rounded"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="click_btnGoAsDriver" >
+
+                        <TextView
+                            android:id="@+id/tvLabelD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/TextSizeM"
+                            android:gravity="center"
+                            android:textColor="@color/background_widgets"
+                            android:text="@string/goAsDriver"
+                            android:layout_marginBottom="@dimen/marginBtwWidgets"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/helmywhite"
+                            android:adjustViewBounds="true"
+                            android:layout_margin="@dimen/marginBtwWidgetsXL"
+                            app:layout_constraintBottom_toTopOf="@id/tvLabelD"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btnGoAsPillion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/marginBtwWidgets"
+                        android:paddingTop="@dimen/marginBtwWidgetsXL"
+                        android:paddingBottom="@dimen/marginBtwWidgetsXL"
+                        android:layout_weight="1"
+                        android:background="@drawable/whitecontour_rounded"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="click_btnGoAsPillion" >
+
+                        <TextView
+                            android:id="@+id/tvLabelP"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/TextSizeM"
+                            android:gravity="center"
+                            android:textColor="@color/background_widgets"
+                            android:text="@string/goAsPillion"
+                            android:layout_marginBottom="@dimen/marginBtwWidgets"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/passenger"
+                            android:adjustViewBounds="true"
+                            android:layout_margin="@dimen/marginBtwWidgets"
+                            app:layout_constraintBottom_toTopOf="@id/tvLabelP"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TextSize"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="email"
+            android:maxLines="1"
+            android:layout_margin="@dimen/marginHorizontalWidgetsM"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/btnEnableHelmy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelmyButtonStyleBlue"
+            android:layout_marginHorizontal="@dimen/marginHorizontalLinearLs"
+            android:onClick="click_btnEnableHelmy"
+            android:text="@string/btnEnableHelmy"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/pbDisableHelmy"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <!-- Overlay the tour, keeping the same distribution -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CL_tour"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:alpha="0.8"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/imv_hamburguer_tour"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:src="@drawable/hamburguer_blue"
+                android:background="@android:color/transparent"
+                android:layout_marginStart="@dimen/marginBtwWidgets"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/tvTourMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/TextSizeXL"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/textViews"
+                android:text="@string/goAsPillionTour"
+                android:maxLines="2"
+                android:layout_marginTop="@dimen/marginHorizontalWidgets"
+                app:layout_constraintTop_toBottomOf="@id/imv_hamburguer_tour"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:layout_marginLeft="@dimen/marginBtwWidgets"
+                android:layout_marginRight="@dimen/marginBtwWidgets"
+                app:layout_constraintTop_toTopOf="@id/tvTourMsg"
+                app:layout_constraintBottom_toBottomOf="@id/tvEmail_NotUsed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" >
+
+                <LinearLayout
+                    android:id="@+id/LLbtnsGoAs_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/marginBtwWidgets"
+                    android:layout_marginRight="@dimen/marginBtwWidgets" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/TextSizeXL"
+                        android:gravity="center"
+                        android:textColor="@android:color/transparent"
+                        android:text="@string/goAsLabel"
+                        android:layout_marginBottom="@dimen/marginHorizontalWidgetsM" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnGoAsDriver_tour"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/marginBtwWidgets"
+                            android:paddingTop="@dimen/marginBtwWidgetsXL"
+                            android:paddingBottom="@dimen/marginBtwWidgetsXL"
+                            android:layout_weight="1"
+                            android:background="@drawable/bluecontour_rounded"
+                            android:visibility="invisible" >
+
+                            <TextView
+                                android:id="@+id/tvLabelD_tour"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/TextSizeM"
+                                android:gravity="center"
+                                android:textColor="@color/background_widgets"
+                                android:text="@string/goAsDriver"
+                                android:layout_marginBottom="@dimen/marginBtwWidgets"
+                                app:layout_constraintBottom_toBottomOf="parent" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/helmywhite"
+                                android:adjustViewBounds="true"
+                                android:layout_margin="@dimen/marginBtwWidgetsXL"
+                                app:layout_constraintBottom_toTopOf="@id/tvLabelD_tour"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnGoAsPillion_tour"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/marginBtwWidgets"
+                            android:paddingTop="@dimen/marginBtwWidgetsXL"
+                            android:paddingBottom="@dimen/marginBtwWidgetsXL"
+                            android:layout_weight="1"
+                            android:background="@drawable/bluecontour_rounded"
+                            android:visibility="invisible" >
+
+                            <TextView
+                                android:id="@+id/tvLabelP_tour"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/TextSizeM"
+                                android:gravity="center"
+                                android:textColor="@color/background_widgets"
+                                android:text="@string/goAsPillion"
+                                android:layout_marginBottom="@dimen/marginBtwWidgets"
+                                app:layout_constraintBottom_toBottomOf="parent" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/passenger"
+                                android:adjustViewBounds="true"
+                                android:layout_margin="@dimen/marginBtwWidgets"
+                                app:layout_constraintBottom_toTopOf="@id/tvLabelP_tour"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/tvBtnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyButtonStyleBlue"
+                android:text="@string/userEnterNextData"
+                android:onClick="click_btnNextInTour"
+                android:layout_marginBottom="@dimen/marginHorizontalWidgetsM"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/tvEmail_NotUsed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/transparent"
+                android:text="NA"
+                android:textSize="@dimen/TextSize"
+                android:layout_margin="@dimen/marginHorizontalWidgetsM"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- The navigation drawer that comes from the left -->
+    <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
+    <!-- NavigationView must go last so that the constraint layout does not cover it   -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#4d4d4d"
+        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/colorAccent"
+        app:menu="@menu/menu_options"
+        app:theme="@style/NavigationViewStyle" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+

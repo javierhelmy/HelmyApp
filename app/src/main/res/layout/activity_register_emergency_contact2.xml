@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CL_contact2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_helmy"
+    tools:context=".ActivityRegisterEmergencyContact2">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goBack"
+        android:textColor="@color/textColorEdit"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:onClick="goBack" />
+
+    <LinearLayout
+        android:id="@+id/LLtitle_contact2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/UserEmergencyContact"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsSM"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thicknessSeperator"
+            android:layout_marginLeft="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginRight="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            android:background="@android:color/white"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/secondary"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsSM"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TextSize"
+            android:gravity="center"
+            android:text="@string/WhyThisInformationLabel"
+            android:drawableRight="@drawable/ic_help_outline_black_24dp"
+            android:textColor="@color/textViews"
+            android:onClick="tvWhyThisInfo_click" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsM"
+        android:layout_marginBottom="@dimen/marginBtwWidgetsXL"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSaveContact2"
+        app:layout_constraintTop_toBottomOf="@id/LLtitle_contact2"
+        app:layout_constraintLeft_toLeftOf="parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/etEmergencyName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="textPersonName|textCapCharacters"
+                android:hint="@string/contactGivenNames" />
+
+            <EditText
+                android:id="@+id/etEmergencySurnames2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="textPersonName|textCapCharacters"
+                android:hint="@string/contactLastName" />
+
+            <TextView
+                android:id="@+id/etEmergencyPhone2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:onClick="launchContactsApp"
+                android:hint="@string/userEmergencyPhone" />
+
+            <TextView
+                android:id="@+id/tvBtnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deleteContact"
+                android:textColor="@color/textColorEdit"
+                android:textSize="@dimen/TextSize"
+                android:drawableStart="@drawable/delete_contact"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                android:onClick="click_deleteSecondContact"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btnSaveContact2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/HelmyButtonSaveNextStyleBlue"
+        android:layout_marginTop="@dimen/marginBtwWidgetsXL"
+        android:text="@string/userSaveData"
+        android:onClick="click_saveContact2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/CL_logo_contact2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CL_logo_contact2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginHorizontalLinearLs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" >
+
+        <ImageView
+            android:id="@+id/imgLogoContact2"
+            android:layout_width="@dimen/logoWidth"
+            android:layout_height="@dimen/logoHeight"
+            android:src="@drawable/helmy_logo"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="@dimen/marginBtwWidgets"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pbInfoEmer2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

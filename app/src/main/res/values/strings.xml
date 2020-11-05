@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HELMY</string>
+
+    <!--General across the app-->
+    <string name="Yes">SÍ</string> // could use R.android.string but if user has his/her phone in a language different than spa/Eng, eg. french, then it show show text in spanish (default) and in french
+    <string name="No">NO</string>
+    <string name="Ok">OK</string>
+    <string name="Later">LUEGO</string>
+    <string name="cancel">Cancelar</string>
+    <string name="checkInternetConnection">Revisa tu conexión a internet</string>
+    <string name="goBack">VOLVER</string>
+    <string name="errorTryAgain">Error, intenta de nuevo.</string>
+    <string name="errorWithServer">Error en el envío de datos del servidor</string>
+
+    <!--  Facebook  -->
+    <string name="facebook_app_id">485686945345147</string>
+    <string name="fb_login_protocol_scheme">fb485686945345147</string>
+
+    <!-- Google: retreive from app registered in Google Developers console -->
+    <string name="google_cliente_id">47959277174-o1fhqfuqit5e36v7hfcdla82hklv0a7n.apps.googleusercontent.com</string>
+
+    <string name="searchingHelmy">Buscando Helmy...</string>
+    <string name="Settings">Ajustes</string>
+    <string name="ChooseNewDevice">Selecciona un dispositivo</string>
+    <string name="DeviceConnected">Conectado a </string>
+    <string name="DeviceDisconnected"> desconectado</string>
+
+    <!--  Splash  -->
+    <string name="isAndroidGO">Tu teléfono tiene Android GO, el asistente de voz de Google
+        no funcionará con la pantalla apagada.</string>
+
+    //Helmet (also voice commands)
+    <string name="HELMET_ON_HEAD">Casco bien puesto</string>
+    <string name="helmetNotOnTheHead">Casco mal puesto</string>
+    <string name="HelmetConnected">Casco conectado</string>
+    <string name="HelmetFasten">Casco abrochado</string>
+    <string name="helmetDisconnected">Casco desconectado</string>
+    <string name="helmetConnected">Casco conectado</string>
+
+    <!--  Bike (also voice commands)  -->
+    <string name="bikeConnected">Moto conectada</string>
+    <string name="bikeDisconnected">Moto desconectada</string>
+
+    <!--  ActivityProgress  -->
+    <string name="registerData">REGISTRO DE DATOS</string>
+    <string name="registerPersonalData">DATOS PERSONALES</string>
+    <string name="registerEmergencyContact">CONTACTOS</string>
+    <string name="configDevices">CONFIGURACIÓN</string>
+    <string name="configHelmet">HELMY-C</string>
+    <string name="configBike">HELMY-M</string>
+    <string name="ready">LISTO</string>
+    <string name="wantToContinueWithoutBike">¿Quieres continuar sin configurar una motocicleta?
+        (Luego puedes agregar más dispositivos en el menú principal)</string>
+
+    <!--  Explanation messages for asking data  -->
+    <string name="whyPersonalData">Ahora vamos a registrar tus datos personales por única vez.</string>
+    <string name="whyContacts">Diligencia los datos de las personas a contactar en caso de emergencia (al menos uno).</string>
+    <string name="whyRegisterHelmet">Enciende tu Helmy-C antes de empezar. \n\nRegistra tu Helmy-C y el casco donde se instalará.</string>
+    <string name="whyRegisterBike">Enciende tu moto antes de empezar. \n\nRegistra tu Helmy-M y la moto donde se instalará.</string>
+
+    //Register user
+    <string name="registerPersonalDataTitle">DATOS PERSONALES</string>
+    <string name="RegisterNewUser">Registro</string>
+    <string name="userGivenNames">Nombres</string>
+    <string name="userLastName">Apellidos</string>
+    <string name="userAge">Edad</string>
+    <string name="userSex">Sexo</string>
+    <string name="female">Mujer</string>
+    <string name="male">Hombre</string>
+    <string name="ratherNotSaySex">Prefiero no decir</string>
+    <string name="userNationality">Nacionalidad</string>
+    <string name="userIDtype">Tipo de documento</string>
+    <string name="userCedula">Cédula de ciudadanía</string>
+    <string name="userTI">Tarjeta de identidad</string>
+    <string name="userCedulaForeigners">Cédula de extranjería</string>
+    <string name="userPassport">Pasaporte</string>
+    <string name="otherIDtype">Otro</string>
+    <string name="userIdNumber">No. Identificación</string>
+    <string name="userLicense">No. Licencia</string>
+    <string name="userPhone">Tu teléfono</string>
+    <string name="userEmergencyPhone">Teléfono</string>
+    <string name="userRH">RH</string>
+    <string name="UserEPS">EPS</string>
+    <string name="UserARL">ARL</string>
+    <string name="userEnterNextData">SIGUIENTE</string>
+    <string name="userSaveData">GUARDAR</string>
+    <string name="UserLicenseIsNational">Licencia colombiana</string>
+    <string name="none">Ninguna</string>
+    <string name="minimumAge">La edad mínima es 16 años.</string>
+
+    <string name="ReasonForAskingPersonalInformation">Helmy detecta accidentes. En caso de que sufras un
+        accidente le enviaremos un SMS a tus contactos de emergencia con esta información.</string>
+    <string name="EmergencyContactLabel">Contacto de emergencia</string>
+    <string name="AllFieldsAreRequired">Todos los campos son obligatorios</string>
+    <string name="WhyThisInformationLabel">¿Por qué esta información?</string>
+    <string name="howWannaInsertPersonalData">¿Cómo quieres continuar ingresando tus datos personales?</string>
+    <string name="readPhotoLicense">EXTRAER DE TU LICENCIA</string>
+    <string name="insertPersonalDataManually">AGREGAR MANUALMENTE</string>
+    <string name="dataUpdated">Datos actualizados</string>
+    <string name="dataSaved">Datos guardados</string>
+    <string name="dataDeleted">Datos eliminados</string>
+
+    //Register emergency
+    <string name="UserEmergencyContact">CONTACTO DE EMERGENCIA</string>
+    <string name="main">PRINCIPAL</string>
+    <string name="secondary">SECUNDARIO</string>
+    <string name="addSecondContact">Segundo contacto</string>
+    <string name="editSecondContact">Editar segundo contacto</string>
+    <string name="deleteContact">Eliminar contacto</string>
+    <string name="registerEmergencyContactTitle">REGISTRO DE CONTACTO</string>
+    <string name="register2ndContact">Registrar un segundo contacto</string>
+    <string name="contactGivenNames">Nombres de contacto</string>
+    <string name="contactLastName">Apellidos de contacto</string>
+    <string name="contactAlreadySelected">Agrega un número diferente al del contacto principal</string>
+    <string name="landlinePhoneError">Debes seleccionar un número celular</string>
+
+    //Register bike
+    <string name="registerBike">REGISTRAR MOTO</string>
+    <string name="bikeChassisID">No. Chasis</string>
+    <string name="bikeBrand">Marca</string>
+    <string name="bikeSOAT">No. Poliza SOAT</string>
+    <string name="checkBox2ndEnsurance">Agregar otro seguro</string>
+    <string name="ensuranceNumber">No. Poliza</string>
+    <string name="phone2ndEnsurance">Teléfono aseguradora</string>
+    <string name="bikePlate">Placa de la moto</string>
+    <string name="plate">Placa</string>
+    <string name="WheelReference">Referencia de la rueda</string>
+    <string name="whatIsWheelReference">Ingresa los 3 primeros números</string>
+    <string name="bikePassword">Clave de encendido</string>
+    <string name="bikePasswordHint">Clave</string>
+    <string name="savingPassword">Guardando clave</string>
+    <string name="whatIsLockPassword">Ingresando tu clave podrás encender tu moto sin necesidad de tener la aplicación o tu Helmy-C.
+    \n\nTu clave consiste en 3 números. Para ingresar cada dígito de tu clave, debes apuntar al número y presionar la perilla de HelmyM.</string>
+    <string name="nicknameBike">Alias, ej. Mi moto</string>
+    <!--  OCR  -->
+    <string name="howWannaEnterBikeInfo">¿Cómo quieres ingresar la información sobre tu moto?</string>
+    <string name="readPhotoSOAT">EXTRAER DEL SOAT</string>
+    <string name="nicknameAlreadyExists">Alias ya existe</string>
+    <string name="howToTakePicture">Debes tomar la foto solo en esta zona (No. Poliza, Marca, Chasis)</string>
+    <string name="lowStorage">Error: Memoria insuficiente</string>
+
+    <string name="justNumbers">Solo números</string>
+    <string name="mustBe6CharactersLong">La placa debe contener 6 caracteres</string>
+    <string name="bikeHasPassword">Este Helmy-M ya tiene una contraseña, ¿deseas actualizarla?</string>
+    <string name="whatIsAliasC">Puedes asignar un nombre personalizado para identificar a tu Helmy-C.</string>
+    <string name="whatIsAliasM">Puedes asignar un nombre personalizado para identificar a tu Helmy-M.</string>
+    <string name="whatIsChassis">El número de chasis lo encuentras en tu tarjeta de propiedad o en el SOAT.</string>
+    <string name="reasonToDisplayHelmyMList">Primero debes seleccionar tu Helmy-M</string>
+
+    //register helmet
+    <string name="registerHelmet">REGISTRAR HELMY-C</string>
+    <string name="HelmetBrand">Marca</string>
+    <string name="HelmetSize">Talla</string>
+    <string name="HelmetColor">Color</string>
+    <string name="HelmetSerial">Numero serial</string>
+    <string name="otherBrand">Otra</string>
+    <string name="searchingBTaudio">Buscando Intercom...</string>
+    <string name="chooseBTaudio">Selecciona un Intercom</string>
+    <string name="nicknameHelmet">Alias, ej. Mi casco</string>
+    <string name="retry">REINTENTAR</string>
+    <string name="manualLabel">MANUAL DE USUARIO</string>
+    <string name="areYouSureToDelete">¿Estás seguro de que quieres eliminar este dispositivo?</string>
+    <string name="reasonToDisplayHelmyCList">Primero debes seleccionar tu Helmy-C</string>
+    <string name="reasonToDisplayIntercommList">Ahora debes seleccionar el intercomunicador de tu Helmy-C</string>
+    <string name="whyGPSmustBeOnForRegister">Helmy utiliza el GPS para encontrar tus dispositivos Helmy. Debes activar tu GPS para continuar.</string>
+
+    //Activity choose devices
+    <string name="yourDevicesTitle">TUS DISPOSITIVOS</string>
+    <string name="ActivityChooseDevicesLabel">Dispositivos</string>
+    <string name="PrimaryHelmetSection">HELMY-C</string>
+    <string name="BikeSection">HELMY-M</string>
+    <string name="HelmetPillionSection">HELMY-C COPILOTO</string>
+    <string name="celphonePillionSection">CELULAR COPILOTO</string>
+    <string name="DevicesSelected">LISTO</string>
+    <string name="YouNeedHelmetBikeSet">Necesitas seleccionar un Helmy-C y un Helmy-M</string>
+    <string name="PairDevice">EMPAREJAR</string>
+    <string name="HelmyC">HELMY-C</string>
+    <string name="HelmyM">HELMY-M</string>
+    <string name="choosePillionCelphone">CELULARES COPILOTOS</string>
+    <string name="searchingCellphones">Buscando celulares...</string>
+    <string name="addNewHelmet">AGREGAR HELMY-C</string>
+    <string name="addNewBike">AGREGAR HELMY-M</string>
+    <string name="selectHelmet">SELECCIONA UN HELMY-C</string>
+    <string name="selectBike">SELECCIONA UN HELMY-M</string>
+    <string name="DeleteDevice">ELIMINAR</string>
+    <string name="edit">EDITAR</string>
+
+    <!--  Menu  -->
+    <string name="go2DeviecsLabel">Mis dispositivos</string>
+    <string name="editMyPersonalData">Editar mis datos</string>
+    <string name="editEmergencyContacts">Editar contactos</string>
+    <string name="motoShopLabel">Moto talleres</string>
+    <string name="reportRobberyLabel">Reportar robo</string>
+    <string name="disableHelmyLabel">Deshabilitar Helmy</string>
+    <string name="contactUsHelmy">Contáctanos</string>
+
+    //ActivityGoAs
+    <string name="hello">Hola</string>
+    <string name="goAsLabel">¿Cómo deseas empezar?</string>
+    <string name="goAsDriver">CONDUCTOR</string>
+    <string name="goAsPillion">PASAJERO</string>
+    <string name="go2ChooseDevices">MIS DISPOSITIVOS</string>
+    <string name="warningDisablingHelmy">Si deshabilitas Helmy, no podras hacer uso de todas las
+        funciones incluyendo la detección de accidentes. ¿Deseas deshabilitar Helmy?</string>
+    <string name="disablingHelmy">Deshabilitando...</string>
+    <string name="enablingHelmy">Habilitando...</string>
+    <string name="helmyDisabled">Deshabilitado</string>
+    <string name="helmyBnabled">Habilitado</string>
+    <string name="bluetoothNotFoundTryAgain">Bluetooth no encontrado, intenta de nuevo</string>
+    <string name="bluetoothErrorTryAgain">Error, intenta de nuevo</string>
+    <string name="youMustEnableHelmy">Debes habilitar Helmy</string>
+    <string name="bikeNotYetChosen">No has seleccionado una motocicleta</string>
+    <string name="btnEnableHelmy">HABILITAR HELMY</string>
+
+    <string name="noHelmetNorBikeSelected">Debes seleccionar un Helmy-C y un Helmy-M</string>
+    <string name="noHelmetSelected">Debes seleccionar un Helmy-C</string>
+    <string name="noBikeSlected">Debes seleccionar un Helmy-M</string>
+
+    <string name="yesLaunchDemo">LANZAR DEMO</string>
+
+    <string name="activityGoAsLabel">Menú principal</string>
+    <string name="whyGPSmustBeOn">Debes activar tu GPS para continuar. Si te accidentas, tu ubicación se enviará a tus contactos
+        de emergencia.</string>
+
+    <string name="wannaDeactivateHelmyBatteryLow">¡BATERÍA BAJA! \nNo es seguro utilizar Helmy
+        \n¿Deseas deshabilitar Helmy para que puedas encender tu moto?</string>
+    <string name="increaseVolume">Debes subir el volumen para escuchar los comandos de voz</string>
+    <string name="enableData">Habilita los datos antes de empezar. En caso de un accidente, es necesario tener conexión a internet.</string>
+    <string name="intercommNotPaired">El modulo intercomunicador de Helmy-C no está emparejado. Recuerda encender tu Helmy-C antes de emparejar.</string>
+    <string name="pair">EMPAREJAR</string>
+    <string name="paired">Emparejado</string>
+    <string name="instructionsPairWithAnotherIntercomm">Debes esperar a que ambos Helmy-C estén
+        parpadeando. Luego, debes pulsar en el botón central de tu Helmy-C
+        o el de tu compañero(a).</string>
+    <string name="instructionsForPairing">Debes esperar a que tu Helmy-C esté
+        parpadeando.</string>
+
+    //Permissions
+    <string name="SMS_LocationPermissionExplanation">
+        Helmy enviará un SMS a tus contactos de emergencia en caso de que sufras un accidente.
+        El SMS contendrá tu ubicación. Debes habilitar los permisos de SMS y Ubicación.</string>
+    <string name="RecordAudio_PermissionExplanation">Debes autorizar el uso del microfono para que
+        puedas utilizar el intercomunicador</string>
+    <string name="enable_SMS_Location_PermissionsManually">Debes habilitar los permisos de SMS y Ubicación en configuraciones.</string>
+    <string name="enable_Microphone_PermissionsManually">Debes habilitar el permiso de micrófono en configuraciones.</string>
+    <string name="enable_Camera_PermissionsManually">Debes habilitar el permiso de cámara en configuraciones.</string>
+    <string name="Go2Settings">Configuraciones</string>
+    <string name="AlreadyEnabledPermissions">Ya lo hice</string>
+
+    <string name="simNotReady">Inserta una tarjeta Sim para continuar</string>
+
+    //Bluetooth
+    <string name="DeviceWithoutBluetooth">Tu dispositivo no cuenta con Bluetooth, no puedes utilzar esta app.</string>
+    <string name="userDidnotTurnOnBluetooth">Si no prendes tu bluetooth, no podrás conectarte con los dispotivos Helmy.</string>
+    <string name="btnEnableBluetooth">ENCENDER</string>
+    <string name="NotifacionServiceBLEs">En conexión</string>
+    <string name="connecting">Conectando...</string>
+    <string name="Searching">Buscando...</string>
+    <string name="pairing">Vinculando dispositivo...</string>
+    <string name="DISCONNECTED">DESCONECTADO</string>
+    <string name="CONNECTED">CONECTADO</string>
+    <string name="bluetoothTurnedOff">Bluetooth del teléfono se ha apagado. Préndelo nuevamente para que Helmy funcione sin problemas.</string>
+    <string name="bluetoothTurnedOff_TTS">Bluetooth del teléfono se ha apagado. Préndelo nuevamente para que Gelmy funcione sin problemas.</string>
+    <string name="btTurnedOff_bikeWillTurnOff">La moto se apagará porque el Bluetooth se apagó. \n\n¿Deseas continuar con tu viaje?</string>
+    <string name="bluetoothOn">Bluetooth encedido</string>
+    <string name="notifBluetoothOff">Enciende el Bluetooth.</string>
+
+    //Emergency
+    <string name="EmergencyActivityLabel">Emergencia</string>
+    <string name="EmergencySMS">posiblemente sufrió un accidente. Por favor mantenga la calma. Ubicación: </string>
+    <string name="SendSMSprogramatically">Enviar alerta</string>
+    <string name="HowToCancelEmergency">¿Quieres lanzar el demo de alerta de emergencia? \nTambién puedes cancelar las alertas desde el panel de notificaciones.</string>
+    <string name="CancelEmergencyBtn">CANCELAR</string>
+    <string name="EmergencyWillBeSentIn">Alerta de emergencia será enviada en </string>
+    <string name="turnOnGPStoSendAlertIn">Enciende el GPS para poder enviar la alerta en </string>
+    <string name="emergencyAlertWasSent">Alerta de emergencia fue enviada.</string>
+    <string name="HelpOnItsWay">La ayuda está en camino, mantén la calma.</string>
+    <string name="alertWasSentKeepCalm">La ayuda está en camino, mantén la calma.\n La alerta de emergencia fue enviada.</string>
+    <string name="EmergencyAlertWasNotSent">Alerta no fue enviada.</string>
+    <string name="EmergencyAlertWasNotSentNoGPS">Alerta no fue enviada porque tu ubicación GPS no está disponible.</string>
+    <string name="EmergencyAlertWasNotSentByCarrier">Alerta no fue enviada por un error con tu operador.</string>
+    <string name="EmergencyAlertWasCancelled">Alerta fue cancelada.</string>
+    <string name="areYouSureSendAlert">¿Estás seguro de enviar la alerta?</string>
+    <string name="areYouSureCancelAlert">¿Estás seguro de cancelar la alerta?</string>
+    <string name="smsPrivatePolicyNumber">Póliza privada No:</string>
+    <string name="smsPrivatePolicyPhone">Teléfono:</string>
+    <string name="sending">Enviando alerta…</string>
+
+    //User login and register
+    <string name="login">INICIAR SESIÓN</string>
+    <string name="registerAccount">REGISTRARSE</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="confirmRegisterPassword">Confirmar contraseña</string>
+    <string name="accountRegisteredSuccesfully">Registrado exitosamente</string>
+    <string name="validateEmail">Ve a tu correo y valida tu cuenta (revisa en spam)</string>
+    <string name="go2email">Ve a tu correo (revisa en spam)</string>
+    <string name="accountAlreadyExists">Email ya registrado</string>
+    <string name="email_password_wrong">Email o contraseña no son correctos</string>
+    <string name="termsConditions">¿Estás de acuerdo con los <a href="https://www.google.com">Términos y Condiciones</a>,
+        y la <a href="https://mail.google.com">Política de Privacidad</a>?</string>
+    <string name="orSignInWith">Iniciar sesión con:</string>
+    <string name="forgotPassword">Recordar contraseña</string>
+    <string name="didntAcceptTermsConditions">En ese caso no puedes utilizar Helmy.</string>
+    <string name="sendEmailAgain">ENVIAR NUEVAMENTE</string>
+    <string name="emailWasVavlidated">Correo ya validado</string>
+    <string name="emailNotRegistered">Correo no registrado</string>
+
+    //email errors
+    <string name="emailEmpty">Introduce un email</string>
+    <string name="emailInvalid">Email no valido</string>
+    //password errors
+    <string name="passwordEmpty">Introduce una contraseña</string>
+    <string name="passwordMin6characters">Debe contener al menos 6 caracteres</string>
+    <string name="passwordOneNumber">Debe contener un número</string>
+    <string name="passwordOneCapitalLetter">Debe contener una letra mayúscula</string>
+    <string name="passwordsDoNotMatch">Contraseñas no coinciden</string>
+    //login errors
+    <string name="emailPasswordEmpty">Introduce tu email y contraseña</string>
+
+    //Main activity
+    <string name="ChooseBTdevices">Dispositivos Helmy</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="areYouSureGoBack">¿Deseas regresar al menú principal?</string>
+    <string name="battery">Bateria= </string>
+    <string name="howHelmetWorks">Para poder arrancar es necesario que:\n
+                                    1. Helmy-C se conecte via Bluetooth\n
+                                    2. Tengas el casco puesto</string>
+    <string name="howBikeWorks">Helmy-M debe estar conectado vía Bluetooth.
+                                Solo debes habilitar el encendido con la llave.
+        \n\nTu moto está registrada con el ID mostrado.</string>
+    <string name="askTripFinished">¿Terminaste tu viaje? </string>
+    <string name="cantFinishtrip_UserMoving">No puedes salir porque estás en movimiento y tu moto se podría apagar.</string>
+    <string name="readyToStart">HELMY LISTO</string>
+    <string name="phoneBatteryLow">Celular en batería baja.</string>
+
+    //intercomm
+    <string name="startComm">INICIAR</string>
+    <string name="intercommLabel">INTERCOMUNICADOR</string>
+    <string name="pillionConnected">Pasajero conectado</string>
+    <string name="pillionDisconnected">Pasajero desconectado</string>
+    <string name="primaryHelmetNotYetConnected">Tu Helmy-C no está conectado</string>
+    <string name="menuIntercomm">Intercomunicador pasajero</string>
+    <string name="waitingDriverToConnect">Esperando que conductor se conecte</string>
+    <string name="labelActivityPillion">Intercomunicador</string>
+    <string name="errorIntercommTryAgain">Reintentar</string>
+    <string name="intercommConnected">CONECTADO</string>
+
+    // Moto shops
+    <string name="title_activity_repair_shops">Moto talleres</string>
+
+    // Voice commands
+    <string name="youNeedTTS">Debes instalar un sintetizador de voz</string>
+
+    <string name="allConditionsMet">Listo. Puedes arrancar</string>
+    <string name="EmergencyWillBeSentIn120">Alerta de emergencia será enviada en 120 segundos</string>
+    <string name="seconds">segundos</string>
+    // other commands used from strings used in the ActivityEmergency
+    <string name="helmetNotWellWorn">No tienes el casco bien puesto</string>
+    <string name="connecting2devices">Conectando</string>
+    <string name="helmetReady">Casco listo</string>
+    <string name="lowBatteryPhoneWillDisconnect">¡Batería baja! Celular se desconectará para
+        que puedas continuar tu viaje. Detección de accidentes no funcionará.</string>
+    <string name="installGoogleAssistant">No tienes la aplicación del asistente de voz de google.</string>
+
+    // Service Bike Disconnected
+    <string name="bikeWillTurnOffIn">La moto se apagará en</string>
+    <string name="bikeWillTurnOffIn90">La moto se ha desconectado, se apagará en 90 segundos. Si
+        terminaste tu viaje, regresa al menú principal o ve a las notificaciones.</string>
+
+    <string name="lowBattery_PhoneWillBeDisconnectedForSafety">¡Celular en batería  baja! Por tu
+        seguridad y para que puedas continuar tu viaje, tu celular se va a desconectar de Helmy</string>
+    <string name="lowBatteryPhone">¡Celular en batería  baja!</string>
+
+    <!--  GPS  -->
+    <string name="gpsAndNetworkProviderNotEnbled">GPS no disponible. En caso de accidente, la alerta no se enviará.</string>
+    <string name="gpsOff_NetworkProviderEnbled">GPS no disponible. La detección de tu ubicación no va a ser precisa.</string>
+    <string name="gpsBackOn">GPS disponible nuevamente</string>
+    <string name="locationOff_AlertCannotBeSent">Ubicación no disponible, la alerta no puede ser enviada.</string>
+    \
+    <string name="notifGPSOff">Enciende el GPS.</string>
+
+    <!--    Activity Camera-->
+    <string name="deviceWithoutCamera">Tu celular no cuenta con una cámara.</string>
+    <string name="otherAppUsingCamera">Asegúrate que otra app no está utilizando la cámara.</string>
+    <string name="SOAT_DATA">DATOS SOAT</string>
+    <string name="howToScanLicense">CÓMO ESCANEAR:\n\n
+        1. Enfocar en tus datos personales\n
+		2. Evitar fondos con texto</string>
+    <string name="howToScanSOAT">CÓMO ESCANEAR:\n\n
+        1. Enfocar en esta sección\n
+		2. Evitar fondos con texto</string>
+
+    <!--  Activity Retrieve data from server  -->
+    <string name="retrievingDataFromServer">Descargando tus datos…</string>
+
+    <!--  Velocity TXT  -->
+    <string name="errorServerTxt">Error TxtServer</string>
+
+    <!--  Encryption  -->
+    <string name="errorWithEncryption">Error de encriptación</string>
+
+    <!--  Temperature  -->
+    <string name="corporalTemperature">Tu temperatura:</string>
+
+    <!--  Blockchain  -->
+    <string name="registeringInBlockchain">Motocicleta está siendo registrada. Te notificaremos por correo.</string>
+    <string name="deletingFromBlockchain">Motocicleta está siendo eliminada. Te notificaremos por correo.</string>
+    <string name="bikeAlreadyRegisteredInBlockchain">Motocicleta ya está registrada con otro usuario.</string>
+    <string name="bikeNotRegisteredInBlockchain">Motocicleta aún no está registrada en Blockchain. </string>
+
+    <!--  TOUR  -->
+    <string name="additionalOptionsTour">Aquí encuentras opciones adicionales</string>
+    <string name="goAsDriverTour">Arranca como conductor si tienes Helmy C + M</string>
+    <string name="goAsPillionTour">Arranca como pasajero si tienes solo Helmy C</string>
+    <string name="tourExplanation">¿Quieres ver un tour del menú principal?</string>
+
+    <!--  Volume0  -->
+    <string name="volume0">Debes subir el volumen para que puedas escuchar las alertas auditivas.
+        \n\n(Una vez subas el volumen este cuadro se cerrará)</string>
+    <string name="volumeUp">Sube el volumen a un nivel adecuado.</string>
+    <string name="notifVolume0">Sube el volumen.</string>
+</resources>

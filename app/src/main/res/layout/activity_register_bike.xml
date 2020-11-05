@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CL_bike"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityRegisterBike"
+    android:background="@drawable/background_helmy">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goBack"
+        android:textColor="@color/textColorEdit"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:onClick="goBack" />
+
+    <ImageButton
+        android:id="@+id/imgBtnDeleteBike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_40dp"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="@dimen/marginBtwWidgets"
+        android:layout_marginEnd="@dimen/marginBtwWidgets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="click_deleteBike" />
+
+    <LinearLayout
+        android:id="@+id/LLtitle_bike"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TextSizeXL"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/registerBike"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsSM"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thicknessSeperator"
+            android:layout_marginLeft="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginRight="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            android:background="@android:color/white"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsM"
+        android:layout_marginBottom="@dimen/marginBtwWidgetsXL"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnManual"
+        app:layout_constraintTop_toBottomOf="@id/LLtitle_bike"
+        app:layout_constraintLeft_toLeftOf="parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/etNicknameBike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/HelmyEditTextStyle2"
+                    android:inputType="textPersonName"
+                    android:hint="@string/nicknameBike" />
+
+                <Button
+                    android:layout_width="@dimen/progressBarSize"
+                    android:layout_height="@dimen/progressBarSize"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="@drawable/ic_help_outline_black_24dp"
+                    android:layout_marginRight="@dimen/marginHorizontalWidgetsM"
+                    android:onClick="click_whatIsAlias"/>
+
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/etSOATbike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="textPersonName"
+                android:hint="@string/bikeSOAT" />
+
+            <CheckBox
+                android:id="@+id/check2ndPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/background_widgets"
+                android:textSize="@dimen/TextSize"
+                android:layout_gravity="center"
+                android:checked="false"
+                android:text="@string/checkBox2ndEnsurance"
+                android:theme="@style/CheckBox_Square_Style"/>
+
+            <EditText
+                android:id="@+id/et2ndPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="textPersonName"
+                android:hint="@string/ensuranceNumber"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/et2ndPolicyPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:hint="@string/phone2ndEnsurance"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerBikeBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmySpinnerStyle"
+                android:spinnerMode="dropdown" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/etChasisBike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/HelmyEditTextStyle2"
+                    android:inputType="text"
+                    android:hint="@string/bikeChassisID"/>
+
+                <Button
+                    android:layout_width="@dimen/progressBarSize"
+                    android:layout_height="@dimen/progressBarSize"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="@drawable/ic_help_outline_black_24dp"
+                    android:layout_marginRight="@dimen/marginHorizontalWidgetsM"
+                    android:onClick="click_whatIsChassis"/>
+
+            </FrameLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btnManual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/manualLabel"
+        style="@style/HelmyButtonSaveNextStyle"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginBottom="@dimen/marginBtwWidgetsXL"
+        android:onClick="click_btnLaunchManual"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnNextBike" />
+
+    <TextView
+        android:id="@+id/btnNextBike"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/userEnterNextData"
+        style="@style/HelmyButtonSaveNextStyleBlue"
+
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:onClick="clickNext_Bike"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/CL_progress_logo_b1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CL_progress_logo_b1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginHorizontalLinearLs"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/imgLogoBottomBike"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:layout_marginLeft="@dimen/marginHorizontalWidgets"
+            android:layout_marginRight="@dimen/marginHorizontalWidgets"
+            android:layout_marginBottom="@dimen/marginBtwWidgets" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical" >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/progress_dot"
+                        android:layout_gravity="center"/>
+
+                    <ImageView
+                        android:id="@+id/circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/progress_circle"
+                        android:layout_gravity="center"
+                        android:scaleX="3"
+                        android:scaleY="3"/>
+
+                </FrameLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/progress_dot"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/imgCompleted1of2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thicknessSeperator"
+                android:background="@color/background_buttons"
+                android:layout_gravity="center_vertical" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imgLogoBottomBike"
+            android:layout_width="@dimen/logoWidth"
+            android:layout_height="@dimen/logoHeight"
+            android:src="@drawable/helmy_logo"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="@dimen/marginBtwWidgets"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pbRegBike"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

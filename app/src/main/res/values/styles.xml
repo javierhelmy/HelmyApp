@@ -1,0 +1,171 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--  No action bar  -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    // for hiding the facebook progress bar
+    <style name="FullyTranslucent" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:progressBarStyle">@style/InvisibleProgress</item>
+    </style>
+    <style name="InvisibleProgress">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    //style for edittexts: login, register,
+    <style name="HelmyEditTextStyle" >
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textColorHint">@color/textHintColor</item>
+        <item name="android:textColor">@color/textColorEdit</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/whitecontour_rounded</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    //style for edittexts: personal data
+    <style name="HelmyEditTextStyle2" >
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textColorHint">@color/textHintColor</item>
+        <item name="android:textColor">@color/textColorEdit</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/whitecontour_rounded</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgets</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgets</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">30</item>
+    </style>
+
+    //style for spinners
+    <style name="HelmySpinnerStyle" >
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:background">@drawable/whitecontour_rounded</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgets</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgets</item>
+    </style>
+
+    //style for spinners in ActivityRegisterBike
+    <style name="HelmySpinnerStyle2" >
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:background">@drawable/whitecontour_rounded</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+    </style>
+
+    //style for secondary buttons: login, register, save
+    <style name="HelmyButtonStyle" >
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/buttons_round_gray</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgets</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgets</item>
+    </style>
+
+    //style for secondary buttons: login, register, save
+    <style name="HelmyButtonStyleBlue" >
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/buttons_round_blue</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgets</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgets</item>
+    </style>
+
+    // save main buttons
+    <style name="HelmyButtonSaveNextStyleBlue" >
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/buttons_round_blue</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgetsM</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgetsM</item>
+    </style>
+
+    // save main buttons
+    <style name="HelmyButtonSaveNextStyle" >
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/buttons_round_gray</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginLeft">@dimen/marginHorizontalWidgetsM</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgetsM</item>
+    </style>
+
+
+    //style for buttons ChooseDevicesActivity
+    <style name="HelmyChooseBtnStyle" >
+        <item name="android:textColor">@color/background_buttons</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:background">@drawable/whitecontour_rounded</item>
+<!--        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>-->
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+    </style>
+
+    <!--  Checkboxes  -->
+    <style name="CheckBox_Square_Style" parent="AppTheme.NoActionBar">
+        <item name="colorControlNormal">@color/background_widgets</item>
+        <item name="colorControlActivated">@color/background_widgets</item>
+    </style>
+
+    <!--  Style for btns in ActivityProgress  -->
+    <style name="HelmyBtnProgress" >
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:textColor">@color/textColorEdit</item>
+        <item name="android:padding">@dimen/paddingEditTexts</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_progress</item>
+        <item name="android:layout_marginTop">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginBottom">@dimen/marginBtwWidgets</item>
+        <item name="android:layout_marginRight">@dimen/marginHorizontalWidgets</item>
+    </style>
+
+    <!--  style for items in menu  -->
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">@dimen/TextSize</item><!-- text size in menu-->
+        <item name="android:lines">2</item>
+    </style>
+
+    <!--  style for title in menu  -->
+    <style name="TextAppearanceTitle">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/TextSizeXL</item>
+    </style>
+
+</resources>

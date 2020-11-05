@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityCamera">
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frameLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
+    <SurfaceView
+        android:id="@+id/surfaceViewCamera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/vHorizontalScan"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thicknessSeperator"
+        android:background="@color/background_buttons" />
+
+    <View
+        android:id="@+id/vVerticalScan"
+        android:layout_width="@dimen/thicknessSeperator"
+        android:layout_height="match_parent"
+        android:background="@color/background_buttons" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvGuide"-->
+<!--        android:layout_width="3.3in"-->
+<!--        android:layout_height="2in"-->
+<!--        android:background="@drawable/whitecontour_rounded"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:src="@drawable/camera_button"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvGuide"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

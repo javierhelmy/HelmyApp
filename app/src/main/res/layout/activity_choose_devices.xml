@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_helmy"
+    tools:context=".ActivityChooseDevices" >
+
+    <LinearLayout
+        android:id="@+id/LLtitle_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginLeft="@dimen/marginBtwWidgets"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/background_widgets"
+            android:text="@string/yourDevicesTitle"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsSM"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thicknessSeperator"
+            android:layout_marginLeft="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginRight="@dimen/marginHorizontalWidgetsXL"
+            android:layout_marginBottom="@dimen/marginBtwWidgets"
+            android:background="@android:color/white"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/marginBtwWidgets"
+        android:layout_marginBottom="@dimen/marginBtwWidgets"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LLtitle_devices"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnDevicesSelected">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/tvHelmetSelected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/textColorBtns"
+                android:background="@color/background_buttons"
+                android:textStyle="bold"
+                android:textSize="@dimen/TextSize"
+                android:layout_marginTop="@dimen/marginBtwWidgets"
+                android:text="@string/addNewHelmet"
+                android:paddingTop="@dimen/marginBtwWidgetsSM"
+                android:paddingBottom="@dimen/marginBtwWidgetsSM"
+                android:onClick="selectPrimaryHelmet"/>
+
+            <TextView
+                android:id="@+id/btnHelmet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:text="@string/HelmyC"
+                android:onClick="selectPrimaryHelmet"/>
+
+            <TextView
+                android:id="@+id/tvBikeSelected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/textColorBtns"
+                android:background="@color/background_buttons"
+                android:textStyle="bold"
+                android:textSize="@dimen/TextSize"
+                android:layout_marginTop="@dimen/marginHorizontalLinearLs"
+                android:text="@string/addNewBike"
+                android:paddingTop="@dimen/marginBtwWidgetsSM"
+                android:paddingBottom="@dimen/marginBtwWidgetsSM"
+                android:onClick="selectPrimaryBike"/>
+
+            <TextView
+                android:id="@+id/btnBike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HelmyEditTextStyle2"
+                android:text="@string/HelmyM"
+                android:onClick="selectPrimaryBike"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btnDevicesSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/HelmyButtonStyleBlue"
+        android:onClick="click_btnDevicesSelected"
+        android:text="@string/DevicesSelected"
+        android:layout_marginTop="@dimen/marginHorizontalWidgetsXL"
+        android:layout_marginBottom="@dimen/marginHorizontalLinearLs"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imgLogoBottomDevices" />
+
+    <ImageView
+        android:id="@+id/imgLogoBottomDevices"
+        android:layout_width="@dimen/logoWidth"
+        android:layout_height="@dimen/logoHeight"
+        android:src="@drawable/helmy_logo"
+        android:adjustViewBounds="true"
+        android:layout_marginRight="@dimen/marginBtwWidgets"
+        android:layout_marginBottom="@dimen/marginBtwWidgets"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

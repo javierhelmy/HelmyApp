@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/menu_options_title"
+        android:title="">
+
+        <menu>
+
+            <item
+                android:id="@+id/myDevices"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/go2DeviecsLabel"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/pairWithOtherIntercomm"
+                android:icon="@drawable/helmywhite"
+                android:title="Emparejar con otro Helmy-C"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/editMyData"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/editMyPersonalData"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/editContacts"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/editEmergencyContacts"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/sendSMS"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/SendSMSprogramatically"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/disableHelmy"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/disableHelmyLabel"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/contactHelmy"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/contactUsHelmy"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/logout_choose"
+                android:icon="@drawable/helmywhite"
+                android:title="@string/logout"
+                app:showAsAction="never" />
+
+        </menu>
+
+    </item>
+
+
+
+</menu>

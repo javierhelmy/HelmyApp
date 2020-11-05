@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityEmergency">
+
+    <TextView
+        android:id="@+id/tvEmergencyMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/EmergencyWillBeSentIn"
+        android:gravity="center"
+        android:layout_margin="@dimen/marginHorizontalLinearLs"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/TextSizeAlertMsg"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgCircle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/circle1"
+        android:layout_margin="@dimen/marginHorizontalWidgetsXL"
+        android:adjustViewBounds="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmergencyMsg"
+        app:layout_constraintBottom_toTopOf="@id/LLbtnsEmer"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="120"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/TextSizeTimer"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmergencyMsg"
+        app:layout_constraintBottom_toTopOf="@id/LLbtnsEmer"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/LLbtnsEmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" >
+
+        <TextView
+            android:id="@+id/btnSendEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelmyButtonSaveNextStyleBlue"
+            android:onClick="click_sendEmergency"
+            android:text="@string/SendSMSprogramatically"
+            android:layout_marginLeft="@dimen/marginHorizontalLinearLs"
+            android:layout_marginRight="@dimen/marginHorizontalLinearLs" />
+
+        <TextView
+            android:id="@+id/btnCancelEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HelmyButtonSaveNextStyleBlue"
+            android:background="@drawable/buttons_round_dark"
+            android:onClick="click_cancelEmergency"
+            android:layout_marginTop="@dimen/marginHorizontalLinearLs"
+            android:layout_marginBottom="@dimen/marginBtwWidgetsXL"
+            android:layout_marginLeft="@dimen/marginHorizontalLinearLs"
+            android:layout_marginRight="@dimen/marginHorizontalLinearLs"
+            android:text="@string/CancelEmergencyBtn" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

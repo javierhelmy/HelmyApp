@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progressBarSize">20dp</dimen>
+    <dimen name="TextSize">14sp</dimen>
+    <dimen name="TextSizeM">18sp</dimen>
+    <dimen name="TextSizeXL">22sp</dimen>
+    <dimen name="TextSizeTemperature">22sp</dimen>
+    <dimen name="paddingEditTexts">6dp</dimen>
+    <dimen name="marginBtwWidgets">6dp</dimen>
+    <dimen name="marginBtwWidgetsXL">12dp</dimen>
+    <dimen name="marginBtwWidgetsSM">3dp</dimen>
+    <dimen name="marginHorizontalWidgets">10dp</dimen>
+    <dimen name="marginHorizontalWidgetsM">16dp</dimen> // sum of marginBtwWidgets + marginHorizontalWidgets
+    <dimen name="marginHorizontalWidgetsXL">35dp</dimen>
+    <dimen name="marginHorizontalLinearLs">25dp</dimen>
+    <dimen name="thicknessSeperator">1dp</dimen>
+    <!--  Dimension Icons within activities  -->
+    <dimen name="dimensWHhelmet">25dp</dimen>
+    <dimen name="dimenHeightBike">20dp</dimen>
+
+    <dimen name="TextSizeAlertMsg">18sp</dimen>
+
+    <dimen name="heightFacebookGoogleBtns">50dp</dimen>
+
+    <dimen name="TextSizeTimer">50sp</dimen>
+
+    <!--  Icons AcitivityMain  -->
+    <dimen name="posTranslationX">70dp</dimen>
+    <dimen name="negTranslationX">-70dp</dimen>
+    <dimen name="posTranslationY">55dp</dimen>
+
+    <!--  Logo  -->
+    <dimen name="logoWidth">80dp</dimen>
+    <dimen name="logoHeight">20dp</dimen>
+
+</resources>
