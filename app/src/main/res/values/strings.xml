@@ -188,6 +188,7 @@
 
     <!--  Menu  -->
     <string name="go2DeviecsLabel">Mis dispositivos</string>
+    <string name="pairWithAnotherHelmyC">Emparejar con otro Helmy-C</string>
     <string name="editMyPersonalData">Editar mis datos</string>
     <string name="editEmergencyContacts">Editar contactos</string>
     <string name="motoShopLabel">Moto talleres</string>
@@ -247,6 +248,7 @@
     <string name="enable_Camera_PermissionsManually">Debes habilitar el permiso de cámara en configuraciones.</string>
     <string name="Go2Settings">Configuraciones</string>
     <string name="AlreadyEnabledPermissions">Ya lo hice</string>
+    <string name="alertNotLaunchedPermissions">No se puede lanzar la alerta de emergencia porque no concediste los permisos</string>
 
     <string name="simNotReady">Inserta una tarjeta Sim para continuar</string>
 
@@ -298,8 +300,8 @@
     <string name="go2email">Ve a tu correo (revisa en spam)</string>
     <string name="accountAlreadyExists">Email ya registrado</string>
     <string name="email_password_wrong">Email o contraseña no son correctos</string>
-    <string name="termsConditions">¿Estás de acuerdo con los <a href="https://www.google.com">Términos y Condiciones</a>,
-        y la <a href="https://mail.google.com">Política de Privacidad</a>?</string>
+    <string name="termsConditions">¿Estás de acuerdo con los <a href="https://helmy.com.co/legal">Términos y Condiciones</a>,
+        y la <a href="https://helmy.com.co/legal">Política de Privacidad</a>?</string>
     <string name="orSignInWith">Iniciar sesión con:</string>
     <string name="forgotPassword">Recordar contraseña</string>
     <string name="didntAcceptTermsConditions">En ese caso no puedes utilizar Helmy.</string>

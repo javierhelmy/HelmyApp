@@ -189,6 +189,7 @@
 
     <!--  Menu  -->
     <string name="go2DeviecsLabel">My devices</string>
+    <string name="pairWithAnotherHelmyC">Pair with another Helmy-C</string>
     <string name="editMyPersonalData">Edit personal data</string>
     <string name="editEmergencyContacts">Edit emergency contacts</string>
     <string name="motoShopLabel">Repair shops</string>
@@ -246,6 +247,7 @@
     <string name="enable_Camera_PermissionsManually">You must enable the camera permission in your settings.</string>
     <string name="Go2Settings">Settings</string>
     <string name="AlreadyEnabledPermissions">Already did</string>
+    <string name="alertNotLaunchedPermissions">Emergency alert cannot be launched because you did not grant the permissions</string>
 
     <string name="simNotReady">Insert a sim card to continue</string>
 
@@ -279,7 +281,7 @@
     <string name="EmergencyAlertWasNotSent">Alert was not sent</string>
     <string name="EmergencyAlertWasNotSentNoGPS">Alert was not sent because the GPS location is not available</string>
     <string name="EmergencyAlertWasNotSentByCarrier">Alert was not sent because of an error with your phone carrier</string>
-    <string name="EmergencyAlertWasCancelled">Alerta was cancelled</string>
+    <string name="EmergencyAlertWasCancelled">Alert was cancelled</string>
     <string name="areYouSureSendAlert">Are you sure you want to send the alert?</string>
     <string name="areYouSureCancelAlert">Are you sure you want to cancel the alert?</string>
     <string name="smsPrivatePolicyNumber">Private policy number:</string>

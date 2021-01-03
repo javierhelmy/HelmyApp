@@ -1,10 +1,6 @@
 package com.taedison.helmy;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.animation.AlphaAnimation;
@@ -15,11 +11,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -46,7 +39,6 @@ import java.util.Map;
  *      if it is android Go, it will alert the user that Voice Assisant does not work when screen off
  *      checks if phone has a sim card
  *      checks Text-to-speech capabilities
- *      checks and asks user to grant permissions
  *      checks if phone has bluetooth
  *
  * This activity also checks for updates in user's data or login password that were done from the Helmy website
@@ -181,7 +173,7 @@ public class ActivitySplash extends AppCompatActivity {
                 // Yes, device has TTS. Initialize TTS
                 mTTS = SingletonTSS_Helmet.getInstance(this.getApplicationContext());
 
-                checkPermissions();
+                checkBluetooth();
 
             } else {
                 Toast.makeText(this, R.string.youNeedTTS, Toast.LENGTH_LONG).show();
@@ -192,84 +184,6 @@ public class ActivitySplash extends AppCompatActivity {
                 startActivity(installIntent);
             }
         }
-    }
-
-    private void checkPermissions() {
-        // these are mandatory, it will continue asking until user grants the permissions
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.SEND_SMS},
-                Static_AppVariables.REQUESTCODE_PERMISSIONS);
-    }
-
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        if (requestCode == Static_AppVariables.REQUESTCODE_PERMISSIONS && permissions.length > 0) {
-            // access_fine_location incluye el permiso de coarse location
-            if (grantResults.length <= 0 ||
-                grantResults[0] == PackageManager.PERMISSION_DENIED || //fine_location
-                grantResults[1] == PackageManager.PERMISSION_DENIED    //sms
-                ) {
-
-                if (Build.VERSION.SDK_INT >= 23) {
-                    // in version above 23 user can reject permission and request not be asked again
-                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0])
-                            || shouldShowRequestPermissionRationale(permissions[1]) ;
-                    if (!showRationale) {
-                        // user denied permission and CHECKED "never ask again"
-                        launchAlertActivatePersimissionsManually();
-                    } else {
-                        launchAlertSMSLocationIsaMust();
-                        // user did NOT check "never ask again"
-                    }
-                } else {
-                    launchAlertSMSLocationIsaMust();
-                }
-
-            } else {
-                checkBluetooth();
-            }
-        }
-    }
-
-    private void launchAlertActivatePersimissionsManually() {
-        final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.enable_SMS_Location_PermissionsManually));
-        alert.setDialogPositiveButton(getResources().getString(R.string.AlreadyEnabledPermissions), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkPermissions();
-                alert.dismissAlert();
-            }
-        });
-        alert.setDialogNegativeButton(getResources().getString(R.string.Go2Settings), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to the settings of the app
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-                alert.dismissAlert();
-            }
-        });
-        alert.showAlert();
-    }
-
-    private void launchAlertSMSLocationIsaMust() {
-        final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.SMS_LocationPermissionExplanation));
-        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        checkPermissions();
-                        alert.dismissAlert();
-                    }
-                });
-        alert.showAlert();
     }
 
     private void checkBluetooth(){
@@ -455,7 +369,7 @@ public class ActivitySplash extends AppCompatActivity {
                                 {
                                     Log.d(TAG+"Volley", error.toString());
                                     // we also check if server is down
-                                    if(error.networkResponse.statusCode == 503){
+                                    if(error != null && error.networkResponse != null && error.networkResponse.statusCode == 503){
                                         // server is down
                                         if(preferences.get_isPrimaryServerDown()){
                                             // The secondary server is down as well. We know this because get_isPrimaryServerDown returned true,

@@ -3,9 +3,11 @@ package com.taedison.helmy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -14,11 +16,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
@@ -103,6 +108,8 @@ public class ActivityGoAs extends AppCompatActivity {
 
     //Volley
     private RequestQueue requestQueue;
+
+    boolean permissionsForEmergencyMenu = false; // to know if permissions were requested from launching emergency alert from Menu or by pressing on driver or pillion buttons
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +220,9 @@ public class ActivityGoAs extends AppCompatActivity {
                                         pairIntercomm(); // we have to wait at least six seconds before attempting to pair, because 6s is what it takes for HelmyC to start pairing mode
                                     }
                                     bluetoothHelmet.finishConnection();
-                                    unregisterReceiver(blueDeviceConnectionReceiver);
+                                    try{
+                                        unregisterReceiver(blueDeviceConnectionReceiver);
+                                    } catch (Exception ignored){}
                                 }
                             }, 7000); // terminate connection with helmy-c after 7 seconds since Helmy-C should be already in paring mode (see BLE_HelmyC class)
 
@@ -485,16 +494,23 @@ public class ActivityGoAs extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.sendSMS:
-                    if(!ServiceEmergency.running){
-                        ServiceEmergency.running = true;
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                            || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+                        // display reason for permissions
+                        permissionsForEmergencyMenu = true;
+                        launchAlertSMSLocationIsaMust();
+                    } else {
+                        if(!ServiceEmergency.running){
+                            ServiceEmergency.running = true;
 
-                        preferences.set_demoWasLaunched(); // in case the user did not launch the the demo, disable it
+                            preferences.set_demoWasLaunched(); // in case the user did not launch the the demo, disable it
 
-                        intent = new Intent(this, ServiceEmergency.class);
-                        startService(intent);
+                            intent = new Intent(this, ServiceEmergency.class);
+                            startService(intent);
 
-                        Intent intentAct = new Intent(this, ActivityEmergency.class);
-                        startActivity(intentAct);
+                            Intent intentAct = new Intent(this, ActivityEmergency.class);
+                            startActivity(intentAct);
+                        }
                     }
                     break;
                 case R.id.disableHelmy:
@@ -764,7 +780,7 @@ public class ActivityGoAs extends AppCompatActivity {
             }
         }
         if(intercommPaired){
-            startActivity(intentDriverPillion);
+            checkPermissions();
         } else {
             final AlertMessageButton alert = new AlertMessageButton(this);
             alert.setDialogMessage(getResources().getString(R.string.intercommNotPaired));
@@ -1068,5 +1084,123 @@ public class ActivityGoAs extends AppCompatActivity {
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
+    }
+
+    private void checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+            // display reason for permissions
+            launchAlertSMSLocationIsaMust();
+        } else {
+            // start trip
+            startActivity(intentDriverPillion);
+        }
+    }
+
+    private void requestPermissions() {
+        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.SEND_SMS},
+                Static_AppVariables.REQUESTCODE_PERMISSIONS);
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == Static_AppVariables.REQUESTCODE_PERMISSIONS && permissions.length > 0) {
+            // access_fine_location incluye el permiso de coarse location
+            if (grantResults.length <= 0 ||
+                    grantResults[0] == PackageManager.PERMISSION_DENIED || //fine_location
+                    grantResults[1] == PackageManager.PERMISSION_DENIED    //sms
+            ) {
+
+                if (Build.VERSION.SDK_INT >= 23) {
+                    // in version above 23 user can reject permission and request not be asked again
+                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0])
+                            || shouldShowRequestPermissionRationale(permissions[1]) ;
+                    if (!showRationale) {
+                        // user denied permission and CHECKED "never ask again"
+                        launchAlertActivatePersimissionsManually();
+                    } else {
+                        // user did NOT check "never ask again", user rejected the permissions
+                        if(!permissionsForEmergencyMenu) {
+                            // permissions were requested to enter into driver or pillion modes
+                            // start trip
+                            startActivity(intentDriverPillion);
+                        }
+                    }
+                } else {
+                    if(!permissionsForEmergencyMenu) {
+                        // permissions were requested to enter into driver or pillion modes
+                        // start trip
+                        startActivity(intentDriverPillion);
+                    }
+                }
+
+            } else {
+                // permissions granted
+                if(permissionsForEmergencyMenu){
+                    if(!ServiceEmergency.running){
+                        ServiceEmergency.running = true;
+
+                        preferences.set_demoWasLaunched(); // in case the user did not launch the the demo, disable it
+
+                        Intent intent = new Intent(this, ServiceEmergency.class);
+                        startService(intent);
+
+                        Intent intentAct = new Intent(this, ActivityEmergency.class);
+                        startActivity(intentAct);
+                    }
+                } else {
+                    // start trip
+                    startActivity(intentDriverPillion);
+                }
+
+            }
+        }
+    }
+
+    private void launchAlertActivatePersimissionsManually() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.enable_SMS_Location_PermissionsManually));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Go2Settings), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to the settings of the app
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+                alert.dismissAlert();
+            }
+        });
+        alert.setDialogNegativeButton(getResources().getString(R.string.No), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!permissionsForEmergencyMenu) {
+                    // permissions were requested to enter into driver or pillion modes
+                    // start trip
+                    startActivity(intentDriverPillion);
+                }
+                alert.dismissAlert();
+            }
+        });
+        alert.showAlert();
+    }
+
+    private void launchAlertSMSLocationIsaMust() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.SMS_LocationPermissionExplanation));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        requestPermissions();
+                        alert.dismissAlert();
+                    }
+                });
+        alert.showAlert();
     }
 }

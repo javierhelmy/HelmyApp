@@ -84,7 +84,7 @@ public class Static_AppMethods {
     static void checkResponseCode(VolleyError error, SingletonSharedPreferences preferences){
         // check if server is down, and if it is, then user has to try again and this
         // time using the secondary server
-        if(error.networkResponse.statusCode == 503){
+        if(error != null && error.networkResponse != null && error.networkResponse.statusCode == 503){
             // server is down
             preferences.set_primaryServerIsDown(true);
         }

@@ -2,7 +2,9 @@ package com.taedison.helmy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.LocationManager;
@@ -413,7 +416,10 @@ public class ActivityPillion extends AppCompatActivity {
                 primaryHelmet_worn = true;
                 primaryHelmet_fastened = true;
             } else if(stringReceived.equals("4")){
-                if(!ServiceEmergency.running){
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                        || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+                    mTTS.speakSentence(getResources().getString(R.string.alertNotLaunchedPermissions));
+                } else if(!ServiceEmergency.running){
                     ServiceEmergency.running = true;
 
                     // save the alert as cancelled (by default), and if alert is sent after 90s,

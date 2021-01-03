@@ -16,7 +16,7 @@
             <item
                 android:id="@+id/pairWithOtherIntercomm"
                 android:icon="@drawable/helmywhite"
-                android:title="Emparejar con otro Helmy-C"
+                android:title="@string/pairWithAnotherHelmyC"
                 app:showAsAction="never" />
 
             <item
