@@ -498,7 +498,7 @@ public class ActivityGoAs extends AppCompatActivity {
                             || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
                         // display reason for permissions
                         permissionsForEmergencyMenu = true;
-                        launchAlertSMSLocationIsaMust();
+                        launchAlertExplanationSMS();
                     } else {
                         if(!ServiceEmergency.running){
                             ServiceEmergency.running = true;
@@ -633,7 +633,7 @@ public class ActivityGoAs extends AppCompatActivity {
             public void onFailure(@NonNull final Exception e) {
                 // GPS off
                 final AlertMessageButton alert = new AlertMessageButton(ActivityGoAs.this);
-                alert.setDialogMessage(getResources().getString(R.string.whyGPSmustBeOn));
+                alert.setDialogMessage(getResources().getString(R.string.whyGPSmustBeOnForRegister));
                 alert.setDialogPositiveButton(getResources().getString(R.string.Ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -780,7 +780,7 @@ public class ActivityGoAs extends AppCompatActivity {
             }
         }
         if(intercommPaired){
-            checkPermissions();
+            checkSMSPermission();
         } else {
             final AlertMessageButton alert = new AlertMessageButton(this);
             alert.setDialogMessage(getResources().getString(R.string.intercommNotPaired));
@@ -1086,34 +1086,70 @@ public class ActivityGoAs extends AppCompatActivity {
         }
     }
 
-    private void checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+    private void checkSMSPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
             // display reason for permissions
-            launchAlertSMSLocationIsaMust();
+            launchAlertExplanationSMS();
+        } else {
+            // start trip
+            startActivity(intentDriverPillion);
+        }
+    }
+    private void checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            // display reason for permissions
+            launchAlertExplanationLocation();
         } else {
             // start trip
             startActivity(intentDriverPillion);
         }
     }
 
-    private void requestPermissions() {
+    private void requestSMSpermission() {
         // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.SEND_SMS},
-                Static_AppVariables.REQUESTCODE_PERMISSIONS);
+                new String[]{Manifest.permission.SEND_SMS},
+                Static_AppVariables.REQUESTCODE_SMS_PERMISSION);
     }
+
+    private void requestLocationPermission() {
+        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION);
+    }
+
+
 
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == Static_AppVariables.REQUESTCODE_PERMISSIONS && permissions.length > 0) {
-            // access_fine_location incluye el permiso de coarse location
+        if (requestCode == Static_AppVariables.REQUESTCODE_SMS_PERMISSION && permissions.length > 0) {
             if (grantResults.length <= 0 ||
-                    grantResults[0] == PackageManager.PERMISSION_DENIED || //fine_location
-                    grantResults[1] == PackageManager.PERMISSION_DENIED    //sms
-            ) {
+                    grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    // in version above 23 user can reject permission and request not be asked again
+                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0])
+                            || shouldShowRequestPermissionRationale(permissions[1]) ;
+                    if (!showRationale) {
+                        // user denied permission and CHECKED "never ask again"
+                        launchAlertActivatePersimissionsManually();
+                    } else {
+                        // user did NOT check "never ask again", user rejected the permissions
+                        checkLocationPermission();
+                    }
+                } else {
+                    checkLocationPermission();
+                }
+
+            } else {
+                // SMS permission granted
+                checkLocationPermission();
+            }
+        } else if (requestCode == Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION && permissions.length > 0) {
+            // access_fine_location includes coarse location
+            if (grantResults.length <= 0 ||
+                    grantResults[0] == PackageManager.PERMISSION_DENIED) {
 
                 if (Build.VERSION.SDK_INT >= 23) {
                     // in version above 23 user can reject permission and request not be asked again
@@ -1139,8 +1175,10 @@ public class ActivityGoAs extends AppCompatActivity {
                 }
 
             } else {
-                // permissions granted
-                if(permissionsForEmergencyMenu){
+                // permission granted
+                if(permissionsForEmergencyMenu
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
                     if(!ServiceEmergency.running){
                         ServiceEmergency.running = true;
 
@@ -1190,14 +1228,28 @@ public class ActivityGoAs extends AppCompatActivity {
         alert.showAlert();
     }
 
-    private void launchAlertSMSLocationIsaMust() {
+    private void launchAlertExplanationSMS() {
         final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.SMS_LocationPermissionExplanation));
+        alert.setDialogMessage(getResources().getString(R.string.SMSpermissionExplanation));
         alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        requestPermissions();
+                        requestSMSpermission();
+                        alert.dismissAlert();
+                    }
+                });
+        alert.showAlert();
+    }
+
+    private void launchAlertExplanationLocation() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationGoAs));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        requestLocationPermission();
                         alert.dismissAlert();
                     }
                 });

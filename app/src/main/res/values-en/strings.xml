@@ -223,7 +223,8 @@
 
     <string name="activityGoAsLabel">Main menu</string>
     <string name="whyGPSmustBeOn">You must enable your GPS in order to
-        continue. If you suffer an accident, your location will be sent to your emergency contacts.</string>
+        find your BLE bluetooths devices such as those in Helmy. Besides, if you suffer an accident your location will be sent to your
+        emergency contacts (only if you granted the SMS and Location permissions).</string>
 
     <string name="wannaDeactivateHelmyBatteryLow">LOW BATTERY! \nIt is not safe to use Helmy
         \nDo you want to deactivate Helmy so that you can start your bike?</string>
@@ -237,6 +238,16 @@
     <string name="instructionsForPairing">You must wait until your Helmy-C is flashing.</string>
 
     //Permissions
+    <string name="locationPermissionExplanationRegister">Starting from Android 6.0 Marshmallow it is required
+        the Location permission in order to find BLE bluetooth devices such as those in Helmy.</string>
+    <string name="locationPermissionExplanationGoAs">Starting from Android 6.0 Marshmallow it is required
+        the Location permission in order to find BLE bluetooth devices such as those in Helmy.
+        \nAdditionally, your location will be sent to your emergency contacts in case of an accident
+        (only if you granted the SMS permission)</string>
+    <string name="enableLocationPermissionManually">You must enable the Location permission in your settings.</string>
+    <string name="SMSpermissionExplanation">
+        Helmy will send an SMS to your emergency contacts in case you suffer an accident.
+        SMS permission must be granted to enable this feature.</string>
     <string name="SMS_LocationPermissionExplanation">
         Helmy will send an SMS to your emergency contacts in case you suffer an accident.
         The SMS will contain your location. You must grant the SMS and Location permissions.</string>

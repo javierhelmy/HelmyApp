@@ -221,8 +221,9 @@
     <string name="yesLaunchDemo">LANZAR DEMO</string>
 
     <string name="activityGoAsLabel">Menú principal</string>
-    <string name="whyGPSmustBeOn">Debes activar tu GPS para continuar. Si te accidentas, tu ubicación se enviará a tus contactos
-        de emergencia.</string>
+    <string name="whyGPSmustBeOn">Debes activar tu GPS para encontrar los dispositivos bluetooth BLE como los de Helmy. Además,
+        si te accidentas tu ubicación se enviará a tus contactos de emergencia (sólo si habilitaste
+        los permisos de SMS y Ubicación).</string>
 
     <string name="wannaDeactivateHelmyBatteryLow">¡BATERÍA BAJA! \nNo es seguro utilizar Helmy
         \n¿Deseas deshabilitar Helmy para que puedas encender tu moto?</string>
@@ -238,6 +239,16 @@
         parpadeando.</string>
 
     //Permissions
+    <string name="locationPermissionExplanationRegister">Empezando desde Android 6.0 Marshmallow se requiere
+        el permiso de Ubicación para encontrar dispositivos bluetooth BLE como los de Helmy.</string>
+    <string name="locationPermissionExplanationGoAs">Empezando desde Android 6.0 Marshmallow se requiere
+        el permiso de Ubicación para encontrar dispositivos bluetooth BLE como los de Helmy.
+        \nAdemás, tu ubicación será enviada a tus contactos en caso de un accidente (sólo si
+        habilitaste el permiso de SMS)</string>
+    <string name="enableLocationPermissionManually">Debes habilitar el permiso de Ubicación en configuraciones.</string>
+    <string name="SMSpermissionExplanation">
+        Helmy enviará un SMS a tus contactos de emergencia en caso de que sufras un accidente.
+        Debes habilitar el permiso de SMS para tener este servicio.</string>
     <string name="SMS_LocationPermissionExplanation">
         Helmy enviará un SMS a tus contactos de emergencia en caso de que sufras un accidente.
         El SMS contendrá tu ubicación. Debes habilitar los permisos de SMS y Ubicación.</string>

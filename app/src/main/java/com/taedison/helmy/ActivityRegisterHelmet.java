@@ -3,9 +3,11 @@ package com.taedison.helmy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,11 +17,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -169,7 +175,8 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
         //volley
         requestQueue = SingletonVolley.getInstance(this.getApplicationContext()).getRequestQueue();
 
-        checkBluetoothON();
+        // check location permission
+        checkLocationPermission();
     }
 
     private void setupKeyboardDisplayListener(){
@@ -1035,5 +1042,91 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
 
     public void click_whatIsAlias(View view) {
         Static_AppMethods.launchAlertMessage(getResources().getString(R.string.whatIsAliasC), this);
+    }
+
+    private void checkLocationPermission() {
+        if (Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            // display reason for permissions
+            launchAlertExplanationForLocation();
+        } else {
+            // check the rest of the conditions
+            checkBluetoothON();
+        }
+    }
+
+    private void requestLocationPermission() {
+        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION);
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION && permissions.length > 0) {
+            // access_fine_location incluye el permiso de coarse location
+            if (grantResults.length <= 0 ||
+                    grantResults[0] == PackageManager.PERMISSION_DENIED  //fine_location
+            ) {
+
+                if (Build.VERSION.SDK_INT >= 23) {
+                    // in version above 23 user can reject permission and request not be asked again
+                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]);
+                    if (!showRationale) {
+                        // user denied permission and CHECKED "never ask again"
+                        launchAlertActivatePersimissionManually();
+                    } else {
+                        // check the rest of the conditions
+                        checkBluetoothON();
+                    }
+                } else {
+                    // check the rest of the conditions
+                    checkBluetoothON();
+                }
+
+            } else {
+                // check the rest of the conditions
+                checkBluetoothON();
+            }
+        }
+    }
+
+    private void launchAlertActivatePersimissionManually() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.enableLocationPermissionManually));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Go2Settings), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to the settings of the app
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+                alert.dismissAlert();
+            }
+        });
+        alert.setDialogNegativeButton(getResources().getString(R.string.No), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismissAlert();
+            }
+        });
+        alert.showAlert();
+    }
+
+    private void launchAlertExplanationForLocation() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationRegister));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        requestLocationPermission();
+                        alert.dismissAlert();
+                    }
+                });
+        alert.showAlert();
     }
 }
