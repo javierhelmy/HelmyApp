@@ -18,12 +18,14 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
@@ -67,10 +69,13 @@ import java.util.concurrent.TimeUnit;
 /***
  * this activity acts as the main menu.
  * To start as driver (Helmy C+M) or pillion (HelmyC only) user must have:
- * 1. bluetooth on
- * 2. GPS on
- * 3. Volume > 0
- * 4. Battery above 15%
+ * - bluetooth on
+ * - GPS on
+ * - Battery above 15%
+ * - Volume > 0
+ * - intercomm must be paired
+ * - Mobile data on
+ * - location permission should be granted (not mandatory)
  * if user has HelmyM, we have to check with Blockchain that it belongs to him/her
  */
 public class ActivityGoAs extends AppCompatActivity {
@@ -494,11 +499,11 @@ public class ActivityGoAs extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.sendSMS:
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
-                            || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
+//                            || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
                         // display reason for permissions
                         permissionsForEmergencyMenu = true;
-                        launchAlertExplanationSMS();
+                        launchAlertExplanationLocationForEmergency();
                     } else {
                         if(!ServiceEmergency.running){
                             ServiceEmergency.running = true;
@@ -746,7 +751,7 @@ public class ActivityGoAs extends AppCompatActivity {
             int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
 //        Toast.makeText(ActivityGoAs.this, "Volume= " + currentVolume, Toast.LENGTH_LONG).show();
             if(currentVolume>0){
-                checkIntercommPaired();
+                checkMobileDataON();
             } else {
                 final AlertMessageButton alert = new AlertMessageButton(this);
                 alert.setDialogMessage(getResources().getString(R.string.increaseVolume));
@@ -780,7 +785,8 @@ public class ActivityGoAs extends AppCompatActivity {
             }
         }
         if(intercommPaired){
-            checkSMSPermission();
+//            checkSMSPermission();
+            checkLocationPermission();
         } else {
             final AlertMessageButton alert = new AlertMessageButton(this);
             alert.setDialogMessage(getResources().getString(R.string.intercommNotPaired));
@@ -1086,15 +1092,16 @@ public class ActivityGoAs extends AppCompatActivity {
         }
     }
 
-    private void checkSMSPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
-            // display reason for permissions
-            launchAlertExplanationSMS();
-        } else {
-            // start trip
-            startActivity(intentDriverPillion);
-        }
-    }
+//    private void checkSMSPermission() {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+//            // display reason for permissions
+//            launchAlertExplanationSMS();
+//        } else {
+//            // start trip
+//            startActivity(intentDriverPillion);
+//        }
+//    }
+
     private void checkLocationPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             // display reason for permissions
@@ -1105,12 +1112,12 @@ public class ActivityGoAs extends AppCompatActivity {
         }
     }
 
-    private void requestSMSpermission() {
-        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.SEND_SMS},
-                Static_AppVariables.REQUESTCODE_SMS_PERMISSION);
-    }
+//    private void requestSMSpermission() {
+//        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{Manifest.permission.SEND_SMS},
+//                Static_AppVariables.REQUESTCODE_SMS_PERMISSION);
+//    }
 
     private void requestLocationPermission() {
         // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
@@ -1124,37 +1131,36 @@ public class ActivityGoAs extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode == Static_AppVariables.REQUESTCODE_SMS_PERMISSION && permissions.length > 0) {
-            if (grantResults.length <= 0 ||
-                    grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    // in version above 23 user can reject permission and request not be asked again
-                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0])
-                            || shouldShowRequestPermissionRationale(permissions[1]) ;
-                    if (!showRationale) {
-                        // user denied permission and CHECKED "never ask again"
-                        launchAlertActivatePersimissionsManually();
-                    } else {
-                        // user did NOT check "never ask again", user rejected the permissions
-                        checkLocationPermission();
-                    }
-                } else {
-                    checkLocationPermission();
-                }
-
-            } else {
-                // SMS permission granted
-                checkLocationPermission();
-            }
-        } else if (requestCode == Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION && permissions.length > 0) {
+//        if (requestCode == Static_AppVariables.REQUESTCODE_SMS_PERMISSION && permissions.length > 0) {
+//            if (grantResults.length <= 0 ||
+//                    grantResults[0] == PackageManager.PERMISSION_DENIED) {
+//                if (Build.VERSION.SDK_INT >= 23) {
+//                    // in version above 23 user can reject permission and request not be asked again
+//                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]);
+//                    if (!showRationale) {
+//                        // user denied permission and CHECKED "never ask again"
+//                        launchAlertActivatePersimissionsManually();
+//                    } else {
+//                        // user did NOT check "never ask again", user rejected the permissions
+//                        checkLocationPermission();
+//                    }
+//                } else {
+//                    checkLocationPermission();
+//                }
+//
+//            } else {
+//                // SMS permission granted
+//                checkLocationPermission();
+//            }
+//        } else
+        if (requestCode == Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION && permissions.length > 0) {
             // access_fine_location includes coarse location
             if (grantResults.length <= 0 ||
                     grantResults[0] == PackageManager.PERMISSION_DENIED) {
 
                 if (Build.VERSION.SDK_INT >= 23) {
                     // in version above 23 user can reject permission and request not be asked again
-                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0])
-                            || shouldShowRequestPermissionRationale(permissions[1]) ;
+                    boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]) ;
                     if (!showRationale) {
                         // user denied permission and CHECKED "never ask again"
                         launchAlertActivatePersimissionsManually();
@@ -1177,8 +1183,8 @@ public class ActivityGoAs extends AppCompatActivity {
             } else {
                 // permission granted
                 if(permissionsForEmergencyMenu
-                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+//                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
                     if(!ServiceEmergency.running){
                         ServiceEmergency.running = true;
 
@@ -1201,7 +1207,7 @@ public class ActivityGoAs extends AppCompatActivity {
 
     private void launchAlertActivatePersimissionsManually() {
         final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.enable_SMS_Location_PermissionsManually));
+        alert.setDialogMessage(getResources().getString(R.string.enableLocationPermissionManually));
         alert.setDialogPositiveButton(getResources().getString(R.string.Go2Settings), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1228,23 +1234,24 @@ public class ActivityGoAs extends AppCompatActivity {
         alert.showAlert();
     }
 
-    private void launchAlertExplanationSMS() {
-        final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.SMSpermissionExplanation));
-        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        requestSMSpermission();
-                        alert.dismissAlert();
-                    }
-                });
-        alert.showAlert();
-    }
+//    private void launchAlertExplanationSMS() {
+//        final AlertMessageButton alert = new AlertMessageButton(this);
+//        alert.setDialogMessage(getResources().getString(R.string.SMSpermissionExplanation));
+//        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+////                        requestSMSpermission();
+//                        requestLocationPermission();
+//                        alert.dismissAlert();
+//                    }
+//                });
+//        alert.showAlert();
+//    }
 
-    private void launchAlertExplanationLocation() {
+    private void launchAlertExplanationLocationForEmergency() {
         final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationGoAs));
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationAlert));
         alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
                 new View.OnClickListener() {
                     @Override
@@ -1255,4 +1262,62 @@ public class ActivityGoAs extends AppCompatActivity {
                 });
         alert.showAlert();
     }
+
+    private void launchAlertExplanationLocation() {
+        final AlertMessageButton alert = new AlertMessageButton(this);
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanation));
+        alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        requestLocationPermission();
+                        alert.dismissAlert();
+                    }
+                });
+        alert.showAlert();
+    }
+
+    void checkMobileDataON(){
+
+        boolean mobileDataEnabled = false; // Assume disabled
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        try {
+            Class cmClass = Class.forName(cm.getClass().getName());
+            Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
+            method.setAccessible(true); // Make the method callable
+            // get the setting for "mobile data"
+            mobileDataEnabled = (Boolean) method.invoke(cm);
+            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
+        } catch (Exception e) {
+            // Some problem accessing the private API or reflection on getMobileDataEnabled,
+            // perhaps in the next Android version is not accessible, we try with the following
+            // and if that fails then we have to let the user pass
+            try{
+                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                if (tm != null && tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
+                    mobileDataEnabled = Settings.Global.getInt(getContentResolver(), "mobile_data", 1) == 1;
+                }
+            } catch (Exception ignored) {
+                mobileDataEnabled = true; // both methods failed, we have to let the user pass
+            }
+            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
+        }
+
+        if( mobileDataEnabled ) {
+            Log.d("SplashAct", "Connected = MOBILE");
+            checkIntercommPaired();
+        } else {
+            final AlertMessageButton alert = new AlertMessageButton(this);
+            alert.setDialogMessage(getResources().getString(R.string.enableData));
+            alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismissAlert();
+                        }
+                    });
+            alert.showAlert();
+        }
+    }
+
 }

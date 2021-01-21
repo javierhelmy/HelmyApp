@@ -159,7 +159,7 @@ public class Static_AppVariables {
     static final int REQUESTCODE_TTS_CHECK = 200;
     //ActivityGoAs
     static final int REQUESTCODE_LOCATION_PERMISSION = 100;
-    static final int REQUESTCODE_SMS_PERMISSION = 150;
+//    static final int REQUESTCODE_SMS_PERMISSION = 150;
     static final int REQUESTCODE_BT_ENABLE_HELMY = 300;
     static final int REQUESTCODE_TURNON_BLUETOOTH = 400;
     static final int REQUESTCODE_TURNON_BLUETOOTH_FROM_PILLION = 450;

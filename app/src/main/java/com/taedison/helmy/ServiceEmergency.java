@@ -1,6 +1,5 @@
 package com.taedison.helmy;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -17,15 +16,20 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
@@ -38,9 +42,15 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /***
  * Service executes the alert as a foreground service, it keeps on running even if app is closed
@@ -85,8 +95,8 @@ public class ServiceEmergency extends Service {
 
     SingletonSharedPreferences preferences;
 
-    String SENT = "SMS_SENT";
-    PendingIntent sentPendingIntent;
+//    String SENT = "SMS_SENT";
+//    PendingIntent sentPendingIntent;
 
     CountDownTimer timerLocation;
 
@@ -99,7 +109,7 @@ public class ServiceEmergency extends Service {
 
         preferences = SingletonSharedPreferences.getInstance(this.getApplicationContext());
 
-        activityEmergencyNotified = false;
+//        activityEmergencyNotified = false;
 
         Log.d(TAG, "Service emergency created");
     }
@@ -357,95 +367,244 @@ public class ServiceEmergency extends Service {
         NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
     }
 
-    int numSMSparts;
-    void sendSMSs(String smsText){
-        sentPendingIntent = PendingIntent.getBroadcast(ServiceEmergency.this, 0, new Intent(
-                SENT), 0);
-        registerReceiver(receiverSMS_sent_sim0, new IntentFilter(SENT));
-
-        try {
-            Log.d(TAG, "----------------------------------");
-            SmsManager smsManager = SmsManager.getDefault();
-            Log.d(TAG, "getDefault");
-//            ArrayList<String> parts = smsManager.divideMessage(smsText);
-            ArrayList<String> parts = splitEqually(smsText, 67); // smsManager.divideMessage fails in some Android Go devices
-            Log.d(TAG, "parts: " + parts);
-
-            ArrayList<PendingIntent> pendingIntentsArray = new ArrayList<>(); // pending intents are necessary for each part of the message sent
-            for (String ignored : parts){
-                pendingIntentsArray.add(sentPendingIntent); // assign the same pending intent for all parts
-            }
-
-            //SendSMS From default Sim
-            smsManager.sendMultipartTextMessage(preferences.getUserEmergencyPhone(), null, parts,
-                    pendingIntentsArray, null);
-
-            numSMSparts = 1;
-
-            if( !TextUtils.isEmpty(preferences.getUserEmergencyPhone2()) ){
-                smsManager.sendMultipartTextMessage(preferences.getUserEmergencyPhone2(), null, parts,
-                        pendingIntentsArray, null);
-
-                numSMSparts = 2;
-            }
-
-            numSMSparts = numSMSparts * parts.size();
-
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-            Log.d(TAG, "Error: " + ex.getMessage());
+    void sendSMSs(final String smsText){
+        // get array of emergency phone numbers in an array
+        final ArrayList<String> arrayPhones = new ArrayList<>();
+        arrayPhones.add(preferences.getUserEmergencyPhone());
+        if( !TextUtils.isEmpty(preferences.getUserEmergencyPhone2()) ){
+            arrayPhones.add(preferences.getUserEmergencyPhone2());
         }
-    }
 
-    boolean activityEmergencyNotified = false;
-    BroadcastReceiver receiverSMS_sent_sim0 = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context arg0, Intent arg1) {
-            Log.d(TAG, "SMS broadcast receiver. Result code: " + getResultCode() + " notified= " + activityEmergencyNotified );
-            if(!activityEmergencyNotified){
-                Calendar calendar = Calendar.getInstance();
-                String dateSMS = calendar.get(Calendar.YEAR) +"-"+ (calendar.get(Calendar.MONTH)+1)
-                        +"-"+ calendar.get(Calendar.DAY_OF_MONTH) +"-"+ calendar.get(Calendar.HOUR_OF_DAY)
-                        +"-"+ calendar.get(Calendar.MINUTE)+"-"+ calendar.get(Calendar.SECOND);
-                if (getResultCode() == Activity.RESULT_OK ) {
-                    // one of all SMS was send succesfully
-                    Log.d(TAG, "SMS sent OK");
-                    activityEmergencyNotified = true; // so that it does not enter here multiple times because sms is broken up into several parts
-                    alertWasSentMsg_TTS_notif();
-                    sendActivityAlertSent(1);
-                    String msg = getResources().getString(R.string.alertWasSentKeepCalm);
-                    preferences.setMessageAboutAlert(msg, 1);
-                    sendAlertRegistryToServer( "0", dateSMS);
-                    running = false;
-                    stopSelf(); // stop service because one the sms was sent successfully, no need for waiting for confirmation of the other sms
-                } else {
-                    // one of the messages was not sent
-                    numSMSparts--;
-                    if(numSMSparts == 0){
-                        activityEmergencyNotified = true; // so that it does not enter here multiple times because sms is broken up into several parts
+//        String[] arrayPhones;
+//        if( !TextUtils.isEmpty(preferences.getUserEmergencyPhone2()) ){
+//            arrayPhones = new String[]{preferences.getUserEmergencyPhone(), preferences.getUserEmergencyPhone2()};
+//        } else {
+//            arrayPhones = new String[]{preferences.getUserEmergencyPhone()};
+//        }
+
+        String url = "https://oe4wdllwf5.execute-api.us-west-2.amazonaws.com/";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("telefono", arrayPhones.toString());
+        params.put("mensaje", smsText);
+
+//        JSONObject jsonBody = new JSONObject();
+//        try {
+//            jsonBody.put("telefono", arrayPhones);
+//            jsonBody.
+//            jsonBody.put("mensaje", smsText);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+        Log.d(TAG+"SMS", "json sent: " + new JSONObject(params));
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG+"SMS", "response: " + response);
+                        Calendar calendar = Calendar.getInstance();
+                        String dateSMS = calendar.get(Calendar.YEAR) +"-"+ (calendar.get(Calendar.MONTH)+1)
+                                +"-"+ calendar.get(Calendar.DAY_OF_MONTH) +"-"+ calendar.get(Calendar.HOUR_OF_DAY)
+                                +"-"+ calendar.get(Calendar.MINUTE)+"-"+ calendar.get(Calendar.SECOND);
+
+                        try{
+                            JSONArray jsonArray = response.getJSONArray("respuesta");
+                            Log.d(TAG+"SMS", "json array: " + jsonArray);
+                            JSONObject j = jsonArray.getJSONObject(0);
+                            Log.d(TAG+"SMS", "json element: " + j);
+
+                            if( jsonArray.length() == 0 ){
+                                // an error occured, SMS were not sent from AWS
+                                sendActivityAlertSent(5);
+                                String msg = getResources().getString(R.string.EmergencyAlertWasNotSent_SMSservice);
+                                preferences.setMessageAboutAlert(msg, 5);
+                                mTTS.speakSentence(msg);
+                                NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
+                                sendAlertRegistryToServer("0", dateSMS);
+                                running = false;
+                                stopSelf(); // stop service
+                            } else if( jsonArray.length() == 1 && !TextUtils.isEmpty( jsonArray.getJSONObject(0).getString("id") ) ){
+                                // alert was sent successfully to phone1
+                                alertWasSentMsg_TTS_notif();
+                                sendActivityAlertSent(1);
+                                String msg = getResources().getString(R.string.alertWasSentKeepCalm);
+                                preferences.setMessageAboutAlert(msg, 1);
+                                sendAlertRegistryToServer( "0", dateSMS);
+                                running = false;
+                                stopSelf(); // stop service because one the sms was sent successfully
+                            } else if( jsonArray.length() == 2 && ( !TextUtils.isEmpty( jsonArray.getJSONObject(0).getString("id") ) )
+                                    || !TextUtils.isEmpty( jsonArray.getJSONObject(0).getString("id") ) ) {
+                                // alert was sent successfully to phone1 or phone2
+                                alertWasSentMsg_TTS_notif();
+                                sendActivityAlertSent(1);
+                                String msg = getResources().getString(R.string.alertWasSentKeepCalm);
+                                preferences.setMessageAboutAlert(msg, 1);
+                                sendAlertRegistryToServer( "0", dateSMS);
+                                running = false;
+                                stopSelf(); // stop service because one the sms was sent successfully
+                            } else {
+                                // phones numbers do not exist
+                                sendActivityAlertSent(6);
+                                String msg = getResources().getString(R.string.EmergencyAlertWasNotSent_NonExistingPhones);
+                                preferences.setMessageAboutAlert(msg, 6);
+                                mTTS.speakSentence(msg);
+                                NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
+                                sendAlertRegistryToServer("0", dateSMS);
+                                running = false;
+                                stopSelf(); // stop service because one the sms was sent successfully
+                            }
+
+                        } catch (Exception ignored){
+                            // an error occured, SMS were not sent from AWS
+                            sendActivityAlertSent(5);
+                            String msg = getResources().getString(R.string.EmergencyAlertWasNotSent_SMSservice);
+                            preferences.setMessageAboutAlert(msg, 5);
+                            mTTS.speakSentence(msg);
+                            NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
+                            sendAlertRegistryToServer("0", dateSMS);
+                            running = false;
+                            stopSelf(); // stop service
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG+"SMS", error.toString());
+                        // possibly user did not have internet connection
+                        Static_AppMethods.checkResponseCode(error, preferences);
                         sendActivityAlertSent(3);
-                        String msg = getResources().getString(R.string.EmergencyAlertWasNotSentByCarrier);
+                        String msg = getResources().getString(R.string.EmergencyAlertWasNotSent_Internet);
                         preferences.setMessageAboutAlert(msg, 3);
                         mTTS.speakSentence(msg);
                         NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
-                        sendAlertRegistryToServer("0", dateSMS);
                         running = false;
-                        stopSelf(); // stop service because one the sms was sent successfully, no need for waiting for confirmation of the other sms
+                        stopSelf(); // stop service because one the sms was sent successfully
                     }
-                    Log.d(TAG, "SMS error");
-                }
-            }
-        }
-    };
+                }) {
 
-    private static ArrayList<String> splitEqually(String text, int size) {
-        ArrayList<String> ret = new ArrayList<>((text.length() + size - 1) / size);
-        for (int start = 0; start < text.length(); start += size) {
-            ret.add(text.substring(start, Math.min(text.length(), start + size)));
-        }
-        return ret;
+//                        @Override
+//                        protected Map<String, String> getParams() {
+//                            Map<String, String> params = new HashMap<>();
+//                            params.put("telefono", arrayPhones.toString());
+//                            params.put("mensaje", smsText);
+//                            return params;
+//                        }
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String>  params = new HashMap<String, String>();
+                            params.put("Authorization", "AWS4-HMAC-SHA256 Credential=AKIAQVS75OZKOFUWMN5S/20210120/us-east-1/execute-api/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=bac4e231b74b32d8d9d4647e1a7ca7e326d5a5ca839e40b6840339d837cd3851");
+                            params.put("X-Amz-Content-Sha256", "beaead3198f7da1e70d03ab969765e0821b24fc913697e929e726aeaebf0eba3");
+                            params.put("X-Amz-Date", "20210120T053513Z");
+                            return params;
+                        }
+
+                    };
+
+
+
+        // increase the timeout period because for some reason this URL end point is throwing: BasicNetwork.logSlowRequests
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS*4,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        //Volley
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jsonRequest);
     }
+
+//    int numSMSparts;
+//    void sendSMSs(String smsText){
+//        sentPendingIntent = PendingIntent.getBroadcast(ServiceEmergency.this, 0, new Intent(
+//                SENT), 0);
+//        registerReceiver(receiverSMS_sent_sim0, new IntentFilter(SENT));
+//
+//        try {
+//            Log.d(TAG, "----------------------------------");
+//            SmsManager smsManager = SmsManager.getDefault();
+//            Log.d(TAG, "getDefault");
+////            ArrayList<String> parts = smsManager.divideMessage(smsText);
+//            ArrayList<String> parts = splitEqually(smsText, 67); // smsManager.divideMessage fails in some Android Go devices
+//            Log.d(TAG, "parts: " + parts);
+//
+//            ArrayList<PendingIntent> pendingIntentsArray = new ArrayList<>(); // pending intents are necessary for each part of the message sent
+//            for (String ignored : parts){
+//                pendingIntentsArray.add(sentPendingIntent); // assign the same pending intent for all parts
+//            }
+//
+//            //SendSMS From default Sim
+//            smsManager.sendMultipartTextMessage(preferences.getUserEmergencyPhone(), null, parts,
+//                    pendingIntentsArray, null);
+//
+//            numSMSparts = 1;
+//
+//            if( !TextUtils.isEmpty(preferences.getUserEmergencyPhone2()) ){
+//                smsManager.sendMultipartTextMessage(preferences.getUserEmergencyPhone2(), null, parts,
+//                        pendingIntentsArray, null);
+//
+//                numSMSparts = 2;
+//            }
+//
+//            numSMSparts = numSMSparts * parts.size();
+//
+//        } catch (Exception ex) {
+//            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+//            ex.printStackTrace();
+//            Log.d(TAG, "Error: " + ex.getMessage());
+//        }
+//    }
+
+//    boolean activityEmergencyNotified = false;
+//    BroadcastReceiver receiverSMS_sent_sim0 = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context arg0, Intent arg1) {
+//            Log.d(TAG, "SMS broadcast receiver. Result code: " + getResultCode() + " notified= " + activityEmergencyNotified );
+//            if(!activityEmergencyNotified){
+//                Calendar calendar = Calendar.getInstance();
+//                String dateSMS = calendar.get(Calendar.YEAR) +"-"+ (calendar.get(Calendar.MONTH)+1)
+//                        +"-"+ calendar.get(Calendar.DAY_OF_MONTH) +"-"+ calendar.get(Calendar.HOUR_OF_DAY)
+//                        +"-"+ calendar.get(Calendar.MINUTE)+"-"+ calendar.get(Calendar.SECOND);
+//                if (getResultCode() == Activity.RESULT_OK ) {
+//                    // one of all SMS was send succesfully
+//                    Log.d(TAG, "SMS sent OK");
+//                    activityEmergencyNotified = true; // so that it does not enter here multiple times because sms is broken up into several parts
+//                    alertWasSentMsg_TTS_notif();
+//                    sendActivityAlertSent(1);
+//                    String msg = getResources().getString(R.string.alertWasSentKeepCalm);
+//                    preferences.setMessageAboutAlert(msg, 1);
+//                    sendAlertRegistryToServer( "0", dateSMS);
+//                    running = false;
+//                    stopSelf(); // stop service because one the sms was sent successfully, no need for waiting for confirmation of the other sms
+//                } else {
+//                    // one of the messages was not sent
+//                    numSMSparts--;
+//                    if(numSMSparts == 0){
+//                        activityEmergencyNotified = true; // so that it does not enter here multiple times because sms is broken up into several parts
+//                        sendActivityAlertSent(3);
+//                        String msg = getResources().getString(R.string.EmergencyAlertWasNotSentByCarrier);
+//                        preferences.setMessageAboutAlert(msg, 3);
+//                        mTTS.speakSentence(msg);
+//                        NotifEmergencyNotSent.Launch(ServiceEmergency.this, msg);
+//                        sendAlertRegistryToServer("0", dateSMS);
+//                        running = false;
+//                        stopSelf(); // stop service because one the sms was sent successfully, no need for waiting for confirmation of the other sms
+//                    }
+//                    Log.d(TAG, "SMS error");
+//                }
+//            }
+//        }
+//    };
+//
+//    private static ArrayList<String> splitEqually(String text, int size) {
+//        ArrayList<String> ret = new ArrayList<>((text.length() + size - 1) / size);
+//        for (int start = 0; start < text.length(); start += size) {
+//            ret.add(text.substring(start, Math.min(text.length(), start + size)));
+//        }
+//        return ret;
+//    }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -519,10 +678,10 @@ public class ServiceEmergency extends Service {
         running = false;
         Log.d(TAG, "ServiceEmergency destroyed");
 //        Toast.makeText(this, "Emergency service done", Toast.LENGTH_SHORT).show();
-        try{
-            unregisterReceiver(receiverSMS_sent_sim0);
-            Log.d(TAG, "SMS receiver unregistered");
-        } catch (Exception ignored){}
+//        try{
+//            unregisterReceiver(receiverSMS_sent_sim0);
+//            Log.d(TAG, "SMS receiver unregistered");
+//        } catch (Exception ignored){}
         if(cancelEmergencyReceiver != null){
             unregisterReceiver(cancelEmergencyReceiver);
             Log.d(TAG, "cancel receiver unregistered");

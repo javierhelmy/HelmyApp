@@ -1055,7 +1055,6 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
     }
 
     private void requestLocationPermission() {
-        // SMS and Location permissions are mandatory, it will continue asking until user grants the permissions
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 Static_AppVariables.REQUESTCODE_LOCATION_PERMISSION);
@@ -1118,7 +1117,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
 
     private void launchAlertExplanationForLocation() {
         final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationRegister));
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanation));
         alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
                 new View.OnClickListener() {
                     @Override

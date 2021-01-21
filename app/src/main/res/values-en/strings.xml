@@ -229,7 +229,8 @@
     <string name="wannaDeactivateHelmyBatteryLow">LOW BATTERY! \nIt is not safe to use Helmy
         \nDo you want to deactivate Helmy so that you can start your bike?</string>
     <string name="increaseVolume">You must turn the volume up to listen the voice commands</string>
-    <string name="enableData">Enable mobile data before starting. In case of an accident, it is necessary to have an internet connection.</string>
+    <string name="enableData">Enable mobile data before starting. In case of an accident, it is
+        necessary to have an internet connection to notify your emergency contacts.</string>
     <string name="intercommNotPaired">Helmy-C\'s intercommunicator module is not paired. Remember to turn Helmy-C on before attempting to pair.</string>
     <string name="pair">PAIR</string>
     <string name="paired">Paired</string>
@@ -238,12 +239,11 @@
     <string name="instructionsForPairing">You must wait until your Helmy-C is flashing.</string>
 
     //Permissions
-    <string name="locationPermissionExplanationRegister">Starting from Android 6.0 Marshmallow it is required
-        the Location permission in order to find BLE bluetooth devices such as those in Helmy.</string>
-    <string name="locationPermissionExplanationGoAs">Starting from Android 6.0 Marshmallow it is required
+    <string name="locationPermissionExplanation">Starting from Android 6.0 Marshmallow it is required
         the Location permission in order to find BLE bluetooth devices such as those in Helmy.
-        \nAdditionally, your location will be sent to your emergency contacts in case of an accident
-        (only if you granted the SMS permission)</string>
+        \nAdditionally, your location will be sent to your emergency contacts in case of an accident.</string>
+    <string name="locationPermissionExplanationAlert">Helmy requires the Location permission. In case
+        you suffer an accident, we will send an SMS to your emegency contacts containing your location.</string>
     <string name="enableLocationPermissionManually">You must enable the Location permission in your settings.</string>
     <string name="SMSpermissionExplanation">
         Helmy will send an SMS to your emergency contacts in case you suffer an accident.
@@ -253,14 +253,14 @@
         The SMS will contain your location. You must grant the SMS and Location permissions.</string>
     <string name="RecordAudio_PermissionExplanation">You must grant the microphone permission if you
         want to use the intercommunicator</string>
-    <string name="enable_SMS_Location_PermissionsManually">You must enable the SMS and Location permissions in your settings.</string>
+<!--    <string name="enable_SMS_Location_PermissionsManually">You must enable the SMS and Location permissions in your settings.</string>-->
     <string name="enable_Microphone_PermissionsManually">You must enable the Microphone permission in your settings.</string>
     <string name="enable_Camera_PermissionsManually">You must enable the camera permission in your settings.</string>
     <string name="Go2Settings">Settings</string>
     <string name="AlreadyEnabledPermissions">Already did</string>
     <string name="alertNotLaunchedPermissions">Emergency alert cannot be launched because you did not grant the permissions</string>
 
-    <string name="simNotReady">Insert a sim card to continue</string>
+    <string name="simNotReady">Insert a sim card to continue, you will need it in case you suffer an accident.</string>
 
     //Bluetooth
     <string name="DeviceWithoutBluetooth">Your device does not have Bluetooth. We are sorry, you can\'t use out app.</string>
@@ -291,7 +291,10 @@
     <string name="alertWasSentKeepCalm">Help is on its way, keep calm! \nEmergency alert was sent.</string>
     <string name="EmergencyAlertWasNotSent">Alert was not sent</string>
     <string name="EmergencyAlertWasNotSentNoGPS">Alert was not sent because the GPS location is not available</string>
-    <string name="EmergencyAlertWasNotSentByCarrier">Alert was not sent because of an error with your phone carrier</string>
+<!--    <string name="EmergencyAlertWasNotSentByCarrier">Alert was not sent because of an error with your phone carrier</string>-->
+    <string name="EmergencyAlertWasNotSent_SMSservice">Alert was not sent because of an error, try again from the main menu.</string>
+    <string name="EmergencyAlertWasNotSent_NonExistingPhones">Alert was not sent because phones numbers do not exist.</string>
+    <string name="EmergencyAlertWasNotSent_Internet">Alert was not sent because of an error with your internet connection.</string>
     <string name="EmergencyAlertWasCancelled">Alert was cancelled</string>
     <string name="areYouSureSendAlert">Are you sure you want to send the alert?</string>
     <string name="areYouSureCancelAlert">Are you sure you want to cancel the alert?</string>

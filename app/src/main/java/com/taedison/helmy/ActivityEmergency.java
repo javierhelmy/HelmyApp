@@ -119,7 +119,28 @@ public class ActivityEmergency extends AppCompatActivity {
                 btnSendEmergency.setText(getResources().getString(R.string.retry));
             } else if (alert_sent == 3) {
                 // update UI
-                tvMsg.setText(R.string.EmergencyAlertWasNotSentByCarrier);
+//                tvMsg.setText(R.string.EmergencyAlertWasNotSentByCarrier);
+                tvMsg.setText(R.string.EmergencyAlertWasNotSent_Internet);
+                tvTimer.setVisibility(View.INVISIBLE);
+                imgCircle.setVisibility(View.INVISIBLE);
+                circleRotationAnim.cancel();
+                btnCancelEmergency.setVisibility(View.INVISIBLE);
+                canRetry = true;
+                btnSendEmergency.setVisibility(View.VISIBLE);
+                btnSendEmergency.setText(getResources().getString(R.string.retry));
+            } else if (alert_sent == 5) {
+                // update UI
+                tvMsg.setText(R.string.EmergencyAlertWasNotSent_SMSservice);
+                tvTimer.setVisibility(View.INVISIBLE);
+                imgCircle.setVisibility(View.INVISIBLE);
+                circleRotationAnim.cancel();
+                btnCancelEmergency.setVisibility(View.INVISIBLE);
+                canRetry = true;
+                btnSendEmergency.setVisibility(View.VISIBLE);
+                btnSendEmergency.setText(getResources().getString(R.string.retry));
+            } else if (alert_sent == 6) {
+                // update UI
+                tvMsg.setText(R.string.EmergencyAlertWasNotSent_NonExistingPhones);
                 tvTimer.setVisibility(View.INVISIBLE);
                 imgCircle.setVisibility(View.INVISIBLE);
                 circleRotationAnim.cancel();

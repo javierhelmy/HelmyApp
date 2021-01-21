@@ -1469,7 +1469,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
 
     private void launchAlertExplanationForLocation() {
         final AlertMessageButton alert = new AlertMessageButton(this);
-        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanationRegister));
+        alert.setDialogMessage(getResources().getString(R.string.locationPermissionExplanation));
         alert.setDialogPositiveButton(getResources().getString(R.string.Ok),
                 new View.OnClickListener() {
                     @Override

@@ -416,8 +416,8 @@ public class ActivityPillion extends AppCompatActivity {
                 primaryHelmet_worn = true;
                 primaryHelmet_fastened = true;
             } else if(stringReceived.equals("4")){
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
-                        || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
+//                        || ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
                     mTTS.speakSentence(getResources().getString(R.string.alertNotLaunchedPermissions));
                 } else if(!ServiceEmergency.running){
                     ServiceEmergency.running = true;
