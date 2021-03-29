@@ -1,7 +1,6 @@
 package com.taedison.helmy;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HurlStack;
@@ -48,7 +47,7 @@ public class SingletonVolley {
             try {
                 setSSLcert_setQueue();
             } catch (Exception e) {
-                Log.e("singletonVolley", "Error loading SSL: " + e.getMessage());
+//                Log.e("singletonVolley", "Error loading SSL: " + e.getMessage());
             }
         }
         return requestQueue;
@@ -60,7 +59,7 @@ public class SingletonVolley {
         // to convert .pfx ssl certificates to .crt, follow: https://www.ibm.com/support/knowledgecenter/SSVP8U_9.7.0/com.ibm.drlive.doc/topics/r_extratsslcert.html
 
         // trust the SSL certificate in our smarter server
-        Log.d("singletonVolley", "Started SSL");
+//        Log.d("singletonVolley", "Started SSL");
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
         InputStream caInput = ctx.getAssets().open("smarter_ssl.crt");
         Certificate ca;
@@ -69,24 +68,24 @@ public class SingletonVolley {
         } finally {
             caInput.close();
         }
-        Log.d("singletonVolley", ".crt loaded");
+//        Log.d("singletonVolley", ".crt loaded");
         // Create a KeyStore containing our trusted CAs
         String keyStoreType = KeyStore.getDefaultType();
         KeyStore keyStore = KeyStore.getInstance(keyStoreType);
         keyStore.load(null, null);
         keyStore.setCertificateEntry("ca", ca);
 
-        Log.d("singletonVolley", "setCertificateEntry SSL");
+//        Log.d("singletonVolley", "setCertificateEntry SSL");
         // Create a TrustManager that trusts the CAs in our KeyStore
         String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
         tmf.init(keyStore);
-        Log.d("singletonVolley", "trust CA SSL");
+//        Log.d("singletonVolley", "trust CA SSL");
         // Create an SSLContext that uses our TrustManager
         SSLContext context = SSLContext.getInstance("TLS");
         context.init(null, tmf.getTrustManagers(), null);
 
-        Log.d("singletonVolley", "context SSL");
+//        Log.d("singletonVolley", "context SSL");
 
         // Tell volley to use a SocketFactory from our SSLContext
         requestQueue = Volley.newRequestQueue(ctx.getApplicationContext(), new HurlStack(null, context.getSocketFactory()));

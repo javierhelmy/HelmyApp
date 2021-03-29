@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
@@ -202,9 +201,9 @@ public class ActivityRegisterUser_PersonalInfo extends AppCompatActivity {
                                 "0", email, preferences);
                     }
 
-                    Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged()
-                            + "\nNationality: " + natiolatityEncrypted + "\nidType: " + idTypeEncrypted + "\nidNum: " + idNumberEncrypted
-                            + "\nidNum: " + isColLicenseEncrypted);
+//                    Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged()
+//                            + "\nNationality: " + natiolatityEncrypted + "\nidType: " + idTypeEncrypted + "\nidNum: " + idNumberEncrypted
+//                            + "\nidNum: " + isColLicenseEncrypted);
 
                     saving = true; //prevents fromActivity entering again
 
@@ -213,7 +212,7 @@ public class ActivityRegisterUser_PersonalInfo extends AppCompatActivity {
 
                     pbInfo2.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
-                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                     Static_AppMethods.ToastEncryptionError(this);
                 }
             }
@@ -247,7 +246,7 @@ public class ActivityRegisterUser_PersonalInfo extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfo2.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg1", "response= " + response);
+//                        Log.d("RequestVolleyReg1", "response= " + response);
 
                         if( !TextUtils.isEmpty(response) ){
                             // save personal data
@@ -287,7 +286,7 @@ public class ActivityRegisterUser_PersonalInfo extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfo2.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg1", error.toString());
+//                        Log.d("RequestVolleyReg1", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterUser_PersonalInfo.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -297,7 +296,7 @@ public class ActivityRegisterUser_PersonalInfo extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 // data already encrypted
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged() );
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged() );
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("nationality", nationality);

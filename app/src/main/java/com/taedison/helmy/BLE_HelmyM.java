@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.android.gms.common.util.Hex;
 
@@ -46,7 +45,7 @@ public class BLE_HelmyM {
     int lastVelocityValue = 0;
 
     BLE_HelmyM(Context context){
-        Log.i(TAG, "constructor 0");
+//        Log.i(TAG, "constructor 0");
         this.context = context;
 
         preferences = SingletonSharedPreferences.getInstance(context.getApplicationContext());
@@ -55,7 +54,7 @@ public class BLE_HelmyM {
     void initiateBluetoothConexion(BluetoothDevice device) {
         this.device = device;
 
-        Log.i(TAG, "Initiated. Device mac: " + this.device.getAddress() );
+//        Log.i(TAG, "Initiated. Device mac: " + this.device.getAddress() );
         bluetoothGatt = device.connectGatt(context, false, gattCallback); // onConnectionStateChange will handle that connection state
 
         String bikeMAC = device.getAddress();
@@ -79,7 +78,7 @@ public class BLE_HelmyM {
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
                     if (newState == BluetoothProfile.STATE_CONNECTED) {
-                        Log.i(TAG, "Connected to GATT server.");
+//                        Log.i(TAG, "Connected to GATT server.");
                         password = "";
                         encryptedBytes = new byte[16];
                         bluetoothGatt.discoverServices(); // onServicesDiscovered callback will handle the action
@@ -87,7 +86,7 @@ public class BLE_HelmyM {
                         bluetoothGatt.disconnect();
                         bluetoothGatt = null;
                         sendDeviceConnectionToActivity(device.getAddress(), false);
-                        Log.i(TAG, "Disonnected fromActivity GATT server.");
+//                        Log.i(TAG, "Disonnected fromActivity GATT server.");
                     }
                 }
 
@@ -95,7 +94,7 @@ public class BLE_HelmyM {
                 public void onServicesDiscovered(BluetoothGatt gatt, int status) {
                     super.onServicesDiscovered(gatt, status);
 
-                    Log.i(TAG, "Services discovered");
+//                    Log.i(TAG, "Services discovered");
                     BluetoothGattService serviceHelmyM = bluetoothGatt.getService(Static_AppVariables.UUID_HELMYM_SERVICE);
 
                     // get the instances of the predefined characteristics
@@ -140,7 +139,7 @@ public class BLE_HelmyM {
                                 // if all 16 bytes have not been received, continue reading
                                 readBikeId(characteristicBikeID);
                             } else {
-                                Log.d("RequestVolleyBike2", "Id in HelmyM= " + Arrays.toString(getBikeIDbytes()));
+//                                Log.d("RequestVolleyBike2", "Id in HelmyM= " + Arrays.toString(getBikeIDbytes()));
                                 readBikePassword(characteristicBikePassword_1);
                             }
                         } else if( charUUID == characteristicBikePassword_1.getUuid()){
@@ -154,8 +153,8 @@ public class BLE_HelmyM {
                             // once password has been read, then notify the activity of the connection
                             sendDeviceConnectionToActivity(device.getAddress(), true);
 
-                            Log.d(TAG, "code M= " + Static_AppMethods.bytesToStringBase64(getBikeIDbytes())
-                                    + " passWord= " + getBikePassword());
+//                            Log.d(TAG, "code M= " + Static_AppMethods.bytesToStringBase64(getBikeIDbytes())
+//                                    + " passWord= " + getBikePassword());
                         }
                     }
                 }
@@ -165,12 +164,12 @@ public class BLE_HelmyM {
                 public void onCharacteristicWrite(BluetoothGatt gatt,
                                                   BluetoothGattCharacteristic characteristic,
                                                   int status) {
-                    Log.d(TAG, "Write Status = " + status + "CarUUID = " +
-                            characteristic.getUuid() );
+//                    Log.d(TAG, "Write Status = " + status + "CarUUID = " +
+//                            characteristic.getUuid() );
                     UUID charUUID = characteristic.getUuid();
                     if (status == BluetoothGatt.GATT_SUCCESS) {
                         if(charUUID == characteristicBikeOnOff.getUuid()){
-                            Log.e(TAG, "on off wrote. Returned = " + true);
+//                            Log.e(TAG, "on off wrote. Returned = " + true);
                             sendActivityWriteOnOffStatus(true);
                         } else if(charUUID == characteristicBikePassword_1.getUuid()
                                 || charUUID == characteristicBikePassword_2.getUuid()
@@ -185,7 +184,7 @@ public class BLE_HelmyM {
                     } else {
                         // an error ocurred
                         if(charUUID == characteristicBikeOnOff.getUuid()){
-                            Log.e(TAG, "on off wrote. Returned = " + false);
+//                            Log.e(TAG, "on off wrote. Returned = " + false);
                             sendActivityWriteOnOffStatus(false);
                         } else if(charUUID == characteristicBikePassword_1.getUuid()
                                 || charUUID == characteristicBikePassword_2.getUuid()
@@ -205,21 +204,21 @@ public class BLE_HelmyM {
         // processes the data received
         final byte[] data = characteristic.getValue();
         if (data != null && data.length == 1) {
-            Log.d("RequestVolleyBike2", "Id seg byte= " + Arrays.toString(data) );
+//            Log.d("RequestVolleyBike2", "Id seg byte= " + Arrays.toString(data) );
             encryptedBytes[contId] = data[0];
             contId ++;
         }
     }
 
     byte[] getBikeIDbytes(){
-        Log.d("RequestVolleyBike2", "Bytes saved in HelmyM= " + Arrays.toString(encryptedBytes));
+//        Log.d("RequestVolleyBike2", "Bytes saved in HelmyM= " + Arrays.toString(encryptedBytes));
         return encryptedBytes;
     }
 
     private void characteristicReadBikePassword(BluetoothGattCharacteristic characteristic) {
         // For profiles that the data is formatted in HEX.
         final byte[] data = characteristic.getValue();
-        Log.d(TAG, "characteristicReadBikePassword. Data length= " + data.length );
+//        Log.d(TAG, "characteristicReadBikePassword. Data length= " + data.length );
         if (data != null && data.length == 1) {
             StringBuilder stringBuilder = new StringBuilder(data.length);
             for(byte byteChar : data){
@@ -231,7 +230,7 @@ public class BLE_HelmyM {
             } else {
                 password =  password + ";" + stringBuilder.toString();
             }
-            Log.d(TAG, "password= " + password );
+//            Log.d(TAG, "password= " + password );
         }
     }
 
@@ -256,18 +255,18 @@ public class BLE_HelmyM {
     /***  /////////////// VELOCITY //////////////// ***/
 
     void startReadVelocityRPM(String fileName_date){
-        Log.d(TAG+"RPM", "start RPMs");
+//        Log.d(TAG+"RPM", "start RPMs");
         fileName_dateTrip = fileName_date;
         readBikeRPMCharacteristic(); // start reading RPMs
     }
 
     private void readBikeRPMCharacteristic(){
 
-        Log.d(TAG+"RPM", "read char RPM");
+//        Log.d(TAG+"RPM", "read char RPM");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -282,7 +281,7 @@ public class BLE_HelmyM {
         // For profiles that the data is formatted in HEX.
         final byte[] data = characteristic.getValue();
         if (data != null && data.length >= 4) {
-            Log.d(TAG+"RPM", "N bytes --> " + data.length);
+//            Log.d(TAG+"RPM", "N bytes --> " + data.length);
             final StringBuilder stringBuilder = new StringBuilder(data.length);
             int cont = 0;
             for(byte byteChar : data){
@@ -319,8 +318,8 @@ public class BLE_HelmyM {
                 linVelocity = (int) ((int) wheelPerimeterInKM / timeInHrs); //round down the number
             }
 
-            Log.d(TAG+"RPM", "Bytes = " + stringBuilder.toString() + "time=" +
-                    timeInHrs + " Vel= " + linVelocity + " wheelPer= " + wheelPerimeterInKM);
+//            Log.d(TAG+"RPM", "Bytes = " + stringBuilder.toString() + "time=" +
+//                    timeInHrs + " Vel= " + linVelocity + " wheelPer= " + wheelPerimeterInKM);
 
             Calendar calendar = Calendar.getInstance();
             String timeStamp = calendar.get(Calendar.HOUR_OF_DAY)
@@ -359,7 +358,7 @@ public class BLE_HelmyM {
             context.startService(intent);
         }
 
-        Log.d(TAG+"RPM", fileName_dateTrip + "\n" + velocityData);
+//        Log.d(TAG+"RPM", fileName_dateTrip + "\n" + velocityData);
 
         fileName_dateTrip = "";
         velocityData = "";
@@ -369,11 +368,11 @@ public class BLE_HelmyM {
 
     private void readBikeId(BluetoothGattCharacteristic characteristic ){
 
-        Log.d(TAG+"Id", "read Bike ID");
+//        Log.d(TAG+"Id", "read Bike ID");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -384,11 +383,11 @@ public class BLE_HelmyM {
 
     private void readBikePassword(BluetoothGattCharacteristic characteristic ){
 
-        Log.d(TAG+"password", "read Bike password");
+//        Log.d(TAG+"password", "read Bike password");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -400,7 +399,7 @@ public class BLE_HelmyM {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -415,7 +414,7 @@ public class BLE_HelmyM {
             value = pass1;
         }
 
-        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
+//        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
 
         characteristicBikePassword_1.setValue( Hex.stringToBytes(value) );
         bluetoothGatt.writeCharacteristic(characteristicBikePassword_1);
@@ -427,7 +426,7 @@ public class BLE_HelmyM {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -442,7 +441,7 @@ public class BLE_HelmyM {
             value = pass1;
         }
 
-        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
+//        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
 
         characteristicBikePassword_2.setValue( Hex.stringToBytes(value) );
         bluetoothGatt.writeCharacteristic(characteristicBikePassword_2);
@@ -454,7 +453,7 @@ public class BLE_HelmyM {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -469,7 +468,7 @@ public class BLE_HelmyM {
             value = pass1;
         }
 
-        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
+//        Log.d("Hexadecc", "hexa = " +  pass1 + " value = " + value  );
 
         characteristicBikePassword_3.setValue( Hex.stringToBytes(value) );
         bluetoothGatt.writeCharacteristic(characteristicBikePassword_3);
@@ -481,7 +480,7 @@ public class BLE_HelmyM {
     public void turnOnOFF_WriteCharacteristic(boolean bikeOn){
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -499,14 +498,14 @@ public class BLE_HelmyM {
             characteristicBikeOnOff.setValue(value);
         }
         status = bluetoothGatt.writeCharacteristic(characteristicBikeOnOff);
-        Log.e(TAG, "on off wrote. Status = " + status);
+//        Log.e(TAG, "on off wrote. Status = " + status);
     }
 
     public void enable_WriteCharacteristic(boolean bikeEnable){
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -526,18 +525,18 @@ public class BLE_HelmyM {
         }
 
         status = bluetoothGatt.writeCharacteristic(characteristicBikeEnable);
-        Log.e(TAG, "enable wrote. Status = " + status);
+//        Log.e(TAG, "enable wrote. Status = " + status);
     }
 
     public void bikeId_write(byte[] segment, int contId){
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
 
-        Log.d("RequestVolleyBike2", "byte id segment sent= " + Arrays.toString(segment) );
+//        Log.d("RequestVolleyBike2", "byte id segment sent= " + Arrays.toString(segment) );
 
         characteristicBikeID.setValue( segment );
         bluetoothGatt.writeCharacteristic(characteristicBikeID);

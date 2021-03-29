@@ -16,7 +16,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -97,7 +96,7 @@ public class ActivityEmergency extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int alert_sent = intent.getIntExtra(Static_AppVariables.INTENTEXTRA_ALERT_SENT, 0);
-            Log.d(TAG, "IntExtra from service: " + alert_sent);
+//            Log.d(TAG, "IntExtra from service: " + alert_sent);
             if(alert_sent == 1){
                 // SMS was sent
                 // update UI
@@ -324,7 +323,7 @@ public class ActivityEmergency extends AppCompatActivity {
             circleRotationAnim.start();
 
             mBound = true;
-            Log.d(TAG, "Connected");
+//            Log.d(TAG, "Connected");
         }
 
         @Override
@@ -344,7 +343,7 @@ public class ActivityEmergency extends AppCompatActivity {
         task.addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull final Exception e) {
-                Log.d(TAG+"GPS_main", "GPS off");
+//                Log.d(TAG+"GPS_main", "GPS off");
                 // GPS off. We then request to turn it on. If user closes the app then the user is warned by voice from the ServiceEmergency
                 if( !turnOnGPSwasRequested ){
                     if (e instanceof ResolvableApiException) {

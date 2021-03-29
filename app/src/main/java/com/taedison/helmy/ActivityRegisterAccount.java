@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -93,10 +92,10 @@ public class ActivityRegisterAccount extends AppCompatActivity {
                         pbRegister.setVisibility(View.INVISIBLE);
                         if( !TextUtils.isEmpty(response) ){
                             if(response.contains("1")){
-                                Log.d(TAG+"volley", "Response contains 1. " + response);
+//                                Log.d(TAG+"volley", "Response contains 1. " + response);
                                 Go2NextActivity();
                             } else {
-                                Log.d(TAG+"volley", "Response does not contains 1. " + response);
+//                                Log.d(TAG+"volley", "Response does not contains 1. " + response);
                                 Toast.makeText(getApplicationContext(), R.string.accountAlreadyExists, Toast.LENGTH_SHORT).show();
                             }
                         } else {
@@ -112,7 +111,7 @@ public class ActivityRegisterAccount extends AppCompatActivity {
                     {
 //                        error.networkResponse.statusCode;
                         pbRegister.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"volley", "response error: " + error.toString());
+//                        Log.e(TAG+"volley", "response error: " + error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterAccount.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -167,7 +166,7 @@ public class ActivityRegisterAccount extends AppCompatActivity {
                             pbRegister.setVisibility(View.VISIBLE);
                             alert.dismissAlert();
                         } catch (Exception e){
-                            Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
+//                            Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
                             Toast.makeText(ActivityRegisterAccount.this, getResources().
                                     getString(R.string.errorWithEncryption)
                                     + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();

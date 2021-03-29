@@ -3,7 +3,6 @@ package com.taedison.helmy;
 import android.content.Context;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -21,7 +20,7 @@ public class SingletonTSS_Helmet {
 
     private SingletonTSS_Helmet(final Context context) {
         ctx = context;
-        Log.d("TTS_singleton", "instance created");
+//        Log.d("TTS_singleton", "instance created");
         initializeTTS();
 
         hashMusicStream = new HashMap<>();
@@ -43,9 +42,9 @@ public class SingletonTSS_Helmet {
                 if(TextToSpeech.SUCCESS == response){
                     TTSready = true;
                     configTTS();
-                    Log.d("TTS_singleton", "success");
+//                    Log.d("TTS_singleton", "success");
                 } else {
-                    Log.d("TTS_singleton", "error");
+//                    Log.d("TTS_singleton", "error");
                 }
             }
         });
@@ -67,7 +66,7 @@ public class SingletonTSS_Helmet {
 
     void speakSentence(String sentence){
         // it plays the most recent sentence and clears out the previous one
-        Log.d("TTS_singleton", "Speaking");
+//        Log.d("TTS_singleton", "Speaking");
         mTTS.speak(sentence, TextToSpeech.QUEUE_FLUSH, hashMusicStream);
     }
 }

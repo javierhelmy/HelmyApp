@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,7 +111,7 @@ public class ActivityLogin extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d("RequestVolleyLogin", "response: " + response);
+//                        Log.d("RequestVolleyLogin", "response: " + response);
                         pbLogin.setVisibility(View.INVISIBLE);
                         if( !TextUtils.isEmpty(response) ){
                             try {
@@ -135,7 +134,7 @@ public class ActivityLogin extends AppCompatActivity {
                                     if(TyC.equals("1")){
                                         // already accepted terms and conditions. Now store userId and userK (AES encryption key)
                                         AESkey64_fromServer = AESkey64_fromServer.replace("\n", "");
-                                        Log.d(TAG+"Volley", "userId: " + userId_fromServer + " AESkey_base64: " + AESkey64_fromServer);
+//                                        Log.d(TAG+"Volley", "userId: " + userId_fromServer + " AESkey_base64: " + AESkey64_fromServer);
                                         try{
                                             byte[] aesKeyBytes = Static_AppMethods.stringBase64toBytes(AESkey64_fromServer);
                                             SecretKey keyAES = new SecretKeySpec(aesKeyBytes, 0, aesKeyBytes.length, "AES");
@@ -148,7 +147,7 @@ public class ActivityLogin extends AppCompatActivity {
                                             Go2ActivityRetrieve();
 
                                         } catch (Exception e){
-                                            Log.e("Encryptionn", "Error: " + e.getMessage());
+//                                            Log.e("Encryptionn", "Error: " + e.getMessage());
                                             Static_AppMethods.ToastEncryptionError(ActivityLogin.this);
                                         }
                                     } else {
@@ -177,7 +176,7 @@ public class ActivityLogin extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbLogin.setVisibility(View.INVISIBLE);
-                        Log.d(TAG+"Volley", error.toString());
+//                        Log.d(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLogin.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -252,7 +251,7 @@ public class ActivityLogin extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG+"Volley", response);
+//                        Log.d(TAG+"Volley", response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -280,7 +279,7 @@ public class ActivityLogin extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbLogin.setVisibility(View.INVISIBLE);
-                        Log.d(TAG+"Volley", error.toString());
+//                        Log.d(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLogin.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -318,12 +317,12 @@ public class ActivityLogin extends AppCompatActivity {
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
-                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
+//                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
                                 String status = jsonArray.getString("status");
 
                                 if( status.equals("2") ) {
                                     // user acceptance was stored successfully in server
-                                    Log.d(TAG+"Volley", "userId: " + userId_fromServer + " AESkey_base64: " + AESkey64_fromServer);
+//                                    Log.d(TAG+"Volley", "userId: " + userId_fromServer + " AESkey_base64: " + AESkey64_fromServer);
                                     try{
                                         byte[] aesKeyBytes = Static_AppMethods.stringBase64toBytes(AESkey64_fromServer);
                                         SecretKey keyAES = new SecretKeySpec(aesKeyBytes, 0, aesKeyBytes.length, "AES");
@@ -336,12 +335,12 @@ public class ActivityLogin extends AppCompatActivity {
                                         Go2ActivityRetrieve();
 
                                     } catch (Exception e){
-                                        Log.d(TAG+"Encrypt", "Error: " + e.getMessage());
+//                                        Log.d(TAG+"Encrypt", "Error: " + e.getMessage());
                                         Toast.makeText(ActivityLogin.this, getResources().getString(R.string.errorWithEncryption)
                                                 + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Log.d(TAG+"Volley", "Response does not contains 2. " + response);
+//                                    Log.d(TAG+"Volley", "Response does not contains 2. " + response);
                                     Toast.makeText(getApplicationContext(), R.string.errorTryAgain, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -349,7 +348,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), R.string.errorWithServer, Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
-                                Log.d(TAG+"Encrypt", "Error: " + e.getMessage());
+//                                Log.d(TAG+"Encrypt", "Error: " + e.getMessage());
                                 Toast.makeText(ActivityLogin.this, getResources().getString(R.string.errorTryAgain)
                                         + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -366,7 +365,7 @@ public class ActivityLogin extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbLogin.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"Volley", error.toString());
+//                        Log.e(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLogin.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }

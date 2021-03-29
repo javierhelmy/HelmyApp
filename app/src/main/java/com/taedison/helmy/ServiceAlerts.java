@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +36,7 @@ public class ServiceAlerts extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d(TAG, "onStartCommand");
+//        Log.d(TAG, "onStartCommand");
 
         running = true;
 
@@ -117,8 +116,8 @@ public class ServiceAlerts extends Service {
                     public void onResponse(String response)
                     {
                         if( !TextUtils.isEmpty(response) ) {
-                            Log.d(TAG, "Response: " + response + "\nname= " + alertInPrefs
-                                    + "\nalertSMS= " + alertSMS + "\nwasCanceled= " + wasCanceled);
+//                            Log.d(TAG, "Response: " + response + "\nname= " + alertInPrefs
+//                                    + "\nalertSMS= " + alertSMS + "\nwasCanceled= " + wasCanceled);
 
                             preferences.removeAlertRegistryAlreadyUploaded(alertInPrefs);
 
@@ -135,8 +134,8 @@ public class ServiceAlerts extends Service {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.e(TAG, "error: " + error.toString() + "\nname= " + alertInPrefs
-                                + "\nalertSMS= " + alertSMS + "\nwasCanceled= " + wasCanceled);
+//                        Log.e(TAG, "error: " + error.toString() + "\nname= " + alertInPrefs
+//                                + "\nalertSMS= " + alertSMS + "\nwasCanceled= " + wasCanceled);
                         Static_AppMethods.checkResponseCode(error, preferences);
                         stopSelf();
                     }
@@ -162,7 +161,7 @@ public class ServiceAlerts extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "Service Alert destroyed");
+//        Log.d(TAG, "Service Alert destroyed");
         running = false;
         super.onDestroy();
     }

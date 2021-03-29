@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -204,7 +203,7 @@ public class ActivityRegisterUser_PersonalInfo3 extends AppCompatActivity {
 
                     pbInfo3.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
-                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                     Static_AppMethods.ToastEncryptionError(this);
                 }
             }
@@ -252,7 +251,7 @@ public class ActivityRegisterUser_PersonalInfo3 extends AppCompatActivity {
                                 intent = new Intent(ActivityRegisterUser_PersonalInfo3.this, ActivityProgress.class);
                             }
 
-                            Log.d("RequestVolleyReg3", "response= " + response);
+//                            Log.d("RequestVolleyReg3", "response= " + response);
                             if(response.contains("1")){
                                 Toast.makeText(getApplicationContext(), R.string.dataSaved, Toast.LENGTH_LONG).show();
                             } else {
@@ -274,7 +273,7 @@ public class ActivityRegisterUser_PersonalInfo3 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfo3.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg1", error.toString());
+//                        Log.d("RequestVolleyReg1", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterUser_PersonalInfo3.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -283,7 +282,7 @@ public class ActivityRegisterUser_PersonalInfo3 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("sex", sex);

@@ -14,7 +14,6 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -40,7 +39,7 @@ import java.util.List;
  * */
 public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.Callback, Camera.PreviewCallback {
 
-    final String TAG = "actCamera";
+//    final String TAG = "actCamera";
 
     View vHorizontal, vVertical; // scanning lines
     ObjectAnimator animationH, animationV;
@@ -223,7 +222,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             mCamera.startPreview();
 
         } catch (IOException e) {
-            Log.d(TAG+"PreviewCamera", "Error setting camera preview: " + e.getMessage());
+//            Log.d(TAG+"PreviewCamera", "Error setting camera preview: " + e.getMessage());
         }
     }
 
@@ -259,7 +258,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             mCamera.startPreview();
 
         } catch (Exception e){
-            Log.d(TAG+"PreviewCamera", "Error starting camera preview: " + e.getMessage());
+//            Log.d(TAG+"PreviewCamera", "Error starting camera preview: " + e.getMessage());
         }
     }
 
@@ -284,24 +283,24 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                     || TextUtils.isEmpty(rh) ){
                 // these four are in the old license card, first check if any of them is empty and in
                 // the next if statement check if age is empty in case it is a new license card
-                Log.d(TAG+"ocrtext", "NOT COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
+//                Log.d(TAG+"ocrtext", "NOT COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
                 clearFields_License(); // all fields must be detected in the same frame
             } else if( !isOldLicenseCard && TextUtils.isEmpty(ageS)){
                 // ageS is checked only if it is a new license card
-                Log.d(TAG+"ocrtext", "NOT COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
+//                Log.d(TAG+"ocrtext", "NOT COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
                 clearFields_License(); // all fields must be detected in the same frame
             } else {
-                Log.d(TAG+"ocrtext", "COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
+//                Log.d(TAG+"ocrtext", "COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
 
                 launchAlertConfirmLicenseData();
             }
         } else if ( fromActivity == 2 ) {
             // scanning soat
             if ( TextUtils.isEmpty(poliza) || TextUtils.isEmpty(placa) || TextUtils.isEmpty(marca) || TextUtils.isEmpty(chasis) ){
-                Log.d(TAG+"ocrtext", "NOT COMPLETE " + poliza + " " + marca + " " + chasis );
+//                Log.d(TAG+"ocrtext", "NOT COMPLETE " + poliza + " " + marca + " " + chasis );
                 clearFields_SOAT(); // all fields must be detected in the same frame
             } else {
-                Log.d(TAG+"ocrtext", "COMPLETE " + poliza + " " + marca + " " + chasis );
+//                Log.d(TAG+"ocrtext", "COMPLETE " + poliza + " " + marca + " " + chasis );
 
                 launchAlertConfirmSOATData();
             }
@@ -342,7 +341,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                         textBlocks = textBlocks_land_180;
                     }
 
-                    Log.d(TAG+"ocrtext", "Textblocks size="+textBlocks.size());
+//                    Log.d(TAG+"ocrtext", "Textblocks size="+textBlocks.size());
                     if(textBlocks.size() > 3){
                         // if more than 3 blocks were detected then process the info, otherwise no text was identified
                         if(fromActivity == 1){
@@ -390,7 +389,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG+"ocrtext", "COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
+//                        Log.d(TAG+"ocrtext", "COMPLETE " + names + " " + surnames + " " + ageS + " " + rh + " " + idnum);
 
                         alertLaunched = false;
                         Intent intent = new Intent(ActivityCamera.this, ActivityRegisterUser_PersonalInfo2.class);
@@ -455,7 +454,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d(TAG+"ocrtext", "COMPLETE " + poliza + " " + marca + " " + chasis );
+//                        Log.d(TAG+"ocrtext", "COMPLETE " + poliza + " " + marca + " " + chasis );
 
                         alertLaunched = false;
                         Intent intent = new Intent(ActivityCamera.this, ActivityRegisterBike.class);
@@ -509,7 +508,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
         for (int i = 0; i < textBlocks.size(); i++) {
             TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
             String tbString =  textBlock.getValue();
-            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
+//            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
 
             if(tbString.contains("C.C.") &&
                 tbString.replaceAll("\\D", "").length() > 7 // deletes all non-digits
@@ -535,7 +534,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
         for (int i = 0; i < textBlocks.size(); i++) {
             TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
             String tbString = textBlock.getValue();
-            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
+//            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
 
             /*
              * PLEASE HAVE AN OLD LICENSE CARD TO UNDERTAND THE CODE
@@ -551,21 +550,21 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             } else if(TextUtils.isEmpty(surnames) && apellidoIsComing){
                 // the workd "APELLIDO" was detected in the previous textblock, therefore this textblock should be the apellido
                 surnames = tbString.toUpperCase();
-                Log.d(TAG+"ocrtext", "SURNAMES: " + surnames);
+//                Log.d(TAG+"ocrtext", "SURNAMES: " + surnames);
             } else if (tbString.contains("NOMBRE")) {
                 // the workd "NOMBRE" was detected, therefore the nombre should be in the next textblock
                 nombreIsComing = true;
             } else if(TextUtils.isEmpty(names) && nombreIsComing){
                 // the workd "NOMBRE" was detected in the previous textblock, therefore this textblock should be the nombre
                 names = tbString.toUpperCase();
-                Log.d(TAG+"ocrtext", "NAMES: " + names);
+//                Log.d(TAG+"ocrtext", "NAMES: " + names);
             } else if(!TextUtils.isEmpty(surnames) && !TextUtils.isEmpty(names)
                     && TextUtils.isEmpty(rh) && TextUtils.isEmpty(idnum)){
                 // If apellidos and nombres were already detected, then the inmidiate textblock after it is the one that contains the RH
                 for(String type : Static_AppVariables.arrayRHs){
                     if(tbString.contains(type)){
                         rh = type;
-                        Log.d(TAG+"ocrtext", "RH: " + rh);
+//                        Log.d(TAG+"ocrtext", "RH: " + rh);
                         break;
                     }
                 }
@@ -576,7 +575,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                 if(seperated.length > 3){
                     // contains at least three words and the number
                     idnum = seperated[seperated.length - 1]; // the last in the array is the license number
-                    Log.d(TAG+"ocrtext", "LICENSE: " + idnum);
+//                    Log.d(TAG+"ocrtext", "LICENSE: " + idnum);
                 }
             } else if(tbString.contains("DE LICENCIA")
                     && tbString.replaceAll("\\D", "").length() < 7 ) {
@@ -584,7 +583,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                 licenceNumIsComing = true;
             } else if(TextUtils.isEmpty(idnum) && licenceNumIsComing){
                 idnum = tbString;
-                Log.d(TAG+"ocrtext", "LICENSE: " + idnum);
+//                Log.d(TAG+"ocrtext", "LICENSE: " + idnum);
             }
         }
     }
@@ -595,7 +594,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
         for (int i = 0; i < textBlocks.size(); i++) {
             TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
             String tbString =  textBlock.getValue();
-            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
+//            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
 
             /*
              PLEASE HAVE A NEW LICENSE CARD TO UNDERTAND THE CODE
@@ -608,13 +607,13 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             if (tbString.contains("No.") && tbString.length() > 6) {
                 // If contains "No.", we extract the string onwards
                 String temp = tbString.substring(4);
-                Log.d(TAG+"ocrtext", "Id = " + temp);
+//                Log.d(TAG+"ocrtext", "Id = " + temp);
                 try {
                     temp = temp.replaceAll("\\s+", ""); // \\s+ finds all white spaces and remove them
                     Integer.parseInt(temp); // if exception is thrown, then it was not a number
                     idnum = temp;
                 } catch (Exception e) {
-                    Log.d(TAG+"ocrtext", "Id error: " + e);
+//                    Log.d(TAG+"ocrtext", "Id error: " + e);
                     // if it is not a number, then it wont be assigned to etLicenseNum
                 }
             } else if (tbString.contains("NOMBRE")) {
@@ -653,11 +652,11 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                     names = "";
                     surnames = "";
                 }
-                Log.d(TAG+"ocrtext", "Length=" + separatedFullName.length + " Full name = " + fullName + " name:" + names + " surnames:" + surnames);
+//                Log.d(TAG+"ocrtext", "Length=" + separatedFullName.length + " Full name = " + fullName + " name:" + names + " surnames:" + surnames);
             } else if (Static_AppVariables.arrayRHs.contains(tbString)) {
                 // check if the strings detected match any of the blood groups
                 rh = tbString;
-                Log.d(TAG+"ocrtext", "Rh= " + rh);
+//                Log.d(TAG+"ocrtext", "Rh= " + rh);
             } else if (tbString.contains("-19") || tbString.contains("-20")) {
                 //if contains years starting -19 (e.g. 1993) or -20 (e.g. 2001), then this should be the birthday
                 int age;
@@ -666,7 +665,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                     Calendar todayCal = Calendar.getInstance(), birthdayCal = Calendar.getInstance();
 
                     String[] separatedAge = tbString.split("-"); // year="+separatedAge[2] +" month="+separatedAge[1] +" day="+separatedAge[0]
-                    Log.d(TAG+"ocrtext", "Age length= " + separatedAge.length);
+//                    Log.d(TAG+"ocrtext", "Age length= " + separatedAge.length);
                     if (separatedAge.length == 3) {
                         //must be length 3, day-month-year
                         try {
@@ -683,9 +682,9 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
 
                             ageS = String.valueOf(age);
 
-                            Log.d(TAG+"ocrtext", "year= " + year + " month=" + month + " day=" + day + " Age= " + ageS);
+//                            Log.d(TAG+"ocrtext", "year= " + year + " month=" + month + " day=" + day + " Age= " + ageS);
                         } catch (Exception e) {
-                            Log.e(TAG+"ocrtext", e.toString());
+//                            Log.e(TAG+"ocrtext", e.toString());
                         }
                     }
                 }
@@ -702,7 +701,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
             String tbString = textBlock.getValue();
 
-            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
+//            Log.d(TAG+"ocrtext", "Textblock ="+tbString + " i=" + i);
             /*
              * PLEASE HAVE AN PRINTED COPY OF SOAT TO UNDERTAND THE CODE
              * Data should be extracted in the following order, as that is how it appears in the SOATs:
@@ -714,13 +713,13 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
             if( TextUtils.isEmpty(poliza) || TextUtils.isEmpty(marca) || TextUtils.isEmpty(chasis) ){
                 if( tbString.contains("POL") && TextUtils.isEmpty(poliza) ){
                     // the word "POL" was detected, the policy number may be in this textblock
-                    Log.d(TAG+"ocrtext_soat", "POL" + tbString);
+//                    Log.d(TAG+"ocrtext_soat", "POL" + tbString);
                     String[] separated = tbString.split("\n");
                     if (separated.length == 3){
                         // if textblock contains three line then the policy number is all together in this textblock.
                         // Sometimes the policy number is devided in two textblocks, we do not address that case.
                         poliza = separated[1] + "-" + separated[2];
-                        Log.d(TAG+"ocrtext_soat", "POLIZA= " + poliza);
+//                        Log.d(TAG+"ocrtext_soat", "POLIZA= " + poliza);
                     } else {
                         // this textblock does not contain the policy number, but the inmidiate next does
                         polizaIsComing = true;
@@ -730,27 +729,27 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                         && TextUtils.isEmpty(poliza) ){
                     // the word "POL" was detected in the previous textblock.
                     // If there are two lines and more than 8 numbers is the poliza number
-                    Log.d(TAG+"ocrtext_soat", "POL" + tbString);
+//                    Log.d(TAG+"ocrtext_soat", "POL" + tbString);
                     String[] separated = tbString.split("\n");
                     if (separated.length == 2){
                         poliza = separated[0] + "-" + separated[1];
-                        Log.d(TAG+"ocrtext_soat", "POLIZA= " + poliza);
+//                        Log.d(TAG+"ocrtext_soat", "POLIZA= " + poliza);
                     }
                 } else if( tbString.replaceAll("\\D", "").length() == 3 && // replaces all non-digits and there should be 3 numbers remaining in the plate number
                         tbString.replaceAll("\\d", "").length() == 3 && // replaces all digits (0-9) and there should be 3 letter remaining in the plate number
                         TextUtils.isEmpty(placa)){
                     // poliza should have been found first
-                    Log.d(TAG+"ocrtext_soat", "PLACA= " + tbString);
+//                    Log.d(TAG+"ocrtext_soat", "PLACA= " + tbString);
                     placa = tbString;
                 } else if ( tbString.contains("MARCA") && TextUtils.isEmpty(marca) ){
                     // sometime two or three words are detected for marca
-                    Log.d(TAG+"ocrtext_soat", "MARCA" + tbString + " length= " + tbString.split(" ").length );
+//                    Log.d(TAG+"ocrtext_soat", "MARCA" + tbString + " length= " + tbString.split(" ").length );
                     String[] separated = tbString.split(" ");
                     if (separated.length == 3){
                         // marca label is in the middle of the 3 words detected, the last is the marca name
                         if(separated[1].equals("MARCA")){
                             marca = separated[2].toUpperCase();
-                            Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
+//                            Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
                         } else {
                             // marca label and the marca name are not in the same block, therefore it will be next (coming)
                             marcaIsComing = true;
@@ -759,7 +758,7 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                         // marca label is the first of the two words detected, the last is the marca name
                         if(separated[0].equals("MARCA")){
                             marca = separated[1].toUpperCase();
-                            Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
+//                            Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
                         } else {
                             // marca label and the marca name are not in the same block, therefore it will be next (coming)
                             marcaIsComing = true;
@@ -770,18 +769,18 @@ public class ActivityCamera extends AppCompatActivity implements SurfaceHolder.C
                     }
                 } else if (marcaIsComing && TextUtils.isEmpty(marca) ){
                     // the word "MARCA" was detected in the previous block, then this textblock contains the brand
-                    Log.d(TAG+"ocrtext_soat", "MARCA" + tbString);
+//                    Log.d(TAG+"ocrtext_soat", "MARCA" + tbString);
                     marca = tbString.toUpperCase();
-                    Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
+//                    Log.d(TAG+"ocrtext_soat", "MARCA= " + marca);
                 } else if (tbString.length() == 17 && TextUtils.isEmpty(chasis) ){
                     // if the textblock contains 17 characters, which is the length of chassis numbers
-                    Log.d(TAG+"ocrtext_soat", "CHASIS" + tbString);
+//                    Log.d(TAG+"ocrtext_soat", "CHASIS" + tbString);
                     // how chasis serial works: https://www.pruebaderuta.com/numero-identificacion-vehicular.php
                     try{
                         Integer.parseInt(tbString.substring(11, 16));
                         // if an exception is not thrown, then this corresponds to the chasis
                         chasis = tbString;
-                        Log.d(TAG+"ocrtext_soat", "CHASIS= " + chasis);
+//                        Log.d(TAG+"ocrtext_soat", "CHASIS= " + chasis);
                     } catch (Exception e){
                         // it wasnt the chasis
                     }

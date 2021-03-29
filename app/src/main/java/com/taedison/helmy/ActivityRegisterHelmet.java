@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -242,7 +241,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                Log.d("LocRequest", "OnSuccess");
+//                Log.d("LocRequest", "OnSuccess");
                 // GPS is ON
                 list_or_connect();
             }
@@ -251,7 +250,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
         task.addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull final Exception e) {
-                Log.d("LocRequest", "GPS off");
+//                Log.d("LocRequest", "GPS off");
                 // GPS off
                 if (e instanceof ResolvableApiException) {
                     ResolvableApiException resolvable = (ResolvableApiException) e;
@@ -415,7 +414,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
     private void startSendingHelmetColor(){
         int red = Color.red( helmetColor );
         contColor = 1;
-        Log.d(TAG, "HelmetColor red = " + red);
+//        Log.d(TAG, "HelmetColor red = " + red);
         bluetoothHelmet.helmetColorWrite(red, bluetoothHelmet.characteristicHelmetColorRed);
     }
 
@@ -460,7 +459,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean success = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_HELMET_COLOR_WRITE, false);
-                Log.d(TAG, "HelmetColor Write was successful: " + success + " cont=" + contColor);
+//                Log.d(TAG, "HelmetColor Write was successful: " + success + " cont=" + contColor);
                 if (!success) {
                     Toast.makeText(ActivityRegisterHelmet.this, R.string.bluetoothErrorTryAgain, Toast.LENGTH_LONG).show();
                     // bluetoothBike.bikePassword_1_WriteCharacteristic(spinnerBikePassword1.getSelectedItemPosition());
@@ -470,13 +469,13 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                     if(contColor == 1){
                         // red component was wrote successfully, then write the green
                         int green = Color.green( helmetColor );
-                        Log.d(TAG, "HelmetColor green = " + green);
+//                        Log.d(TAG, "HelmetColor green = " + green);
                         bluetoothHelmet.helmetColorWrite(green, bluetoothHelmet.characteristicHelmetColorGreen);
                         contColor = 2;
                     } else if(contColor == 2){
                         // green component was wrote successfully, then write the blue
                         int blue = Color.blue( helmetColor );
-                        Log.d(TAG, "HelmetColor blue = " + blue);
+//                        Log.d(TAG, "HelmetColor blue = " + blue);
                         bluetoothHelmet.helmetColorWrite(blue, bluetoothHelmet.characteristicHelmetColorBlue);
                         contColor = 3;
                     } else if(contColor == 3){
@@ -495,7 +494,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
-            Log.d(TAG,"start scanning");
+//            Log.d(TAG,"start scanning");
             // Stops scanning after a pre-defined scan period.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -547,8 +546,8 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                         public void run() {
                             String device2add = device.getName() + ";" + device.getAddress();
 
-                            Log.d(TAG, "BleFound device2add" + " " + arrayBleDevices.indexOf(device2add)
-                                    + " " + arrayBleDevices.indexOf(device2add));
+//                            Log.d(TAG, "BleFound device2add" + " " + arrayBleDevices.indexOf(device2add)
+//                                    + " " + arrayBleDevices.indexOf(device2add));
 
                             //check if device2add was already listed and if it is the primaryHelmet, bike or pillion and that the name is HELMY
                             if(device.getName() != null
@@ -686,7 +685,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
 
                 pbHelmet.setVisibility(View.VISIBLE);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                 Static_AppMethods.ToastEncryptionError(this);
             }
         }
@@ -720,13 +719,13 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                 // Add the name and address to array list to show in AlertDialog
                 String deviceNameMAC = device.getName()+";"+device.getAddress();
                 if (arrayBclassicNamesMACs.indexOf( deviceNameMAC ) < 0 && device.getName() != null &&
-                        ( device.getName().equals("V6") || device.getName().equals("Vansky") ) ) { //TODO: remove or change names allowed for intercomms
-                    Log.d(TAG, "New --> Name=" + device.getName() + " MAC=" + device.getAddress());
+                        ( device.getName().contains("HC Inter") || device.getName().contains("HC inter") ) ) {
+//                    Log.d(TAG, "New --> Name=" + device.getName() + " MAC=" + device.getAddress());
                     arrayBclassicNamesMACs.add(deviceNameMAC); // list in alertdialog updates automatically
                 }
 //                arrayBclassicNamesMACs.add(device.getName()+";"+device.getAddress());
             }
-            Log.d(TAG, "Bluetooth:" + arrayBclassicNamesMACs.toString());
+//            Log.d(TAG, "Bluetooth:" + arrayBclassicNamesMACs.toString());
         }
     }
 
@@ -751,8 +750,8 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                 // If it's already listed, skip it.
                 String deviceNameMAC = device.getName()+";"+device.getAddress();
                 if (arrayBclassicNamesMACs.indexOf( deviceNameMAC ) < 0 && device.getName() != null &&
-                        ( device.getName().equals("V6") || device.getName().equals("Vansky") ) ) { //TODO: remove or change names allowed for intercomms
-                    Log.d(TAG, "New --> Name=" + device.getName() + " MAC=" + device.getAddress());
+                        ( device.getName().contains("HC Inter") || device.getName().contains("HC inter") ) ) {
+//                    Log.d(TAG, "New --> Name=" + device.getName() + " MAC=" + device.getAddress());
                     arrayBclassicNamesMACs.add(deviceNameMAC); // list in alertdialog updates automatically
                     adapterBclassicNames.notifyDataSetChanged();
                 }
@@ -766,7 +765,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                         addnewBclassicDevice();
                     }
                 });
-                Log.d(TAG, "Bluetooth Discovery Finished");
+//                Log.d(TAG, "Bluetooth Discovery Finished");
             }
             if (intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
                 BluetoothDevice mBluetooth2Pair = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -777,11 +776,11 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                         saveHelmetInServer();
                         break;
                     case BluetoothDevice.BOND_BONDING:
-                        Log.d(TAG, "Bluetooth pairing BONDING");
+//                        Log.d(TAG, "Bluetooth pairing BONDING");
                         pbHelmet.setVisibility(View.VISIBLE);
                         break;
                     case BluetoothDevice.BOND_NONE:
-                        Log.d(TAG, "Bluetooth pairing NONE");
+//                        Log.d(TAG, "Bluetooth pairing NONE");
                         Toast.makeText(ActivityRegisterHelmet.this, getResources().getString(R.string.errorTryAgain),
                                 Toast.LENGTH_SHORT).show();
                         addnewBclassicDevice(); // start all over because there was an error pairing
@@ -822,12 +821,12 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
     private void pairDevice(BluetoothDevice device) {
         // Response to pairing will handled by the bluetoothBroadcastReceiver
         try {
-            Log.d(TAG, "pairDevice() Start Pairing...");
+//            Log.d(TAG, "pairDevice() Start Pairing...");
             Method m = device.getClass().getMethod("createBond", (Class[]) null);
             m.invoke(device, (Object[]) null);
-            Log.d(TAG, "pairDevice() Pairing finished.");
+//            Log.d(TAG, "pairDevice() Pairing finished.");
         } catch (Exception e) {
-            Log.e(TAG, e.toString() );
+//            Log.e(TAG, e.toString() );
         }
     }
 
@@ -905,7 +904,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG+"Volley", "save response: " + response);
+//                        Log.d(TAG+"Volley", "save response: " + response);
                         saving = false;
                         pbHelmet.setVisibility(View.INVISIBLE);
                         if( !TextUtils.isEmpty(response) ){
@@ -945,7 +944,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                     {
                         saving = false;
                         pbHelmet.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"Volley", error.toString());
+//                        Log.e(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterHelmet.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -954,9 +953,9 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG+"Volley", "userId= " + preferences.get_lastUser_Id_logged() +
-                        "alias= " + alias + " size=" +size + " brand=" + brand + " color=" + color + " mac=" + mac
-                        + " intercom=" + intercomm_mac);
+//                Log.d(TAG+"Volley", "userId= " + preferences.get_lastUser_Id_logged() +
+//                        "alias= " + alias + " size=" +size + " brand=" + brand + " color=" + color + " mac=" + mac
+//                        + " intercom=" + intercomm_mac);
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("alias", alias);
@@ -988,7 +987,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG+"Volley", "HC delete response: " + response);
+//                        Log.d(TAG+"Volley", "HC delete response: " + response);
                         saving = false;
                         pbHelmet.setVisibility(View.INVISIBLE);
                         if( !TextUtils.isEmpty(response) ){
@@ -1021,7 +1020,7 @@ public class ActivityRegisterHelmet extends AppCompatActivity {
                     {
                         saving = false;
                         pbHelmet.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"Volley", error.toString());
+//                        Log.e(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterHelmet.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }

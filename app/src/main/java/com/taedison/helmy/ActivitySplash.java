@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -69,7 +68,7 @@ public class ActivitySplash extends AppCompatActivity {
         //shared preferences
         preferences = SingletonSharedPreferences.getInstance(this.getApplicationContext()); // for the last user logged in
 
-        Log.d("SplashAct", "Oncreate");
+//        Log.d("SplashAct", "Oncreate");
 
         checkServerForDataLoginUpdates();
 
@@ -205,7 +204,7 @@ public class ActivitySplash extends AppCompatActivity {
         int TIME_SPLASH_MS = 2000;
 
         String lastUser = preferences.get_lastUser_email_logged();
-        Log.d("SplashAct", "Last user = " + lastUser);
+//        Log.d("SplashAct", "Last user = " + lastUser);
 
         startAnimationLogo();
 
@@ -333,7 +332,7 @@ public class ActivitySplash extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response)
                                 {
-                                    Log.d(TAG+"Volley", response);
+//                                    Log.d(TAG+"Volley", response);
                                     try {
                                         JSONObject jsonArray = new JSONObject(response);
                                         String passwordUptaded = jsonArray.getString("updatePassword");
@@ -367,7 +366,7 @@ public class ActivitySplash extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error)
                                 {
-                                    Log.d(TAG+"Volley", error.toString());
+//                                    Log.d(TAG+"Volley", error.toString());
                                     // we also check if server is down
                                     if(error != null && error.networkResponse != null && error.networkResponse.statusCode == 503){
                                         // server is down
@@ -420,7 +419,7 @@ public class ActivitySplash extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG+"Volley", "requestNotifyServer: " + response);
+//                        Log.d(TAG+"Volley", "requestNotifyServer: " + response);
                         // if there is a response, server was notified successfully, we don't do anything else
                         Thread.currentThread().interrupt(); // kill thread
                     }
@@ -431,7 +430,7 @@ public class ActivitySplash extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         // we also check if server is down
-                        Log.d(TAG+"Volley", error.toString());
+//                        Log.d(TAG+"Volley", error.toString());
                         Thread.currentThread().interrupt(); // kill thread
                     }
                 })
@@ -443,7 +442,7 @@ public class ActivitySplash extends AppCompatActivity {
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("updatePassword", "0");
                 params.put("updateData", "0");
-                Log.d(TAG+"Volley", "requestNotifyServer params: " + params.toString());
+//                Log.d(TAG+"Volley", "requestNotifyServer params: " + params.toString());
                 return params;
             }
         };

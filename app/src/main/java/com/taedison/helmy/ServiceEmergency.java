@@ -17,7 +17,6 @@ import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -111,13 +110,13 @@ public class ServiceEmergency extends Service {
 
 //        activityEmergencyNotified = false;
 
-        Log.d(TAG, "Service emergency created");
+//        Log.d(TAG, "Service emergency created");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d(TAG, "NotificationEmergency");
+//        Log.d(TAG, "NotificationEmergency");
 
         createNotificationChannel();
         notificationIntent = new Intent(this, ActivityEmergency.class);
@@ -160,7 +159,7 @@ public class ServiceEmergency extends Service {
                     // multiple of 10
                     checkGPS(remaining);
 
-                    Log.d(TAG, "TTsEmergency Remaining= " + remaining + " in millis= " + millisUntilFinished);
+//                    Log.d(TAG, "TTsEmergency Remaining= " + remaining + " in millis= " + millisUntilFinished);
                 }
             }
 
@@ -175,12 +174,12 @@ public class ServiceEmergency extends Service {
 
         // Text to speech: alert will be sent in 120 seconds. User has 120 seconds to cancel it.
         mTTS.speakSentence(getResources().getString(R.string.EmergencyWillBeSentIn120));
-        Log.d(TAG, "TTsEmergency 120 seconds");
+//        Log.d(TAG, "TTsEmergency 120 seconds");
 
         cancelEmergencyReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("CancelBtn", "from emergency");
+//                Log.d("CancelBtn", "from emergency");
                 cancelService();
                 NotifEmergencyNotSent.Launch(ServiceEmergency.this, getResources().getString(R.string.EmergencyAlertWasCancelled));
                 sendActivityAlertSent(4);
@@ -233,7 +232,7 @@ public class ServiceEmergency extends Service {
     private void alertWasSentMsg_TTS_notif(){
         // Text to speech: alert was sent
         mTTS.speakSentence(getResources().getString(R.string.alertWasSentKeepCalm));
-        Log.d(TAG, "TTsEmergency Sent");
+//        Log.d(TAG, "TTsEmergency Sent");
 
         // send SMS
         if(vibrator != null) {
@@ -299,7 +298,7 @@ public class ServiceEmergency extends Service {
                     // location not available
                     notifyGPSerror();
                 } else {
-                    Log.d(TAG, "num locations: " + locationResult.getLocations().size() );
+//                    Log.d(TAG, "num locations: " + locationResult.getLocations().size() );
                     for (Location location : locationResult.getLocations()) {
                         if (location != null) {
                             fusedLocationClient.removeLocationUpdates(mLocationCallback); // so that it stops listening for updates
@@ -307,7 +306,7 @@ public class ServiceEmergency extends Service {
                             timerLocation.cancel(); // cancel so that the OnFinish method does not execute
                             String locationLink = "https://www.google.com/maps/search/?api=1&query="
                                     + location.getLatitude() + "," + location.getLongitude();
-                            Log.d(TAG, "LocationLink: " + locationLink);
+//                            Log.d(TAG, "LocationLink: " + locationLink);
 
                             String smsText = "HELMY: " + preferences.getUserNames() + " "
                                     + getResources().getString(R.string.EmergencySMS) + locationLink;
@@ -396,13 +395,13 @@ public class ServiceEmergency extends Service {
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-        Log.d(TAG+"SMS", "json sent: " + new JSONObject(params));
+//        Log.d(TAG+"SMS", "json sent: " + new JSONObject(params));
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG+"SMS", "response: " + response);
+//                        Log.d(TAG+"SMS", "response: " + response);
                         Calendar calendar = Calendar.getInstance();
                         String dateSMS = calendar.get(Calendar.YEAR) +"-"+ (calendar.get(Calendar.MONTH)+1)
                                 +"-"+ calendar.get(Calendar.DAY_OF_MONTH) +"-"+ calendar.get(Calendar.HOUR_OF_DAY)
@@ -410,9 +409,9 @@ public class ServiceEmergency extends Service {
 
                         try{
                             JSONArray jsonArray = response.getJSONArray("respuesta");
-                            Log.d(TAG+"SMS", "json array: " + jsonArray);
+//                            Log.d(TAG+"SMS", "json array: " + jsonArray);
                             JSONObject j = jsonArray.getJSONObject(0);
-                            Log.d(TAG+"SMS", "json element: " + j);
+//                            Log.d(TAG+"SMS", "json element: " + j);
 
                             if( jsonArray.length() == 0 ){
                                 // an error occured, SMS were not sent from AWS
@@ -471,7 +470,7 @@ public class ServiceEmergency extends Service {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG+"SMS", error.toString());
+//                        Log.e(TAG+"SMS", error.toString());
                         // possibly user did not have internet connection
                         Static_AppMethods.checkResponseCode(error, preferences);
                         sendActivityAlertSent(3);
@@ -640,7 +639,7 @@ public class ServiceEmergency extends Service {
         if(vibrator != null) {
             vibrator.cancel();
         }
-        Log.d(TAG, "cancelService");
+//        Log.d(TAG, "cancelService");
 
         mTTS.speakSentence(getResources().getString(R.string.EmergencyAlertWasCancelled));
 
@@ -653,7 +652,7 @@ public class ServiceEmergency extends Service {
             sendAlertRegistryToServer(dateCanceled, "0");
         }
 
-        Log.d("TTsEmergency", "Cancelled");
+//        Log.d("TTsEmergency", "Cancelled");
     }
 
     private void sendAlertRegistryToServer(String dateCanceled, String dateSMS){
@@ -676,7 +675,7 @@ public class ServiceEmergency extends Service {
     @Override
     public void onDestroy() {
         running = false;
-        Log.d(TAG, "ServiceEmergency destroyed");
+//        Log.d(TAG, "ServiceEmergency destroyed");
 //        Toast.makeText(this, "Emergency service done", Toast.LENGTH_SHORT).show();
 //        try{
 //            unregisterReceiver(receiverSMS_sent_sim0);
@@ -684,7 +683,7 @@ public class ServiceEmergency extends Service {
 //        } catch (Exception ignored){}
         if(cancelEmergencyReceiver != null){
             unregisterReceiver(cancelEmergencyReceiver);
-            Log.d(TAG, "cancel receiver unregistered");
+//            Log.d(TAG, "cancel receiver unregistered");
         }
         if(vibrator != null) {
             vibrator.cancel();

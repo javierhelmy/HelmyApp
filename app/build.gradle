@@ -10,8 +10,8 @@ android {
         applicationId "com.taedison.helmy"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.5"
+        versionCode 7
+        versionName "1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true // code got very long and many libraries imported
     }

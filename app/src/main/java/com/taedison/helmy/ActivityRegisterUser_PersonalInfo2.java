@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -179,7 +178,7 @@ public class ActivityRegisterUser_PersonalInfo2 extends AppCompatActivity {
 
                     pbInfo1.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
-                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                     Static_AppMethods.ToastEncryptionError(this);
                 }
             }
@@ -212,7 +211,7 @@ public class ActivityRegisterUser_PersonalInfo2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfo1.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg2", "response= " + response);
+//                        Log.d("RequestVolleyReg2", "response= " + response);
 
                         if( !TextUtils.isEmpty(response) ){
                             // save personal data in preferences
@@ -241,7 +240,7 @@ public class ActivityRegisterUser_PersonalInfo2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfo1.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg1", error.toString());
+//                        Log.d("RequestVolleyReg1", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterUser_PersonalInfo2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -250,7 +249,7 @@ public class ActivityRegisterUser_PersonalInfo2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("licenseNumber", licenseNum);

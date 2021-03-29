@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -99,7 +98,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
-                                        Log.d(TAG, response.toString());
+//                                        Log.d(TAG, response.toString());
                                         try {
                                             emailFacebook = object.getString("email");
                                         } catch (JSONException e) {
@@ -107,7 +106,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                         }
                                         if(emailFacebook != null){
                                             String token = loginResult.getAccessToken().getToken(); //todo send to server
-                                            Log.d(TAG, "token: " + token);
+//                                            Log.d(TAG, "token: " + token);
                                             generateKeyAES_sendServer(emailFacebook, "FACEBOOK", token);
                                         }
                                     }
@@ -126,7 +125,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        Log.e(TAG, exception.toString());
+//                        Log.e(TAG, exception.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLoginRegister.this);
                     }
 
@@ -155,7 +154,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
             pbRegister.setVisibility(View.VISIBLE);
 
         } catch (Exception e){
-            Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
+//            Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
             Static_AppMethods.ToastEncryptionError(this);
         }
     }
@@ -185,20 +184,20 @@ public class ActivityLoginRegister extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                Log.d(TAG, "signing");
+//                Log.d(TAG, "signing");
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
                 // Signed in was successful
                 if(account != null){
                     String tokenId = account.getIdToken();
-                    Log.d(TAG, "tokenId: " + tokenId);
+//                    Log.d(TAG, "tokenId: " + tokenId);
                     generateKeyAES_sendServer(account.getEmail(),
                             "GOOGLE", tokenId);
                 }
             } catch (ApiException e) {
                 // The ApiException status code indicates the detailed failure reason.
                 // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
+//                Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
                 if(e.getStatusCode() == CommonStatusCodes.NETWORK_ERROR){
                     Static_AppMethods.ToastCheckYourInternet(this);
                 }
@@ -251,7 +250,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
-                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
+//                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
                                 String status = jsonArray.getString("status");
                                 String userID = jsonArray.getString("userId");
 
@@ -289,7 +288,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 } else {
-                                    Log.d(TAG+"Volley", "Response does not contains 1 or 2. " + response);
+//                                    Log.d(TAG+"Volley", "Response does not contains 1 or 2. " + response);
                                     Toast.makeText(getApplicationContext(), R.string.errorWithServer, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -297,7 +296,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), R.string.errorWithServer, Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
-                                Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
+//                                Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
                                 Toast.makeText(ActivityLoginRegister.this, getResources().getString(R.string.errorWithEncryption)
                                         + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -314,7 +313,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbRegister.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"Volley", error.toString());
+//                        Log.e(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLoginRegister.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -323,7 +322,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG+"Volley", "email: " + emailFacebook_Google + " password: " + password + " userK: " + AESkey_string64 );
+//                Log.d(TAG+"Volley", "email: " + emailFacebook_Google + " password: " + password + " userK: " + AESkey_string64 );
                 Map<String, String> params = new HashMap<>();
                 params.put("email", emailFacebook_Google);
                 params.put("password", password);
@@ -354,7 +353,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
-                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
+//                                Log.d(TAG+"Volley", "Jason: " + jsonArray.toString());
                                 String status = jsonArray.getString("status");
 
                                 if( status.equals("4") ) {
@@ -377,7 +376,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 } else {
-                                    Log.d(TAG+"Volley", "Response does not contains 4. " + response);
+//                                    Log.d(TAG+"Volley", "Response does not contains 4. " + response);
                                     Toast.makeText(getApplicationContext(), R.string.errorTryAgain, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -385,7 +384,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), R.string.errorWithServer, Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
-                                Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
+//                                Log.e(TAG+"Encrypt", "Error: " + e.getMessage());
                                 Toast.makeText(ActivityLoginRegister.this, getResources().getString(R.string.errorTryAgain)
                                         + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -402,7 +401,7 @@ public class ActivityLoginRegister extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbRegister.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"Volley", error.toString());
+//                        Log.e(TAG+"Volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityLoginRegister.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }

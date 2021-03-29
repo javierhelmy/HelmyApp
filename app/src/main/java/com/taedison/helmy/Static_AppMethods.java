@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.security.KeyPairGeneratorSpec;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,9 +55,9 @@ public class Static_AppMethods {
         progressBar.setVisibility(View.VISIBLE);
         SingletonSharedPreferences preferences = SingletonSharedPreferences.getInstance(context.getApplicationContext());
         int loginForm = preferences.get_userLoginForm();
-        Log.d("logout_helmy", "started");
+//        Log.d("logout_helmy", "started");
         preferences.delete_lastUser_logged(); // deletes all preferences
-        Log.d("logout_helmy", "prefs");
+//        Log.d("logout_helmy", "prefs");
         if(loginForm == 1){
             //Google logout
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -66,18 +65,18 @@ public class Static_AppMethods {
                     .build();
             GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
             mGoogleSignInClient.signOut();
-            Log.d("logout_helmy", "google");
+//            Log.d("logout_helmy", "google");
         } else if (loginForm == 2){
             //facebook logout
             LoginManager.getInstance().logOut();
-            Log.d("logout_helmy", "facebook");
+//            Log.d("logout_helmy", "facebook");
         }
 
         //Go to ActivityLogin
         Intent va = new Intent(context, ActivityLoginRegister.class);
         va.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(va);
-        Log.d("logout_helmy", "done");
+//        Log.d("logout_helmy", "done");
         progressBar.setVisibility(View.GONE);
     }
 
@@ -188,7 +187,7 @@ public class Static_AppMethods {
             outputStreamWriter.close();
         }
         catch (IOException e) {
-            Log.e("SplashAct", "File write failed: " + e.toString());
+//            Log.e("SplashAct", "File write failed: " + e.toString());
         }
     }
 
@@ -211,13 +210,13 @@ public class Static_AppMethods {
 
                 inputStream.close();
                 ret = stringBuilder.toString();
-                Log.d("SplashAct", "data" + fileName + "\n" + ret);
+//                Log.d("SplashAct", "data" + fileName + "\n" + ret);
             }
         }
         catch (FileNotFoundException e) {
-            Log.e("SplashAct", "File not found: " + e.toString());
+//            Log.e("SplashAct", "File not found: " + e.toString());
         } catch (IOException e) {
-            Log.e("SplashAct", "Can not read file: " + e.toString());
+//            Log.e("SplashAct", "Can not read file: " + e.toString());
         }
 
         return ret;
@@ -283,10 +282,10 @@ public class Static_AppMethods {
 
         if(global_keyAES == null){
             // get the key that was generated/retrieved at the time of login or registration
-            Log.e("Encryptionn", "key is null" );
+//            Log.e("Encryptionn", "key is null" );
             getAESkeyFromPrefs(context, KEY_ALIAS, preferences);
         } else {
-            Log.e("Encryptionn", "AES key bytes: " + Arrays.toString(global_keyAES.getEncoded()) );
+//            Log.e("Encryptionn", "AES key bytes: " + Arrays.toString(global_keyAES.getEncoded()) );
         }
 
         cipher.init(Cipher.ENCRYPT_MODE, global_keyAES);
@@ -300,10 +299,10 @@ public class Static_AppMethods {
 
         if(global_keyAES == null){
             // get the key that was generated/retrieved at the time of login or registration
-            Log.e("Encryptionn", "key is null" );
+//            Log.e("Encryptionn", "key is null" );
             getAESkeyFromPrefs(context, KEY_ALIAS, preferences);
         }else {
-            Log.e("Encryptionn", "AES key bytes: " + Arrays.toString(global_keyAES.getEncoded()) );
+//            Log.e("Encryptionn", "AES key bytes: " + Arrays.toString(global_keyAES.getEncoded()) );
         }
 
         cipher.init(Cipher.DECRYPT_MODE, global_keyAES);
@@ -369,7 +368,7 @@ public class Static_AppMethods {
         keyStore.load(null);
         // Generate the RSA key pairs
         if (!keyStore.containsAlias(KEY_ALIAS)) {
-            Log.d("Encryptionn",  "NO RSA KEY");
+//            Log.d("Encryptionn",  "NO RSA KEY");
             // Generate a key pair for encryption
             Calendar start = Calendar.getInstance();
             Calendar end = Calendar.getInstance();
@@ -385,7 +384,7 @@ public class Static_AppMethods {
             kpg.initialize(spec);
             kpg.generateKeyPair(); // privateKeys are not accessible in the app or outside
 
-            Log.d("Encryptionn",  "NOW YES RSA KEY");
+//            Log.d("Encryptionn",  "NOW YES RSA KEY");
         }
     }
 
@@ -403,11 +402,11 @@ public class Static_AppMethods {
 
             global_keyAES = keyAES;
 
-            Log.d("Encryptionn",  "keyAES string prefs= " +  Static_AppMethods.bytesToStringBase64(aesEncryptedBytes) );
+//            Log.d("Encryptionn",  "keyAES string prefs= " +  Static_AppMethods.bytesToStringBase64(aesEncryptedBytes) );
 
-            Log.d("Encryptionn",  "email= " + preferences.get_lastUser_email_logged() +" keyAES string prefs= " +  preferences.get_AESkey_rsaEncrypted() );
+//            Log.d("Encryptionn",  "email= " + preferences.get_lastUser_email_logged() +" keyAES string prefs= " +  preferences.get_AESkey_rsaEncrypted() );
         } catch (Exception e){
-            Log.d("Encryptionn", "Error: " + e.getMessage());
+//            Log.d("Encryptionn", "Error: " + e.getMessage());
             Toast.makeText(context, context.getResources().getString(R.string.errorWithEncryption)
                     + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -415,7 +414,7 @@ public class Static_AppMethods {
 
     private static void getAESkeyFromPrefs (Context context, String KEY_ALIAS, SingletonSharedPreferences preferences) throws Exception{
         String AESkey64_rsaEncrypted = preferences.get_AESkey_rsaEncrypted(); // get the AES key as a string in base 64
-        Log.e("Encryptionn", "Prefs AESkey64_rsaEncrypted: " + AESkey64_rsaEncrypted );
+//        Log.e("Encryptionn", "Prefs AESkey64_rsaEncrypted: " + AESkey64_rsaEncrypted );
         //convert it to bytes. Remember that the AES key was encrypted using RSA
         byte[] AESkey_rsaEncrypted_bytes = Static_AppMethods.stringBase64toBytes(AESkey64_rsaEncrypted);
         // Now decrypt the AES key

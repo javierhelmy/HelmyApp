@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +52,7 @@ public class ServiceUploadTxt extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d(TAG, "onStartCommand");
+//        Log.d(TAG, "onStartCommand");
 
         running = true;
 
@@ -113,7 +112,7 @@ public class ServiceUploadTxt extends Service {
 
                 try{
                     // trust the SSL certificate in our smarter server
-                    Log.d("singletonVolley", "Started SSL");
+//                    Log.d("singletonVolley", "Started SSL");
                     CertificateFactory cf = CertificateFactory.getInstance("X.509");
                     InputStream caInput = getAssets().open("smarter_ssl.crt");
                     Certificate ca;
@@ -123,19 +122,19 @@ public class ServiceUploadTxt extends Service {
                     } finally {
                         caInput.close();
                     }
-                    Log.d("singletonVolley", ".crt loaded");
+//                    Log.d("singletonVolley", ".crt loaded");
                     // Create a KeyStore containing our trusted CAs
                     String keyStoreType = KeyStore.getDefaultType();
                     KeyStore keyStore = KeyStore.getInstance(keyStoreType);
                     keyStore.load(null, null);
                     keyStore.setCertificateEntry("ca", ca);
 
-                    Log.d("singletonVolley", "setCertificateEntry SSL");
+//                    Log.d("singletonVolley", "setCertificateEntry SSL");
                     // Create a TrustManager that trusts the CAs in our KeyStore
                     String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
                     TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
                     tmf.init(keyStore);
-                    Log.d("singletonVolley", "trust CA SSL");
+//                    Log.d("singletonVolley", "trust CA SSL");
                     // Create an SSLContext that uses our TrustManager
                     SSLContext ssl_context = SSLContext.getInstance("TLS");
                     ssl_context.init(null, tmf.getTrustManagers(), null);
@@ -176,7 +175,7 @@ public class ServiceUploadTxt extends Service {
                     final Response response = client.newCall(request).execute();
 
                     if(!response.isSuccessful()){
-                        Log.e(TAG, "Error : "+response + "\nuserId= " + userId);
+//                        Log.e(TAG, "Error : "+response + "\nuserId= " + userId);
                         // check if server is down, and if it is, then user has to try again and this
                         // time using the secondary server
                         if(response.code() == 503){
@@ -186,7 +185,7 @@ public class ServiceUploadTxt extends Service {
                     } else {
                         try {
                             JSONObject jsonArray = new JSONObject(response.body().string());
-                            Log.d(TAG, "Jason: " + jsonArray.toString());
+//                            Log.d(TAG, "Jason: " + jsonArray.toString());
                             String status = jsonArray.getString("status");
 
                             if( status.equals("1") || status.equals("0") ) {
@@ -196,7 +195,7 @@ public class ServiceUploadTxt extends Service {
                             }
 
                         } catch (JSONException ignored) {
-                            Log.e(TAG, "error txt upload:" + ignored.getMessage());
+//                            Log.e(TAG, "error txt upload:" + ignored.getMessage());
                         }
 
                     }
@@ -204,7 +203,7 @@ public class ServiceUploadTxt extends Service {
 
 
                 } catch (final IOException e) {
-                    Log.e(TAG, "Exception : "+e.getMessage() + "\nuserId= " + userId);
+//                    Log.e(TAG, "Exception : "+e.getMessage() + "\nuserId= " + userId);
                     stopSelf();
                 }
             }
@@ -218,7 +217,7 @@ public class ServiceUploadTxt extends Service {
         // to convert .pfx ssl certificates to .crt, follow: https://www.ibm.com/support/knowledgecenter/SSVP8U_9.7.0/com.ibm.drlive.doc/topics/r_extratsslcert.html
 
         // trust the SSL certificate in our smarter server
-        Log.d("singletonVolley", "Started SSL");
+//        Log.d("singletonVolley", "Started SSL");
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
         InputStream caInput = getAssets().open("smarter_ssl.crt");
         Certificate ca;
@@ -228,19 +227,19 @@ public class ServiceUploadTxt extends Service {
         } finally {
             caInput.close();
         }
-        Log.d("singletonVolley", ".crt loaded");
+//        Log.d("singletonVolley", ".crt loaded");
         // Create a KeyStore containing our trusted CAs
         String keyStoreType = KeyStore.getDefaultType();
         KeyStore keyStore = KeyStore.getInstance(keyStoreType);
         keyStore.load(null, null);
         keyStore.setCertificateEntry("ca", ca);
 
-        Log.d("singletonVolley", "setCertificateEntry SSL");
+//        Log.d("singletonVolley", "setCertificateEntry SSL");
         // Create a TrustManager that trusts the CAs in our KeyStore
         String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
         tmf.init(keyStore);
-        Log.d("singletonVolley", "trust CA SSL");
+//        Log.d("singletonVolley", "trust CA SSL");
         // Create an SSLContext that uses our TrustManager
         SSLContext context = SSLContext.getInstance("TLS");
         context.init(null, tmf.getTrustManagers(), null);
@@ -250,7 +249,7 @@ public class ServiceUploadTxt extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "Service txt destroyed");
+//        Log.d(TAG, "Service txt destroyed");
         running = false;
         super.onDestroy();
     }

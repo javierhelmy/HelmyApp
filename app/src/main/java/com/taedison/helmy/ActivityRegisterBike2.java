@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -176,8 +175,8 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 boolean connected = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BLE_CONNECTION, false);
                 String deviceMAC = intent.getStringExtra(Static_AppVariables.INTENTEXTRA_BLE_MAC);
-                Log.d(TAG_receivers, "Device = " + deviceMAC + " connnected " + connected);
-                Log.d(TAG_receivers, "Device =" + deviceMAC + "connnected" + connected);
+//                Log.d(TAG_receivers, "Device = " + deviceMAC + " connnected " + connected);
+//                Log.d(TAG_receivers, "Device =" + deviceMAC + "connnected" + connected);
 
                 if (!connected) {
                     Toast.makeText(ActivityRegisterBike2.this, R.string.bluetoothNotFoundTryAgain, Toast.LENGTH_LONG).show();
@@ -190,7 +189,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     saving = true; // will start saving data into helmyM, server, and preferences
                     bikeId_bytes = bluetoothBike.getBikeIDbytes();
 
-                    Log.d(TAG_receivers, "Encrypted bytes ID read= " + Arrays.toString(bikeId_bytes) );
+//                    Log.d(TAG_receivers, "Encrypted bytes ID read= " + Arrays.toString(bikeId_bytes) );
 
                     // if bike does not have an ID, we request a random unique ID from the server and it is sent to HelmyM.
                     // 1. If HelmyM is turned off before sending it complete, HelmyM wont save it (HelmyMs code)
@@ -223,7 +222,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean success = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BIKE_PASSWORD_WRITE, false);
-                Log.d(TAG_receivers, "Write was successful: " + success + " cont=" + contPassword);
+//                Log.d(TAG_receivers, "Write was successful: " + success + " cont=" + contPassword);
                 if (!success) {
                     Toast.makeText(ActivityRegisterBike2.this, R.string.bluetoothErrorTryAgain, Toast.LENGTH_LONG).show();
                     // user will have to hit on the button to restart writing the password fromActivity the beggining
@@ -253,7 +252,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean success = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BIKE_ID_WRITE, false);
-                Log.d(TAG_receivers, "Write was successful: " + success + " cont=" + contBikeId);
+//                Log.d(TAG_receivers, "Write was successful: " + success + " cont=" + contBikeId);
                 if (!success) {
                     Toast.makeText(ActivityRegisterBike2.this, R.string.bluetoothErrorTryAgain, Toast.LENGTH_LONG).show();
 //                    bluetoothBike.bikePassword_1_WriteCharacteristic(spinnerBikePassword1.getSelectedItemPosition());
@@ -356,7 +355,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     }
                     oldPass1 = spinnerBikePassword1.getSelectedItem().toString();
 
-                    Log.d(TAG, "oldpass1= " + oldPass1);
+//                    Log.d(TAG, "oldpass1= " + oldPass1);
 
                     sel = arrayListNumbers.indexOf( preferences.getBikePass2(edit_MAC) );
                     if (sel > 0) {
@@ -440,7 +439,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
-            Log.d("BLEdevices","start scanning");
+//            Log.d("BLEdevices","start scanning");
             // Stops scanning after a pre-defined scan period.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -452,7 +451,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     BluetoothDevicesDialog.setDialogPositiveButton(getResources().getString(R.string.retry), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.d("RegisterBike", "Reintentar");
+//                            Log.d("RegisterBike", "Reintentar");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -485,8 +484,8 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                         @Override
                         public void run() {
                             String device2add = device.getName() + ";" + device.getAddress();
-                            Log.d("BleFound", device2add + " " + arrayBleDevices.indexOf(device2add)
-                                    + " " + arrayBleDevices.indexOf(device2add));
+//                            Log.d("BleFound", device2add + " " + arrayBleDevices.indexOf(device2add)
+//                                    + " " + arrayBleDevices.indexOf(device2add));
                             //check if device2add was already listed and if it is the primaryHelmet, bike or pillion and that the name is HELMY
                             if(device.getName() != null
                                     && arrayBleDevices.indexOf(device2add) < 0
@@ -578,14 +577,14 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 && spinnerBikePassword3.getSelectedItem().toString().equals(preferences.getBikePass3(primaryBikeSelectedMAC))
         ){
             // user did not change any data
-            Log.d("actregisterbike", "did not changed");
+//            Log.d("actregisterbike", "did not changed");
             Go2NextActivity();
         } else {
-            Log.d("actregisterbike", "helmyM_connected= " + helmyM_connected + " edit_MAC= " +
-                    edit_MAC );
+//            Log.d("actregisterbike", "helmyM_connected= " + helmyM_connected + " edit_MAC= " +
+//                    edit_MAC );
 
             if(!saving) {
-                Log.d("actregisterbike", "entered connected");
+//                Log.d("actregisterbike", "entered connected");
                 checkLocationPermission();
             }
         }
@@ -612,7 +611,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                Log.d("LocRequest", "OnSuccess");
+//                Log.d("LocRequest", "OnSuccess");
                 // GPS is ON
                 list_connect_or_update();
             }
@@ -621,7 +620,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
         task.addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull final Exception e) {
-                Log.d("LocRequest", "GPS off");
+//                Log.d("LocRequest", "GPS off");
                 // GPS off
                 if (e instanceof ResolvableApiException) {
                     ResolvableApiException resolvable = (ResolvableApiException) e;
@@ -689,14 +688,14 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     // first add the BLE and then the intercom bluetooth
                     alert.dismissAlert();
                     displayListBluetoothDevices();
-                    Log.d("actregisterbike", "displayBLEs");
+//                    Log.d("actregisterbike", "displayBLEs");
                 }
             });
             alert.hideCancelButton();
             alert.showAlert();
         } else {
             // user want to edit HelmyM
-            Log.d("actregisterbike", "primaryBikeSelectedMAC= " + primaryBikeSelectedMAC);
+//            Log.d("actregisterbike", "primaryBikeSelectedMAC= " + primaryBikeSelectedMAC);
 
             if (oldPass1.equals(String.valueOf(spinnerBikePassword1.getSelectedItemPosition()))
                     && oldPass2.equals(String.valueOf(spinnerBikePassword2.getSelectedItemPosition()))
@@ -748,7 +747,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     wheelRefEncrypted, password123Encrypted, bikeIdEncrypted);
             requestQueue.add(joRequest);
         } catch (Exception e) {
-            Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//            Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
             Static_AppMethods.ToastEncryptionError(this);
         }
     }
@@ -857,7 +856,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, "requestBike response= " + response);
+//                        Log.d(TAG, "requestBike response= " + response);
                         if( !TextUtils.isEmpty(response) ) {
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -908,12 +907,12 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                                     Go2NextActivity();
 
                                 } catch (Exception e) {
-                                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                                     Static_AppMethods.ToastEncryptionError(ActivityRegisterBike2.this);
                                     bluetoothBike.finishConnection();
                                 }
                             } catch (JSONException e) {
-                                Log.e(TAG, "requestBike Error= " + e.getMessage());
+//                                Log.e(TAG, "requestBike Error= " + e.getMessage());
                                 Static_AppMethods.ToastTryAgain(ActivityRegisterBike2.this);
                                 bluetoothBike.finishConnection();
                             }
@@ -932,7 +931,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbBike2.setVisibility(View.INVISIBLE);
-                        Log.d("RequestVolleyReg2", error.toString());
+//                        Log.d("RequestVolleyReg2", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         bluetoothBike.finishConnection();
                         Static_AppMethods.checkResponseCode(error, preferences);
@@ -942,7 +941,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("alias", alias);
@@ -956,7 +955,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 params.put("threeDigitsBackupPowerKey", password123);
                 params.put("mac", primaryBikeSelectedMAC);
                 params.put("codeM", bikeCode); // it is encrypted
-                Log.d(TAG, "params requestBike: " + params.toString() );
+//                Log.d(TAG, "params requestBike: " + params.toString() );
                 return params;
             }
         };
@@ -977,7 +976,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, "requestBikeCode response: " + response);
+//                        Log.d(TAG, "requestBikeCode response: " + response);
                         if( !TextUtils.isEmpty(response) ) {
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -1014,7 +1013,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                         saving = false;
                         pbBike2.setVisibility(View.INVISIBLE);
                         bluetoothBike.finishConnection();
-                        Log.d("RequestVolleyReg1", error.toString());
+//                        Log.d("RequestVolleyReg1", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -1023,7 +1022,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("code", preferences.get_lastUser_Id_logged());
 
@@ -1047,7 +1046,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, "requestDeleteBike response: " + response);
+//                        Log.d(TAG, "requestDeleteBike response: " + response);
                         pbBike2.setVisibility(View.GONE);
                         if( !TextUtils.isEmpty(response) ){
                             preferences.deleteBikeFromPreferences(edit_MAC);
@@ -1065,7 +1064,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbBike2.setVisibility(View.INVISIBLE);
-                        Log.d(TAG, error.toString());
+//                        Log.d(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         bluetoothBike.finishConnection();
                         Static_AppMethods.checkResponseCode(error, preferences);
@@ -1075,11 +1074,11 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("mac", primaryBikeSelectedMAC);
-                Log.d(TAG, "params requestDeleteBike: " + params.toString() );
+//                Log.d(TAG, "params requestDeleteBike: " + params.toString() );
                 return params;
             }
         };
@@ -1100,7 +1099,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "Deletion response: " + response);
+//                        Log.d(TAG_blockchain, "Deletion response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -1150,7 +1149,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         pbBike2.setVisibility(View.GONE);
                         bluetoothBike.finishConnection();
@@ -1163,7 +1162,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             {
                 Map<String, String> params = new HashMap<>();
                 params.put("bikeId", preferences.getBikeId(edit_MAC));
-                Log.d(TAG_blockchain, "params delete" + params.toString());
+//                Log.d(TAG_blockchain, "params delete" + params.toString());
                 return params;
             }
         };
@@ -1189,7 +1188,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 bikeId.append(bikeId_byte);
             }
         }
-        Log.d(TAG, "bikeIdbytes_toString32= " + bikeId.toString() +"\nBytes= " + Arrays.toString(bikeId_bytes));
+//        Log.d(TAG, "bikeIdbytes_toString32= " + bikeId.toString() +"\nBytes= " + Arrays.toString(bikeId_bytes));
         return bikeId.toString();
     }
 
@@ -1211,11 +1210,11 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 temp[arrayIdx] = (byte) Integer.parseInt( value0 + value1 );
                 arrayIdx++;
             }
-            Log.d(TAG, "string32_toBytes= " + bikeId_32 +"\nBytes= " + Arrays.toString(temp));
+//            Log.d(TAG, "string32_toBytes= " + bikeId_32 +"\nBytes= " + Arrays.toString(temp));
             return temp;
         } catch (Exception ignored){
             // there was an error, probably parsing
-            Log.e(TAG+"encrypt", "string32_toBytes Error: " + ignored.getMessage());
+//            Log.e(TAG+"encrypt", "string32_toBytes Error: " + ignored.getMessage());
             Static_AppMethods.ToastTryAgain(ActivityRegisterBike2.this);
         }
         return new byte[16]; // return empty byte array by default
@@ -1236,7 +1235,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "Registration response: " + response);
+//                        Log.d(TAG_blockchain, "Registration response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -1283,7 +1282,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                         saving = false;
@@ -1303,7 +1302,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 params.put("brand", brand);
                 params.put("chassis", chassis);
                 params.put("plate", plate);
-                Log.d(TAG_blockchain, "params register: " + params.toString() );
+//                Log.d(TAG_blockchain, "params register: " + params.toString() );
                 return params;
             }
         };
@@ -1325,7 +1324,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "getUserId_fromBikeId response: " + response);
+//                        Log.d(TAG_blockchain, "getUserId_fromBikeId response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -1372,7 +1371,7 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                         saving = false;
@@ -1384,10 +1383,10 @@ public class ActivityRegisterBike2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG_blockchain, "params loaded");
+//                Log.d(TAG_blockchain, "params loaded");
                 Map<String, String> params = new HashMap<>();
                 params.put("bikeId", bikeIdbytes_toString32_decrypted() ); // blockcahin stores the bikeIds without encryption
-                Log.d(TAG_blockchain, "params getUserId_fromBikeId: " + params.toString() );
+//                Log.d(TAG_blockchain, "params getUserId_fromBikeId: " + params.toString() );
                 return params;
             }
         };

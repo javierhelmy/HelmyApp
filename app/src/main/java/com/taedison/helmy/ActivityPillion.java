@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -215,7 +214,7 @@ public class ActivityPillion extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
                 String data = intent.getStringExtra(Static_AppVariables.INTENTEXTRA_HELMET_DATA);
-                Log.d(TAG, "Data =" + data);
+//                Log.d(TAG, "Data =" + data);
                 if(data != null){
                     processDataReceived(data);
                 }
@@ -228,18 +227,18 @@ public class ActivityPillion extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 boolean connected = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BLE_CONNECTION, false);
                 String deviceMAC = intent.getStringExtra(Static_AppVariables.INTENTEXTRA_BLE_MAC);
-                Log.d(TAG, "Device = " + deviceMAC + " connnected " + connected);
-                Log.d(TAG, "Device =" + deviceMAC + "connnected" + connected);
+//                Log.d(TAG, "Device = " + deviceMAC + " connnected " + connected);
+//                Log.d(TAG, "Device =" + deviceMAC + "connnected" + connected);
                 if(deviceMAC != null){
-                    Log.d(TAG, "Device = " + deviceMAC + "  Saved = " + primaryHelmet_MAC
-                            + " Comparison = " + (deviceMAC.equals(primaryHelmet_MAC)) );
+//                    Log.d(TAG, "Device = " + deviceMAC + "  Saved = " + primaryHelmet_MAC
+//                            + " Comparison = " + (deviceMAC.equals(primaryHelmet_MAC)) );
                     if(deviceMAC.equals(primaryHelmet_MAC)){
                         if(!connected){
                             if(primaryHelmet_connected){
                                 // if the helmet was connected and now it is disconnected
                                 mTTS.speakSentence( getResources().getString(R.string.helmetDisconnected) );
                             }
-                            Log.d(TAG, "disconnnected = " + connected);
+//                            Log.d(TAG, "disconnnected = " + connected);
 
                             primaryHelmet_connected = false;
 
@@ -306,7 +305,7 @@ public class ActivityPillion extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String error = intent.getStringExtra("Error");
-                Log.d(TAG, "Error =" + error);
+//                Log.d(TAG, "Error =" + error);
                 if(error != null){
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
                 }
@@ -318,7 +317,7 @@ public class ActivityPillion extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
-                Log.d(TAG+"receiverBT", "state= " + mBluetoothAdapter.getState() );
+//                Log.d(TAG+"receiverBT", "state= " + mBluetoothAdapter.getState() );
                 if (state == BluetoothAdapter.STATE_OFF) {
                     alertBluetoothIsOff();
                 } else if(state == BluetoothAdapter.STATE_ON) {
@@ -332,7 +331,7 @@ public class ActivityPillion extends AppCompatActivity {
         mGpsSwitchStateReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(TAG+"GPS_main", "triggered" );
+//                Log.d(TAG+"GPS_main", "triggered" );
                 if (intent.getAction() != null && intent.getAction().matches(LocationManager.PROVIDERS_CHANGED_ACTION)) {
                     Toast.makeText(ActivityPillion.this, "GPS changed", Toast.LENGTH_SHORT).show();
                     processGPSreceiver();
@@ -370,10 +369,10 @@ public class ActivityPillion extends AppCompatActivity {
         phoneVolumeReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(TAG+"phoneVolume", "Action : ");
+//                Log.d(TAG+"phoneVolume", "Action : ");
                 try{
                     int currentVolume = (Integer) intent.getExtras().get("android.media.EXTRA_VOLUME_STREAM_VALUE");
-                    Log.d(TAG+"phoneVolume", "Action : "+ intent.getAction() + " / volume : "+currentVolume);
+//                    Log.d(TAG+"phoneVolume", "Action : "+ intent.getAction() + " / volume : "+currentVolume);
                     checkVolume(currentVolume);
                 } catch (Exception ignored){
                     // if it fails because of the extra does not exists, possibly for some Android devices
@@ -401,7 +400,7 @@ public class ActivityPillion extends AppCompatActivity {
     private void processDataReceived(String stringReceived){
 
         if(stringReceived != null && !stringReceived.isEmpty()){
-            Log.d(TAG+"Bluetooth", "InputReceived= " + stringReceived + "length=" + stringReceived.length());
+//            Log.d(TAG+"Bluetooth", "InputReceived= " + stringReceived + "length=" + stringReceived.length());
 
 //            Toast.makeText(this, stringReceived, Toast.LENGTH_SHORT).show();
 
@@ -444,14 +443,14 @@ public class ActivityPillion extends AppCompatActivity {
                     startActivity(intentAct); // ActivityMain will continue in stack
                 }
             } else if (stringReceived.equals("5")){
-                Log.d("assistantG", "HelmyC triggered");
+//                Log.d("assistantG", "HelmyC triggered");
                 if ( (System.currentTimeMillis() - time) > 2000 || time == 0 ) {
                     // allows to trigger the assistant every 2 seconds max
                     Intent intentAssistant = new Intent(Intent.ACTION_VOICE_COMMAND).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     if (intentAssistant.resolveActivity(getPackageManager()) != null ) {
                         time = System.currentTimeMillis();
                         startActivity(intentAssistant);
-                        Log.d("assistantG", "Activated");
+//                        Log.d("assistantG", "Activated");
                     } else {
                         mTTS.speakSentence(getResources().getString(R.string.installGoogleAssistant));
                     }
@@ -475,7 +474,7 @@ public class ActivityPillion extends AppCompatActivity {
                     imgRingHelmetTemperature.clearAnimation();
                 }
             } else {
-                Log.d(TAG+"battery_bt", "value= " + stringReceived);
+//                Log.d(TAG+"battery_bt", "value= " + stringReceived);
                 try {
                     float battery10_255 = Float.parseFloat(stringReceived);
                     int batteryLevel = (int) (((battery10_255 - 30f) / (42f - 30f))*100f); // normalize between 0-1 and multiply by 100
@@ -497,7 +496,7 @@ public class ActivityPillion extends AppCompatActivity {
                             tvHelmetBatteryLevel.setTextColor(getResources().
                                     getColor(R.color.progresBars));
                         }
-                        Log.d(TAG+"battery_bt", "Battery = " + batteryLevel);
+//                        Log.d(TAG+"battery_bt", "Battery = " + batteryLevel);
 
                         tvHelmetBatteryLevel.setText(batteryLevel + "%");
                     }
@@ -510,7 +509,7 @@ public class ActivityPillion extends AppCompatActivity {
 
     AlertMessageButton alertBluetoothOff;
     private void alertBluetoothIsOff(){
-        Log.d(TAG, "alertBluetoothIsOff");
+//        Log.d(TAG, "alertBluetoothIsOff");
         if ( !mBluetoothAdapter.isEnabled() ) {
             alertBluetoothOff = new AlertMessageButton(ActivityPillion.this);
             alertBluetoothOff.setDialogMessage(getResources().getString(R.string.bluetoothTurnedOff));
@@ -553,7 +552,7 @@ public class ActivityPillion extends AppCompatActivity {
 
     AlertMessageButton alertGPSoff;
     private void alertGPSIsOff(String msg){
-        Log.d(TAG+"GPS_main", "alertGPSIsOff");
+//        Log.d(TAG+"GPS_main", "alertGPSIsOff");
         // mGpsSwitchStateReceiver is triggered multiple times for some reason, check if alertGPSoff is null so that it is laucnh once
         if(alertGPSoff == null){
             alertGPSoff = new AlertMessageButton(ActivityPillion.this);
@@ -597,7 +596,7 @@ public class ActivityPillion extends AppCompatActivity {
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                Log.d(TAG+"GPS_main", "OnSuccess");
+//                Log.d(TAG+"GPS_main", "OnSuccess");
                 // GPS is ON
                 stopAlert_GPSIsBackOn();
             }
@@ -606,7 +605,7 @@ public class ActivityPillion extends AppCompatActivity {
         task.addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull final Exception e) {
-                Log.d(TAG+"GPS_main", "GPS off");
+//                Log.d(TAG+"GPS_main", "GPS off");
                 // GPS off
                 if (e instanceof ResolvableApiException) {
                     ResolvableApiException resolvable = (ResolvableApiException) e;
@@ -624,9 +623,9 @@ public class ActivityPillion extends AppCompatActivity {
         LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
         if (manager != null && !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            Log.d(TAG+"GPS_main", "off");
+//            Log.d(TAG+"GPS_main", "off");
             if ( !manager.isProviderEnabled( LocationManager.NETWORK_PROVIDER ) ) {
-                Log.d(TAG+"GPS_main", "network provider off");
+//                Log.d(TAG+"GPS_main", "network provider off");
                 alertGPSIsOff(getResources().getString(R.string.gpsAndNetworkProviderNotEnbled));
             } else {
                 // network provider is still working for getting the location
@@ -634,7 +633,7 @@ public class ActivityPillion extends AppCompatActivity {
             }
         } else {
             // if user enables GPS from the notifications and not from the dialog
-            Log.d(TAG+"GPS_main", "on");
+//            Log.d(TAG+"GPS_main", "on");
             stopAlert_GPSIsBackOn();
         }
     }
@@ -705,13 +704,13 @@ public class ActivityPillion extends AppCompatActivity {
     Handler handlerVibrate;
     private void vibrate(){
         // this handler will keep vibrator running even with screen off (vibrator stops when the phone has the screen off)
-        Log.d(TAG, "vibrate");
+//        Log.d(TAG, "vibrate");
         handlerVibrate = new Handler();
         handlerVibrate.post(new Runnable() {
             @Override
             public void run() {
                 if(vibrator != null) {
-                    Log.d(TAG, "handler");
+//                    Log.d(TAG, "handler");
                     long[] pattern = {0, 500, 500};
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0)); // repeat at index 0
@@ -736,7 +735,7 @@ public class ActivityPillion extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onresume");
+//        Log.d(TAG, "onresume");
         // check the battery of HelmyC every time user comes back to the activity
         if(bluetoothHelmet != null && bluetoothHelmet.bluetoothGatt != null){
             bluetoothHelmet.readBattery();
@@ -819,8 +818,8 @@ public class ActivityPillion extends AppCompatActivity {
                         public void run() {
                             String device2add = device.getName() + ";" + device.getAddress();
 
-                            Log.d(TAG_ble, "BleFound: " + device2add + " " + arrayBleDevices.indexOf(device2add)
-                                    + " " + arrayBleDevices.indexOf(device2add));
+//                            Log.d(TAG_ble, "BleFound: " + device2add + " " + arrayBleDevices.indexOf(device2add)
+//                                    + " " + arrayBleDevices.indexOf(device2add));
 
                             //check if device2add was already listed and if it is the primaryHelmet
                             if( !TextUtils.isEmpty(primaryHelmet_MAC) && device.getAddress().equals(primaryHelmet_MAC)
@@ -837,7 +836,7 @@ public class ActivityPillion extends AppCompatActivity {
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             arrayBleDevices.clear();
-            Log.d(TAG_ble,"ble start scanning");
+//            Log.d(TAG_ble,"ble start scanning");
             // Stops scanning after a pre-defined scan period.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -878,7 +877,7 @@ public class ActivityPillion extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG+"Thresholds", "response: " + response);
+//                        Log.d(TAG+"Thresholds", "response: " + response);
                         try {
                             JSONObject jsonArray = new JSONObject(response);
                             String impactTH = jsonArray.getString("impacto");
@@ -902,12 +901,12 @@ public class ActivityPillion extends AppCompatActivity {
                                 }
 
                             } catch (Exception ignored){
-                                Log.e(TAG+"Thresholds", "error with thresholds sent from server. Error=" + ignored.toString() );
+//                                Log.e(TAG+"Thresholds", "error with thresholds sent from server. Error=" + ignored.toString() );
                                 // if thresholds were not downloaded, e.g. user did not have internet connection, then HelmyC will work with value previously stored
                             }
 
                         } catch (JSONException e) {
-                            Log.e(TAG+"Thresholds", "error with thresholds sent from server. Error=" + e.toString() );
+//                            Log.e(TAG+"Thresholds", "error with thresholds sent from server. Error=" + e.toString() );
                             // if thresholds were not downloaded, e.g. user did not have internet connection, then HelmyC will work with value previously stored
                         }
                     }
@@ -915,7 +914,7 @@ public class ActivityPillion extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG+"Thresholds", error.toString());
+//                        Log.e(TAG+"Thresholds", error.toString());
                         Static_AppMethods.checkResponseCode(error, preferences);
                         // if thresholds were not downloaded, e.g. user did not have internet connection, then HelmyC will work with value previously stored
                     }

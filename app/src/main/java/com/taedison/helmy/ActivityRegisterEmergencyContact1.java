@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -241,7 +240,7 @@ public class ActivityRegisterEmergencyContact1 extends AppCompatActivity {
 
             pbInfoEmer.setVisibility(View.VISIBLE);
         } catch (Exception e) {
-            Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//            Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
             Static_AppMethods.ToastEncryptionError(this);
         }
     }
@@ -261,7 +260,7 @@ public class ActivityRegisterEmergencyContact1 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, response);
+//                        Log.d(TAG, response);
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
 
@@ -303,7 +302,7 @@ public class ActivityRegisterEmergencyContact1 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
-                        Log.d(TAG, error.toString());
+//                        Log.d(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterEmergencyContact1.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -312,7 +311,7 @@ public class ActivityRegisterEmergencyContact1 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("firstEmergencyContactNames", names);

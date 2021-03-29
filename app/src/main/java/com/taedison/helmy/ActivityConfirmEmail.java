@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -54,7 +53,7 @@ public class ActivityConfirmEmail extends AppCompatActivity {
             password = intent.getStringExtra("password");
         }
 
-        Log.d(TAG, "email: " + preferences.get_lastUser_email_logged() );
+//        Log.d(TAG, "email: " + preferences.get_lastUser_email_logged() );
     }
 
     public void click_BackToLoginRegister(View view) {
@@ -98,7 +97,7 @@ public class ActivityConfirmEmail extends AppCompatActivity {
                     public void onResponse(String response)
                     {
                         pbConfirm.setVisibility(View.INVISIBLE);
-                        Log.d(TAG, "response: " + response);
+//                        Log.d(TAG, "response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             if(response.contains("1")) {
                                 // user has not validated his/her email account
@@ -135,7 +134,7 @@ public class ActivityConfirmEmail extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbConfirm.setVisibility(View.INVISIBLE);
-                        Log.d(TAG, error.toString());
+//                        Log.d(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityConfirmEmail.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }

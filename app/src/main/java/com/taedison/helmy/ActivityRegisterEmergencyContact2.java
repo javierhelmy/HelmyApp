@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -157,7 +156,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
 
                     pbInfoEmer.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
-                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                    Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                     Static_AppMethods.ToastEncryptionError(this);
                 }
             }
@@ -262,7 +261,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, "save response: " + response);
+//                        Log.d(TAG, "save response: " + response);
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
                         if( !TextUtils.isEmpty(response) ){
@@ -299,7 +298,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
-                        Log.e(TAG, error.toString());
+//                        Log.e(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterEmergencyContact2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -308,7 +307,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d("RequestVolleyReg1", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("namesSecondEmergencyContact", names);
@@ -334,7 +333,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, "Delete response: " + response);
+//                        Log.d(TAG, "Delete response: " + response);
 
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
@@ -358,7 +357,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
                     {
                         saving = false;
                         pbInfoEmer.setVisibility(View.INVISIBLE);
-                        Log.e(TAG, error.toString());
+//                        Log.e(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterEmergencyContact2.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -367,7 +366,7 @@ public class ActivityRegisterEmergencyContact2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.d(TAG, "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("namesSecondEmergencyContact", names);

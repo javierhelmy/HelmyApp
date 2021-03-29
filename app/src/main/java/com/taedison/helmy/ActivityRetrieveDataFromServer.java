@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -106,7 +105,7 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d(TAG, url + " " + response);
+//                        Log.d(TAG, url + " " + response);
                         if(!TextUtils.isEmpty(response)){
                             // response is status=0 if there is no data saved in the server for the current user, but never empty.
                             // in case it is empty, then it is like that it was an internet connection error
@@ -120,7 +119,7 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                                     saveDataInPreferences();
                                 }
                             } catch (JSONException e) {
-                                Log.e(TAG, e.toString());
+//                                Log.e(TAG, e.toString());
                                 Toast.makeText(ActivityRetrieveDataFromServer.this, R.string.errorWithServer, Toast.LENGTH_SHORT).show();
                                 imageCircle.setVisibility(View.INVISIBLE);
                                 tvBtnRetry.setVisibility(View.VISIBLE);
@@ -139,7 +138,7 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.d(TAG, error.toString());
+//                        Log.d(TAG, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRetrieveDataFromServer.this);
                         imageCircle.setVisibility(View.INVISIBLE);
                         tvBtnRetry.setVisibility(View.VISIBLE);
@@ -151,7 +150,7 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG, "userId= " + userId_fromServer);
+//                Log.d(TAG, "userId= " + userId_fromServer);
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId_fromServer);
                 return params;
@@ -408,11 +407,11 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 preferences.setUserIDnum_encrypted(documentNumber);
                 preferences.setUser_isColLicense_encrypted(colombianLicense);
             }
-            Log.d(TAG, "success person one" + preferences.getUserIDType()
-                    + "nat= " + nationality + "type= " + documentType);
+//            Log.d(TAG, "success person one" + preferences.getUserIDType()
+//                    + "nat= " + nationality + "type= " + documentType);
         } catch (Exception e) {
             // JSON contains status=0, or error saving into preferences
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
         }
 
         try {
@@ -429,10 +428,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 preferences.setUserAge_encrypted(age);
                 preferences.setUserRH_encrypted(rh);
             }
-            Log.d(TAG, "success person two");
+//            Log.d(TAG, "success person two");
         } catch (Exception e) {
             // JSON contains status=0, or error saving into preferences
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
         }
 
         try {
@@ -448,10 +447,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 preferences.setUserARL_encrypted(arl);
                 preferences.setUserPhone_encrypted(phone);
             }
-            Log.d(TAG, "success person three");
+//            Log.d(TAG, "success person three");
         } catch (Exception e) {
             // JSON contains status=0, or error saving into preferences
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
         }
 
         try {
@@ -465,10 +464,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 preferences.setUserEmergencySurnames_encrypted(surnamesFirstEmergencyContact);
                 preferences.setUserEmergencyPhone_encrypted(firstEmergencyContactNumber);
             }
-            Log.d(TAG, "success person four");
+//            Log.d(TAG, "success person four");
         } catch (Exception e) {
             // JSON contains status=0, or error saving into preferences
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
         }
 
         try {
@@ -482,10 +481,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 preferences.setUserEmergencySurnames2_encrypted(surnamesSecondEmergencyContact);
                 preferences.setUserEmergencyPhone2_encrypted(numberSecondEmergencyContact);
             }
-            Log.d(TAG, "success person five");
+//            Log.d(TAG, "success person five");
         } catch (Exception e) {
             // JSON contains status=0, or error saving into preferences
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
             preferences.deleteSecondContact();
         }
 
@@ -514,10 +513,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 // if there is only one helmet, then set it as the primary
                 preferences.savePrimaryHelmetPreferences(helmetMac);
             }
-            Log.d(TAG, "success helmet");
+//            Log.d(TAG, "success helmet");
         } catch (Exception e){
             // JSON contains status=0, or there was an error saving data into prefereces. Delete helmet
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
             preferences.deleteHelmetFromPreferences(helmetMac);
         }
 
@@ -582,7 +581,7 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                             preferences.saveBikePass3_encrypted(bikeMac, pass3Encrypted );
                         }
                     } catch (Exception e) {
-                        Log.e(TAG+"Encrypt", "Error= " + e.getMessage());
+//                        Log.e(TAG+"Encrypt", "Error= " + e.getMessage());
                     }
                 }
             }
@@ -590,10 +589,10 @@ public class ActivityRetrieveDataFromServer extends AppCompatActivity {
                 // if there is only one bike, then set it as the primary bike
                 preferences.savePrimaryBikePreferences(bikeMac);
             }
-            Log.d(TAG, "success bike");
+//            Log.d(TAG, "success bike");
         }  catch (Exception e){
             // JSON contains status=0, or there was an error saving data into prefereces. Delete bike
-            Log.e(TAG, e.toString());
+//            Log.e(TAG, e.toString());
             preferences.deleteBikeFromPreferences(bikeMac);
         }
 

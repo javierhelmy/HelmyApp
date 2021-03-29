@@ -12,7 +12,6 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -56,7 +55,7 @@ public class ServiceBikeDisconnected extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d(TAG, "onStartCommand");
+//        Log.d(TAG, "onStartCommand");
 
         createNotificationChannel();
         notificationIntent = new Intent(this, ActivityMain.class); // clicking on the notification will take the user back to ActivityMain
@@ -98,7 +97,7 @@ public class ServiceBikeDisconnected extends Service {
                         mTTS.speakSentence( getResources().getString(R.string.bikeWillTurnOffIn)
                                 + " " + remainingTime + " " + getResources().getString(R.string.seconds) );
                     }
-                    Log.d("TTsEmergency", "Remaining= " + remainingTime + " in millis= " + millisUntilFinished);
+//                    Log.d("TTsEmergency", "Remaining= " + remainingTime + " in millis= " + millisUntilFinished);
                 }
             }
 
@@ -110,7 +109,7 @@ public class ServiceBikeDisconnected extends Service {
 
         // Text to speech: bike will shut off in 90 seconds. User has 90 seconds to cancel it.
         mTTS.speakSentence(getResources().getString(R.string.bikeWillTurnOffIn90));
-        Log.d("TTsEmergency", "90 seconds");
+//        Log.d("TTsEmergency", "90 seconds");
 
         // If we get killed because of insuficient memory, START NOT STICKY do not restart when memory is released
         return START_NOT_STICKY;
@@ -143,7 +142,7 @@ public class ServiceBikeDisconnected extends Service {
     }
 
     public static int getRemainigTimeCounter_ms(){
-        Log.d("ServiceBikeDisconnected", "destroyed");
+//        Log.d("ServiceBikeDisconnected", "destroyed");
         return remainingTime;
     }
 
@@ -156,7 +155,7 @@ public class ServiceBikeDisconnected extends Service {
     @Override
     public void onDestroy() {
         running = false;
-        Log.d(TAG, "destroyed");
+//        Log.d(TAG, "destroyed");
 //        Toast.makeText(this, "Bike service done", Toast.LENGTH_SHORT).show();
         counter.cancel();
         if(vibrator != null) {

@@ -8,7 +8,6 @@ import android.graphics.Rect;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
@@ -162,7 +161,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
         }
 
         edit_MAC = i.getStringExtra("edit_MAC_bike");
-        Log.d(TAG, "editMAC= " + edit_MAC);
+//        Log.d(TAG, "editMAC= " + edit_MAC);
         if (TextUtils.isEmpty(edit_MAC)) {
             imgBtnDelete.setVisibility(View.GONE); // hide delete button
         } else {
@@ -177,7 +176,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
                         et2ndPolicyPhone.setText( preferences.getBike2ndPolicyPhone(edit_MAC) );
                     }
                     int sel = arrayBikeBrands.indexOf( preferences.getBikeBrand(edit_MAC) );
-                    Log.d(TAG, "brand= " + preferences.getBikeBrand(edit_MAC));
+//                    Log.d(TAG, "brand= " + preferences.getBikeBrand(edit_MAC));
                     if (sel > 0) {
                         spinnerBikeBrand.setSelection(sel);
                     } else {
@@ -309,7 +308,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbBike.setVisibility(View.INVISIBLE);
-                        Log.e(TAG+"volley", error.toString());
+//                        Log.e(TAG+"volley", error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike.this);
                         Static_AppMethods.checkResponseCode(error, preferences);
                     }
@@ -318,7 +317,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.e(TAG+"volley", "userId= " + preferences.get_lastUser_Id_logged());
+//                Log.e(TAG+"volley", "userId= " + preferences.get_lastUser_Id_logged());
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", preferences.get_lastUser_Id_logged());
                 params.put("mac", edit_MAC);
@@ -344,7 +343,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "Deletion response: " + response);
+//                        Log.d(TAG_blockchain, "Deletion response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -390,7 +389,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.ToastCheckYourInternet(ActivityRegisterBike.this);
                         pbBike.setVisibility(View.GONE);
                         Static_AppMethods.checkResponseCode(error, preferences);
@@ -402,7 +401,7 @@ public class ActivityRegisterBike extends AppCompatActivity {
             {
                 Map<String, String> params = new HashMap<>();
                 params.put("bikeId", preferences.getBikeId(edit_MAC));
-                Log.e(TAG_blockchain, "params delete" + params.toString());
+//                Log.e(TAG_blockchain, "params delete" + params.toString());
                 return params;
             }
         };

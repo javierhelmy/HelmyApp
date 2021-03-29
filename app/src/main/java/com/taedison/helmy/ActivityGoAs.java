@@ -29,7 +29,6 @@ import android.telephony.TelephonyManager;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -153,6 +152,8 @@ public class ActivityGoAs extends AppCompatActivity {
         String name = preferences.getUserNames();
         String email = preferences.get_lastUser_email_logged();
 
+//        Log.d(TAG, name + email);
+
         if(!TextUtils.isEmpty(name)){
             // display only the first name
             String[] names = name.split(" ");
@@ -195,7 +196,7 @@ public class ActivityGoAs extends AppCompatActivity {
 
         // check if emergency alert demo was launched
         if( !preferences.wasDemoAlreadyLaunched() ){
-            Log.d(TAG, "FirstTime Yes");
+//            Log.d(TAG, "FirstTime Yes");
             launchEmergencyDemo();
         }
         // check if tour was already shown
@@ -209,8 +210,8 @@ public class ActivityGoAs extends AppCompatActivity {
                 // broadcasts from Helmy classes
                 boolean connected = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BLE_CONNECTION, false);
                 String deviceMAC = intent.getStringExtra(Static_AppVariables.INTENTEXTRA_BLE_MAC);
-                Log.d(TAG_receivers, "Device = " + deviceMAC + " connnected " + connected);
-                Log.d(TAG_receivers, "Device =" + deviceMAC + "connnected" + connected);
+//                Log.d(TAG_receivers, "Device = " + deviceMAC + " connnected " + connected);
+//                Log.d(TAG_receivers, "Device =" + deviceMAC + "connnected" + connected);
 
                 if(deviceMAC != null) {
                     if (deviceMAC.equals(preferences.get_primaryHelmet_MAC())) {
@@ -264,7 +265,7 @@ public class ActivityGoAs extends AppCompatActivity {
                                 Toast.makeText(ActivityGoAs.this, R.string.disablingHelmy, Toast.LENGTH_LONG).show();
                             }
                             bluetoothBike.enable_WriteCharacteristic(bikeAlwaysOn);
-                            Log.d(TAG_receivers, "turn on");
+//                            Log.d(TAG_receivers, "turn on");
                         }
                     }
                 }
@@ -275,7 +276,7 @@ public class ActivityGoAs extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean success = intent.getBooleanExtra(Static_AppVariables.INTENTEXTRA_BIKE_ENABLE_WRITE, false);
-                Log.d(TAG_receivers, "Write was successful: " + success);
+//                Log.d(TAG_receivers, "Write was successful: " + success);
                 if (!success) {
                     Toast.makeText(ActivityGoAs.this, R.string.bluetoothErrorTryAgain, Toast.LENGTH_LONG).show();
                     pbDisable.setVisibility(View.GONE);
@@ -719,7 +720,7 @@ public class ActivityGoAs extends AppCompatActivity {
         // battery low?
         float batteryPct = level * 100 / (float) scale;
 
-        Log.d(TAG+"Battery_log", "isCharging= " + isCharging + " Battery= "+batteryPct);
+//        Log.d(TAG+"Battery_log", "isCharging= " + isCharging + " Battery= "+batteryPct);
 
         if(batteryPct <= 15 && !isCharging){
             final AlertMessageButton alert = new AlertMessageButton(this);
@@ -772,11 +773,11 @@ public class ActivityGoAs extends AppCompatActivity {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         // check if intercomm is paired
         intercommPaired = false;
-        Log.d(TAG+"BluetoothPair", "Associated: " + preferences.getHelmetAssociatedBluetoothClassic(
-                preferences.get_primaryHelmet_MAC() ) );
+//        Log.d(TAG+"BluetoothPair", "Associated: " + preferences.getHelmetAssociatedBluetoothClassic(
+//                preferences.get_primaryHelmet_MAC() ) );
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                Log.d(TAG+"BluetoothPair", "Paired: " + device.getAddress() );
+//                Log.d(TAG+"BluetoothPair", "Paired: " + device.getAddress() );
                 if(device.getAddress().equals(
                         preferences.getHelmetAssociatedBluetoothClassic(
                                 preferences.get_primaryHelmet_MAC() ))){
@@ -808,12 +809,12 @@ public class ActivityGoAs extends AppCompatActivity {
         BluetoothDevice device = bluetoothAdapter.getRemoteDevice(preferences.getHelmetAssociatedBluetoothClassic(
                 preferences.get_primaryHelmet_MAC() ) );
         try {
-            Log.d(TAG+"pairDevice()", "Start Pairing...");
+//            Log.d(TAG+"pairDevice()", "Start Pairing...");
             Method m = device.getClass().getMethod("createBond", (Class[]) null);
             m.invoke(device, (Object[]) null);
-            Log.d(TAG+"pairDevice()", "Pairing finished.");
+//            Log.d(TAG+"pairDevice()", "Pairing finished.");
         } catch (Exception e) {
-            Log.e(TAG+"pairDevice()", e.toString() );
+//            Log.e(TAG+"pairDevice()", e.toString() );
         }
     }
 
@@ -831,7 +832,7 @@ public class ActivityGoAs extends AppCompatActivity {
                         case BluetoothDevice.BOND_BONDING:
                             break;
                         case BluetoothDevice.BOND_NONE:
-                            Log.d(TAG+"BTpairing", "NONE");
+//                            Log.d(TAG+"BTpairing", "NONE");
                             pbDisable.setVisibility(View.GONE);
                             Toast.makeText(ActivityGoAs.this, getResources().getString(R.string.errorTryAgain),
                                     Toast.LENGTH_SHORT).show();
@@ -859,7 +860,7 @@ public class ActivityGoAs extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "response: " + response);
+//                        Log.d(TAG_blockchain, "response: " + response);
                         pbDisable.setVisibility(View.GONE);
                         if( !TextUtils.isEmpty(response) ){
                             try {
@@ -911,7 +912,7 @@ public class ActivityGoAs extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbDisable.setVisibility(View.GONE);
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.checkResponseCode(error, preferences);
                         // we allow the user to continue
                         checkGPS(); // now check GPS and the rest of conditions: volume, ...
@@ -921,7 +922,7 @@ public class ActivityGoAs extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Log.d(TAG_blockchain, "params loaded");
+//                Log.d(TAG_blockchain, "params loaded");
                 Map<String, String> params = new HashMap<>();
                 params.put("bikeId", preferences.get_primaryBike_bikeId()); // blockchain stores the bikeIds without encryption
                 return params;
@@ -953,7 +954,7 @@ public class ActivityGoAs extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG_blockchain, "response: " + response);
+//                        Log.d(TAG_blockchain, "response: " + response);
                         if( !TextUtils.isEmpty(response) ){
                             try {
                                 JSONObject jsonArray = new JSONObject(response);
@@ -976,7 +977,7 @@ public class ActivityGoAs extends AppCompatActivity {
                                         preferences.saveBikeBondId_encrypted(preferences.get_primaryBike_MAC(), bondIdEncrypted);
                                         getUserId_fromBikeId_blockchain(); // to check if bike belongs to the user
                                     } catch (Exception e) {
-                                        Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
+//                                        Log.e(TAG+"Encrypt", "Encryption Error= " + e.getMessage());
                                         Static_AppMethods.ToastEncryptionError(ActivityGoAs.this);
                                         pbDisable.setVisibility(View.GONE);
                                     }
@@ -1000,7 +1001,7 @@ public class ActivityGoAs extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         pbDisable.setVisibility(View.GONE);
-                        Log.e(TAG_blockchain, error.toString());
+//                        Log.e(TAG_blockchain, error.toString());
                         Static_AppMethods.checkResponseCode(error, preferences);
                         // we let the user pass so that we dont affect the user experience
                         getUserId_fromBikeId_blockchain();
@@ -1012,7 +1013,7 @@ public class ActivityGoAs extends AppCompatActivity {
             {
                 Map<String, String> params = new HashMap<>();
                 params.put("bikeId", preferences.getBikeId(preferences.get_primaryBike_MAC()) ); // blockchain stores the bikeIds without encryption
-                Log.d(TAG_blockchain, "params getBondId: " + params.toString());
+//                Log.d(TAG_blockchain, "params getBondId: " + params.toString());
                 return params;
             }
         };
@@ -1287,7 +1288,7 @@ public class ActivityGoAs extends AppCompatActivity {
             method.setAccessible(true); // Make the method callable
             // get the setting for "mobile data"
             mobileDataEnabled = (Boolean) method.invoke(cm);
-            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
+//            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
         } catch (Exception e) {
             // Some problem accessing the private API or reflection on getMobileDataEnabled,
             // perhaps in the next Android version is not accessible, we try with the following
@@ -1300,11 +1301,11 @@ public class ActivityGoAs extends AppCompatActivity {
             } catch (Exception ignored) {
                 mobileDataEnabled = true; // both methods failed, we have to let the user pass
             }
-            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
+//            Log.d("SplashAct", "Connected? = " + mobileDataEnabled);
         }
 
         if( mobileDataEnabled ) {
-            Log.d("SplashAct", "Connected = MOBILE");
+//            Log.d("SplashAct", "Connected = MOBILE");
             checkIntercommPaired();
         } else {
             final AlertMessageButton alert = new AlertMessageButton(this);

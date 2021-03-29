@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.android.gms.common.util.Hex;
 
@@ -57,7 +56,7 @@ class BLE_HelmyC {
         this.device = device;
         this.readVariables = readVariables; // if true, user will start a trip. If false, user is registering helmet (no need for reading variables)
 
-        Log.i(TAG, "Initiated");
+//        Log.i(TAG, "Initiated");
         bluetoothGatt = device.connectGatt(context, false, gattCallback); // onConnectionStateChange will handle that connection state
 
         if(!TextUtils.isEmpty(bikeMAC)){
@@ -65,7 +64,7 @@ class BLE_HelmyC {
             // HelmyM as master. This will be used in case the phone's battery goes lower than 15%.
             // characteristicPhoneLowBattery will be used nto notify HelmyC of the event
             String[] MACs = bikeMAC.split(":");
-            Log.d("BikeMAC", "MAC= " + bikeMAC + " segments= " + MACs.length);
+//            Log.d("BikeMAC", "MAC= " + bikeMAC + " segments= " + MACs.length);
             if(MACs.length == 6){
                 MAC_1 = MACs[0];
                 MAC_2 = MACs[1];
@@ -83,21 +82,21 @@ class BLE_HelmyC {
                 public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                                     int newState) {
                     if (newState == BluetoothProfile.STATE_CONNECTED) {
-                        Log.d(TAG, "Connected to GATT server.");
+//                        Log.d(TAG, "Connected to GATT server.");
                         bluetoothGatt.discoverServices(); // onServicesDiscovered callback will handle the action
                     } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                         bluetoothGatt.disconnect();
                         bluetoothGatt.close();
                         bluetoothGatt = null;
                         sendDeviceConnectionToActivity(device.getAddress(), false);
-                        Log.d(TAG, "Disonnected fromActivity GATT server.");
+//                        Log.d(TAG, "Disonnected fromActivity GATT server.");
                     }
                 }
 
                 @Override
                 public void onServicesDiscovered(BluetoothGatt gatt, int status) {
                     if (status == BluetoothGatt.GATT_SUCCESS) {
-                        Log.i(TAG, "Services discovered");
+//                        Log.i(TAG, "Services discovered");
                         // get the instance of the service
                         BluetoothGattService serviceHelmyC = bluetoothGatt.getService(Static_AppVariables.UUID_HELMYC_SERVICE);
 
@@ -170,7 +169,7 @@ class BLE_HelmyC {
                             // 3. read variables: battery, onHead, fasten, temperature
                             setHelmetImpactNotification();
 
-                            Log.d(TAG, "Notif set");
+//                            Log.d(TAG, "Notif set");
 
                             if(TextUtils.isEmpty(MAC_1)){
                                 // Bike was not registered, or user entered in the pillion activity
@@ -180,7 +179,7 @@ class BLE_HelmyC {
                             }
                         }
                     } else {
-                        Log.w(TAG, "onServicesDiscovered received: " + status);
+//                        Log.w(TAG, "onServicesDiscovered received: " + status);
                     }
                 }
 
@@ -189,7 +188,7 @@ class BLE_HelmyC {
                 public void onCharacteristicRead(BluetoothGatt gatt,
                                                  BluetoothGattCharacteristic characteristic,
                                                  int status) {
-                    Log.d(TAG+"ReadChar", "Read " + characteristic.getUuid());
+//                    Log.d(TAG+"ReadChar", "Read " + characteristic.getUuid());
                     if (status == BluetoothGatt.GATT_SUCCESS) {
                         if(characteristicHelmetTemperature !=null &&
                                 characteristic.getUuid() == characteristicHelmetTemperature.getUuid()){
@@ -211,10 +210,10 @@ class BLE_HelmyC {
 
                     UUID charUUID = descriptor.getCharacteristic().getUuid();
                     if (status == BluetoothGatt.GATT_SUCCESS) {
-                        Log.d(TAG+"Descriptor", "Callback success" + status);
+//                        Log.d(TAG+"Descriptor", "Callback success" + status);
                         nextCharacteristic_If_GATT_SUCCESS(charUUID);
                     } else {
-                        Log.d(TAG+"Descriptor", "Callback error" + status);
+//                        Log.d(TAG+"Descriptor", "Callback error" + status);
                         nextCharacteristic_If_GATT_FAILURE(charUUID);
                     }
                 }
@@ -224,7 +223,7 @@ class BLE_HelmyC {
                 public void onCharacteristicChanged(BluetoothGatt gatt,
                                                     BluetoothGattCharacteristic characteristic) {
                     characteristicRead(characteristic);
-                    Log.d(TAG, "Impact notification received");
+//                    Log.d(TAG, "Impact notification received");
                 }
 
                 @Override
@@ -232,7 +231,7 @@ class BLE_HelmyC {
                 public void onCharacteristicWrite(BluetoothGatt gatt,
                                                   BluetoothGattCharacteristic characteristic,
                                                   int status) {
-                    Log.d("class_helmet", "Write Status Success= " + (status==BluetoothGatt.GATT_SUCCESS) );
+//                    Log.d("class_helmet", "Write Status Success= " + (status==BluetoothGatt.GATT_SUCCESS) );
                     UUID charUUID = characteristic.getUuid();
                     if (status == BluetoothGatt.GATT_SUCCESS) {
                         nextCharacteristic_If_GATT_SUCCESS(charUUID);
@@ -244,17 +243,17 @@ class BLE_HelmyC {
 
     private void nextCharacteristic_If_GATT_SUCCESS(UUID charUUID){
         // method executes the next read/write operation after a successful read/write operation
-        Log.d("HelmetColor", "nextCharacteristic_If_GATT_SUCCESS " + charUUID );
+//        Log.d("HelmetColor", "nextCharacteristic_If_GATT_SUCCESS " + charUUID );
         if( charUUID == characteristicHelmetImpact.getUuid()){
             // impact notification was set
             bikeMAC_Write(MAC_1, characteristicHelmet_MAC1);
         } else if(charUUID == characteristicHelmetColorRed.getUuid() ||
                 charUUID == characteristicHelmetColorGreen.getUuid() ||
                 charUUID == characteristicHelmetColorBlue.getUuid() ){
-            Log.e("HelmetColor", "Color wrote. Returned = " + true);
+//            Log.e("HelmetColor", "Color wrote. Returned = " + true);
             sendActivityWriteColorStatus(true); // notify the activity
         } else if (charUUID == characteristicPhoneLowBattery.getUuid()){
-            Log.e("PhoneLowBattery", "PhoneLowBattery wrote. Returned = " + true);
+//            Log.e("PhoneLowBattery", "PhoneLowBattery wrote. Returned = " + true);
             sendActivityWritePhoneLowBatteryStatus(true);
         } else if (charUUID == characteristicHelmet_MAC1.getUuid()){
             // segment 1 was set. Write segment 2
@@ -283,7 +282,7 @@ class BLE_HelmyC {
                 // now start timer to turnoff pairing mode in 6s
                 new Handler().postDelayed(new Runnable(){
                     public void run(){
-                        Log.d(TAG, "pairing mode off");
+//                        Log.d(TAG, "pairing mode off");
                         pairingMode_writeChar(false);
                     }
                 }, 6000);
@@ -294,17 +293,17 @@ class BLE_HelmyC {
 
     private void nextCharacteristic_If_GATT_FAILURE(UUID charUUID) {
         // method executes the next read/write operation after a failed read/write operation
-        Log.d("HelmetColor", "nextCharacteristic_If_GATT_FAILURE " + charUUID );
+//        Log.d("HelmetColor", "nextCharacteristic_If_GATT_FAILURE " + charUUID );
         if( charUUID == characteristicHelmetImpact.getUuid()){
             // try again
             setHelmetImpactNotification();
         } else if( charUUID == characteristicHelmetColorRed.getUuid() ||
                 charUUID == characteristicHelmetColorGreen.getUuid() ||
                 charUUID == characteristicHelmetColorBlue.getUuid() ){
-            Log.e("HelmetColor", "Color wrote. Returned = " + false);
+//            Log.e("HelmetColor", "Color wrote. Returned = " + false);
             sendActivityWriteColorStatus(false);
         } else if (charUUID == characteristicPhoneLowBattery.getUuid()){
-            Log.e("PhoneLowBattery", "PhoneLowBattery wrote. Returned = " + false);
+//            Log.e("PhoneLowBattery", "PhoneLowBattery wrote. Returned = " + false);
             sendActivityWritePhoneLowBatteryStatus(false);
         } else if (charUUID == characteristicHelmet_MAC1.getUuid()){
             // try again
@@ -362,7 +361,7 @@ class BLE_HelmyC {
             boolean timeElapsed = false;
             if(hasTemperatureSensor) {
                 timer = System.currentTimeMillis();
-                Log.d(TAG, "timer= " + timer + " startMillis= " + startMillis);
+//                Log.d(TAG, "timer= " + timer + " startMillis= " + startMillis);
                 long timeElapsedSincePreviousRead = timer - startMillis; //startMillis was set in readHelmetTemperatureCharacteristic()
                 timeElapsed = startMillis == 0 || timeElapsedSincePreviousRead > readTemperatureFreq; // if startMillis = 0, then read for it must read for the first time
             }
@@ -387,7 +386,7 @@ class BLE_HelmyC {
                 stringBuilder.append(byteChar & 0xFF);
 //                stringBuilder.append(String.format("%02x", byteChar));
             }
-            Log.d(TAG, "Datareceived " + characteristic.getUuid() + " = " + stringBuilder);
+//            Log.d(TAG, "Datareceived " + characteristic.getUuid() + " = " + stringBuilder);
             sendDataToActivity(stringBuilder.toString());
         }
 
@@ -411,7 +410,7 @@ class BLE_HelmyC {
             double St = mostSig*256 + leastSig;
 
             double temperature = -45 + 175*(St/(Math.pow(2,16)-1));
-            Log.d(TAG, "Temperature= " + temperature + " MSB= " + mostSig + " LSB= " + leastSig);
+//            Log.d(TAG, "Temperature= " + temperature + " MSB= " + mostSig + " LSB= " + leastSig);
             sendDataToActivity("T=" + temperature);
         }
 
@@ -429,11 +428,11 @@ class BLE_HelmyC {
     }
 
     private void readHelmetOnHeadCharacteristic(){
-        Log.d(TAG+"OnHead", "Started");
+//        Log.d(TAG+"OnHead", "Started");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG+"OnHead", "lost connection");
+//            Log.e(TAG+"OnHead", "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -444,11 +443,11 @@ class BLE_HelmyC {
     }
 
     private void readHelmetFastenCharacteristic(){
-        Log.d(TAG+"Fasten", "Started");
+//        Log.d(TAG+"Fasten", "Started");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG+"Fasten", "lost connection");
+//            Log.e(TAG+"Fasten", "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -459,11 +458,11 @@ class BLE_HelmyC {
     }
 
     private void readHelmetTemperatureCharacteristic(){
-        Log.d(TAG+"Temperature", "Started");
+//        Log.d(TAG+"Temperature", "Started");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG+"Fasten", "lost connection");
+//            Log.e(TAG+"Fasten", "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -489,11 +488,11 @@ class BLE_HelmyC {
     }
 
     private void readHelmetBatteryCharacteristic(){
-        Log.d(TAG+"Battery", "Started");
+//        Log.d(TAG+"Battery", "Started");
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG+"Battery", "lost connection");
+//            Log.e(TAG+"Battery", "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -505,19 +504,19 @@ class BLE_HelmyC {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG+"Impact", "lost connection");
+//            Log.e(TAG+"Impact", "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
 
         boolean status = bluetoothGatt.setCharacteristicNotification(characteristicHelmetImpact, true);
-        Log.d(TAG+"Notif", "Notif="+status);
+//        Log.d(TAG+"Notif", "Notif="+status);
     }
 
     public void helmetColorWrite(int color, BluetoothGattCharacteristic characteristic){
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -532,7 +531,7 @@ class BLE_HelmyC {
             value = pass1;
         }
 
-        Log.d(TAG, "HelmetColor hexa = " +  pass1 + " value = " + value  );
+//        Log.d(TAG, "HelmetColor hexa = " +  pass1 + " value = " + value  );
 
         characteristic.setValue( Hex.stringToBytes(value) );
         bluetoothGatt.writeCharacteristic(characteristic);
@@ -541,12 +540,12 @@ class BLE_HelmyC {
     private void bikeMAC_Write(String segment, BluetoothGattCharacteristic characteristic){
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
 
-        Log.d(TAG, "BikeMAC hexa = " +  Hex.stringToBytes(segment) + " segment = " + segment  );
+//        Log.d(TAG, "BikeMAC hexa = " +  Hex.stringToBytes(segment) + " segment = " + segment  );
 
         characteristic.setValue( Hex.stringToBytes(segment) );
         bluetoothGatt.writeCharacteristic(characteristic);
@@ -569,7 +568,7 @@ class BLE_HelmyC {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -590,7 +589,7 @@ class BLE_HelmyC {
         if(characteristicHelmetThresholds != null){
             sendTresdholds = true; // nextCharacteristic_ReadWriteVariables will send them
         }
-        Log.d("RequestThresholds", "write threshold scheduled");
+//        Log.d("RequestThresholds", "write threshold scheduled");
     }
 
     private void thresholds_WriteChar(){
@@ -598,7 +597,7 @@ class BLE_HelmyC {
 
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -627,7 +626,7 @@ class BLE_HelmyC {
             value += th3;
         }
 
-        Log.d("RequestThresholds", "value to send= " + value);
+//        Log.d("RequestThresholds", "value to send= " + value);
 
         characteristicHelmetThresholds.setValue(value);
         bluetoothGatt.writeCharacteristic(characteristicHelmetThresholds);
@@ -640,7 +639,7 @@ class BLE_HelmyC {
     void pairingMode_writeChar(boolean pair){
         //check mBluetoothGatt is available
         if (bluetoothGatt == null) {
-            Log.e(TAG, "lost connection");
+//            Log.e(TAG, "lost connection");
             sendDeviceConnectionToActivity(device.getAddress(), false);
             return;
         }
@@ -675,7 +674,7 @@ class BLE_HelmyC {
     }
 
     private void sendActivityWriteColorStatus(boolean writeWasSuccessful) {
-        Log.d("HelmetColor", "Send Write Status: " + writeWasSuccessful);
+//        Log.d("HelmetColor", "Send Write Status: " + writeWasSuccessful);
         Intent intent = new Intent(Static_AppVariables.ACTIONFILTER_HELMET_COLOR);
         intent.putExtra(Static_AppVariables.INTENTEXTRA_HELMET_COLOR_WRITE, writeWasSuccessful);
         context.sendBroadcast(intent);

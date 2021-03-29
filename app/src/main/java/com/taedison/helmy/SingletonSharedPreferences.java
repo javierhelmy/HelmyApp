@@ -3,7 +3,6 @@ package com.taedison.helmy;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +34,7 @@ public class SingletonSharedPreferences {
         prefs = context.getSharedPreferences("HELMY", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
-        Log.d("SharedPrefs", "LastUser=" + get_lastUser_Id_logged() + "   prefs" + prefs);
+//        Log.d("SharedPrefs", "LastUser=" + get_lastUser_Id_logged() + "   prefs" + prefs);
     }
 
     public static synchronized SingletonSharedPreferences getInstance(Context context) {
@@ -48,7 +47,7 @@ public class SingletonSharedPreferences {
     synchronized void reset(Context context) {
         instance = null;
         instance = new SingletonSharedPreferences(context);
-        Log.d("SharedPrefs", "LastUser Reset");
+//        Log.d("SharedPrefs", "LastUser Reset");
     }
 
     String get_lastUser_email_logged() {
@@ -60,10 +59,10 @@ public class SingletonSharedPreferences {
         if( !TextUtils.isEmpty(encryptedInBase64) ){
             try {
                 String userIddecrypted = Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
-                Log.d(TAG+"Encrypt", "userIddecrypted= " + userIddecrypted);
+//                Log.d(TAG+"Encrypt", "userIddecrypted= " + userIddecrypted);
                 return userIddecrypted;
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get UserId Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get UserId Error= " + e.getMessage());
                 return "";
             }
         }
@@ -80,11 +79,11 @@ public class SingletonSharedPreferences {
         editor.commit();
         try {
             String userIdEncrypted = Static_AppMethods.encryptAES_toString64(context, userId, username, instance);
-            Log.d(TAG+"Encrypt", "userIdEncrypted= " + userIdEncrypted);
+//            Log.d(TAG+"Encrypt", "userIdEncrypted= " + userIdEncrypted);
             editor.putString("USER_ID", userIdEncrypted); // encrypted
             editor.commit();
         } catch (Exception e) {
-            Log.e(TAG+"Encrypt", "Set UserId Error= " + e.getMessage());
+//            Log.e(TAG+"Encrypt", "Set UserId Error= " + e.getMessage());
         }
     }
 
@@ -108,7 +107,7 @@ public class SingletonSharedPreferences {
 
     // AESkey is passed encypted by RSA and as string base64
     void save_AESkey_rsaEncrypted(String AESkey){
-        Log.d(TAG+"Encrypt", "AESkey= " + AESkey);
+//        Log.d(TAG+"Encrypt", "AESkey= " + AESkey);
         editor.putString("AESkey", AESkey);
         editor.commit();
     }
@@ -125,7 +124,7 @@ public class SingletonSharedPreferences {
     }
 
     boolean was_androidGO_checked(){
-        Log.d("SharedPrefs", "was androidGO checked = " + prefs.getBoolean("androidGO", false));
+//        Log.d("SharedPrefs", "was androidGO checked = " + prefs.getBoolean("androidGO", false));
         return prefs.getBoolean("androidGO", false);
     }
 
@@ -141,11 +140,11 @@ public class SingletonSharedPreferences {
     void userRegistered_data_devices(){
         editor.putBoolean("register", true);
         editor.commit(); // save the data synchronously
-        Log.d("SharedPrefs", "register yes");
+//        Log.d("SharedPrefs", "register yes");
     }
 
     boolean didUserRegister_data_devices(){
-        Log.d("SharedPrefs", "registered data = " + prefs.getBoolean("register", false));
+//        Log.d("SharedPrefs", "registered data = " + prefs.getBoolean("register", false));
         return prefs.getBoolean("register", false);
     }
 
@@ -178,7 +177,7 @@ public class SingletonSharedPreferences {
         Set<String> helmetsSet = prefs.getStringSet("HELMETS", null);
         if (helmetsSet != null && helmetsSet.size() != 0) {
             for (String MAC : helmetsSet) {
-                Log.d("prefsSingle", "MAC= " + MAC);
+//                Log.d("prefsSingle", "MAC= " + MAC);
                 if (nickname.equals(getHelmetNickname(MAC))) {
                     return MAC;
                 }
@@ -233,15 +232,15 @@ public class SingletonSharedPreferences {
         helmetsSet.add(helmetMAC);
         editor.putStringSet("HELMETS", helmetsSet);
         editor.commit(); // save the data synchronously
-        Log.d("redHelmet","Saved helmet");
+//        Log.d("redHelmet","Saved helmet");
 
-        Log.d("redHelmet", "saved= " + get_helmets_saved_MACs().size() );
+//        Log.d("redHelmet", "saved= " + get_helmets_saved_MACs().size() );
     }
 
     void savePrimaryHelmetPreferences(String primary) {
         editor.putString("PRIMARY_HELMET", primary);
         editor.commit(); // save the data synchronously
-        Log.d("redHelmet","Saved primary");
+//        Log.d("redHelmet","Saved primary");
     }
 
     private void deletePrimaryHelmetFromPreferences() {
@@ -253,7 +252,7 @@ public class SingletonSharedPreferences {
     void setHelmetAssociatedBluetoothClassic(String bLE_MAC, String classic_MAC) {
         editor.putString(bLE_MAC + "BT", classic_MAC);
         editor.commit(); // save the data synchronously
-        Log.d("redHelmet","Saved bt");
+//        Log.d("redHelmet","Saved bt");
     }
 
     String getHelmetAssociatedBluetoothClassic(String bLE_MAC) {
@@ -268,7 +267,7 @@ public class SingletonSharedPreferences {
     void setHelmetNickname(String bLE_MAC, String nickname) {
         editor.putString(bLE_MAC + "Nickname", nickname);
         editor.commit(); // save the data synchronously
-        Log.d("redHelmet","Saved nickname");
+//        Log.d("redHelmet","Saved nickname");
     }
 
     String getHelmetNickname(String bLE_MAC) {
@@ -304,7 +303,7 @@ public class SingletonSharedPreferences {
         Set<String> bikesSet = prefs.getStringSet("BIKES", null);
         if (bikesSet != null && bikesSet.size() != 0) {
             for (String MAC : bikesSet) {
-                Log.d("prefsSingle", MAC);
+//                Log.d("prefsSingle", MAC);
                 if (nickname.equals(getBikeNickname(MAC))) {
                     return MAC;
                 }
@@ -418,10 +417,10 @@ public class SingletonSharedPreferences {
         if( !TextUtils.isEmpty(encryptedInBase64) ){
             try {
                 String nationalityDecrypted = Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
-                Log.d(TAG+"Encrypt", "nationalityDecrypted= " + nationalityDecrypted);
+//                Log.d(TAG+"Encrypt", "nationalityDecrypted= " + nationalityDecrypted);
                 return nationalityDecrypted;
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get Natiolatity Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get Natiolatity Error= " + e.getMessage());
                 return "";
             }
         }
@@ -438,10 +437,10 @@ public class SingletonSharedPreferences {
         if( !TextUtils.isEmpty(encryptedInBase64) ){
             try {
                 String idTypeDecrypted = Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
-                Log.d(TAG+"Encrypt", "idTypeDecrypted= " + idTypeDecrypted);
+//                Log.d(TAG+"Encrypt", "idTypeDecrypted= " + idTypeDecrypted);
                 return idTypeDecrypted;
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get idType Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get idType Error= " + e.getMessage());
                 return "";
             }
         }
@@ -458,10 +457,10 @@ public class SingletonSharedPreferences {
         if( !TextUtils.isEmpty(encryptedInBase64) ){
             try {
                 String idNumDecrypted = Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
-                Log.d(TAG+"Encrypt", "idNumDecrypted= " + idNumDecrypted);
+//                Log.d(TAG+"Encrypt", "idNumDecrypted= " + idNumDecrypted);
                 return idNumDecrypted;
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get idNum Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get idNum Error= " + e.getMessage());
                 return "";
             }
         }
@@ -479,14 +478,14 @@ public class SingletonSharedPreferences {
         if( !TextUtils.isEmpty(encryptedInBase64) ){
             try {
                 String isColLicenseDecrypted = Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
-                Log.d(TAG+"Encrypt", "isColLicenseDecrypted= " + isColLicenseDecrypted);
+//                Log.d(TAG+"Encrypt", "isColLicenseDecrypted= " + isColLicenseDecrypted);
                 if(isColLicenseDecrypted.equals("1")){
                     return true;
                 } else {
                     return false;
                 }
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get isColLicenseDecrypted Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get isColLicenseDecrypted Error= " + e.getMessage());
                 return true; // return true as default
             }
         }
@@ -504,7 +503,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get licenseNum Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get licenseNum Error= " + e.getMessage());
                 return "";
             }
         }
@@ -522,7 +521,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get names Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get names Error= " + e.getMessage());
                 return "";
             }
         }
@@ -540,7 +539,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get surnames Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get surnames Error= " + e.getMessage());
                 return "";
             }
         }
@@ -558,7 +557,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get age Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get age Error= " + e.getMessage());
                 return "";
             }
         }
@@ -576,7 +575,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get rh Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get rh Error= " + e.getMessage());
                 return "";
             }
         }
@@ -596,7 +595,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get sex Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get sex Error= " + e.getMessage());
                 return "";
             }
         }
@@ -614,7 +613,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get eps Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get eps Error= " + e.getMessage());
                 return "";
             }
         }
@@ -632,7 +631,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get arl Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get arl Error= " + e.getMessage());
                 return "";
             }
         }
@@ -650,7 +649,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get phone Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get phone Error= " + e.getMessage());
                 return "";
             }
         }
@@ -678,7 +677,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencyNames Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencyNames Error= " + e.getMessage());
                 return "";
             }
         }
@@ -696,7 +695,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencySurnames Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencySurnames Error= " + e.getMessage());
                 return "";
             }
         }
@@ -714,7 +713,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencyPhone Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencyPhone Error= " + e.getMessage());
                 return "";
             }
         }
@@ -732,7 +731,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencyNames2 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencyNames2 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -754,7 +753,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencySurnames2 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencySurnames2 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -772,7 +771,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get emergencyPhone2 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get emergencyPhone2 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -800,7 +799,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
                 return "";
             }
         }
@@ -823,7 +822,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
                 return "";
             }
         }
@@ -838,7 +837,7 @@ public class SingletonSharedPreferences {
     void setHelmetColor (String bLE_MAC, int color){
         editor.putInt(bLE_MAC+"color", color);
         editor.commit(); // save the data synchronously
-        Log.d("redHelmet","Saved color");
+//        Log.d("redHelmet","Saved color");
     }
 
     int getHelmetColor (String bLE_MAC){
@@ -877,7 +876,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get soat Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get soat Error= " + e.getMessage());
                 return "";
             }
         }
@@ -900,7 +899,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get 2nd_policy Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get 2nd_policy Error= " + e.getMessage());
                 return "";
             }
         }
@@ -923,7 +922,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get 2nd_policy_phone Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get 2nd_policy_phone Error= " + e.getMessage());
                 return "";
             }
         }
@@ -946,7 +945,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get brand Error= " + e.getMessage());
                 return "";
             }
         }
@@ -969,7 +968,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get chasis Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get chasis Error= " + e.getMessage());
                 return "";
             }
         }
@@ -992,7 +991,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get plate Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get plate Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1015,7 +1014,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get width Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get width Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1038,7 +1037,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get percentage Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get percentage Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1061,7 +1060,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get diameter Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get diameter Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1084,7 +1083,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get pass1 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get pass1 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1107,7 +1106,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get pass2 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get pass2 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1130,7 +1129,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get pass3 Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get pass3 Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1153,7 +1152,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get bikeId Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get bikeId Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1176,7 +1175,7 @@ public class SingletonSharedPreferences {
             try {
                 return Static_AppMethods.decryptAES_toUTF8(context, encryptedInBase64, get_lastUser_email_logged(), instance);
             } catch (Exception e) {
-                Log.e(TAG+"Encrypt", "Get bondId Error= " + e.getMessage());
+//                Log.e(TAG+"Encrypt", "Get bondId Error= " + e.getMessage());
                 return "";
             }
         }
@@ -1247,7 +1246,7 @@ public class SingletonSharedPreferences {
             }
             g_editor.commit(); // save the data synchronously
 
-            Log.d("ServiceUploadTxt", "txt deleted from preferences");
+//            Log.d("ServiceUploadTxt", "txt deleted from preferences");
         }
     }
 
